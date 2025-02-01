@@ -1,3 +1,3 @@
-## Install 
+## Installation
 
 `pip install gradio` 
