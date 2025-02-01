@@ -4,7 +4,7 @@
 
 or
 
-# First create and activate a virtual environment
+# Create and activate a virtual environment
 `python -m venv venv`
 
 # On Windows:
