@@ -1,5 +1,6 @@
 import gradio as gr
 import time
+import os
 
 def process_data(text: str) -> str:
     """Basic text processing function"""
@@ -8,17 +9,17 @@ def process_data(text: str) -> str:
 
 def load_css():
     try:
-        # Use relative path which works in both environments
-        css_path = "static/style.css" # <-- change to style.css 
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        css_path = os.path.join(base_dir, "static", "styles.css")
+        print(f"Looking for CSS at: {css_path}")
         
-        with open(css_path, 'r') as f:
+        with open(css_path, 'r', encoding='utf-8') as f:
             return f.read()
     except Exception as e:
-        print(f"Warning: Could not load CSS file: {e}")
-        return ""  # Return empty string if file can't be loaded
+        print(f"Failed to load CSS: {e}")
+        return ""
 
 css_content = load_css()
-
 with gr.Blocks(
     css=css_content,
     title="unsloth - Fast and Easy LLM Finetuning",
@@ -37,10 +38,9 @@ with gr.Blocks(
         </head>
     """)
     
-    # Top nav bar
-    with gr.Row():
+    # Header Section
+    with gr.Row(elem_classes=["header"]):
         with gr.Column(scale=1):
-            # Logo implementation
             with gr.Row(elem_classes=["logo-container"]):
                 try:
                     gr.Image("logo.png", label=None, show_label=False, container=False)
@@ -48,60 +48,75 @@ with gr.Blocks(
                 except:
                     gr.Markdown("# unsloth")
         
-        # Main nav buttons
         with gr.Column(scale=3):
             with gr.Row(elem_classes=["navigation-buttons"]):
-                nav_train = gr.Button("Train", elem_classes=["lg", "primary", "nav-train-btn"])
-                nav_evaluate = gr.Button("Evaluate", elem_classes=["lg", "secondary", "nav-evaluate-btn"])
-                nav_chat = gr.Button("Chat", elem_classes=["lg", "secondary", "nav-chat-btn"])
-                nav_export = gr.Button("Export", elem_classes=["lg", "secondary", "nav-export-btn"])
+                nav_train = gr.Button("Train", elem_classes=["lg", "primary", "nav-train-btn", "nav-button"])
+                nav_evaluate = gr.Button("Evaluate", elem_classes=["lg", "secondary", "nav-evaluate-btn", "nav-button"])
+                nav_chat = gr.Button("Chat", elem_classes=["lg", "secondary", "nav-chat-btn", "nav-button"])
+                nav_export = gr.Button("Export", elem_classes=["lg", "secondary", "nav-export-btn", "nav-button"])
         
-        # Mode toggle buttons
         with gr.Column(scale=2):
-            with gr.Row(elem_classes=["mode-toggle-buttons"]):
-                mode_basic = gr.Button("Basic", variant="primary", elem_classes=["mode-basic-btn"])
-                mode_advanced = gr.Button("Advanced", elem_classes=["mode-advanced-btn"])
-    
-    with gr.Column(elem_classes=["container"]):
-        # Model selection section
-        gr.Markdown("## Model Selection", elem_classes=["section-header"])
-        with gr.Row(elem_classes=["model-selection-container"]):
-            with gr.Column(scale=2):
+            gr.Row()  # Spacer for layout balance
+
+    # Main Content
+    with gr.Column(elem_classes=["main-container"]):
+        # Model Selection Card
+        with gr.Column(elem_classes=["card", "model-selection-card"]):
+            gr.Markdown("## Model Selection")
+            with gr.Row():
                 model_dropdown = gr.Dropdown(
                     choices=[
-                        "Llama-3.1-8B-Instruct",
-                        "Mistral-7B-Instruct",
-                        "Phi-2",
-                        "Gemma-7B"
+                        "unsloth/Meta-Llama-3.1-8B-bnb-4bit",
+                        "unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit",
+                        "unsloth/Meta-Llama-3.1-70B-bnb-4bit",
+                        "unsloth/Meta-Llama-3.1-405B-bnb-4bit",
+                        "unsloth/Mistral-Nemo-Base-2407-bnb-4bit",
+                        "unsloth/Mistral-Nemo-Instruct-2407-bnb-4bit",
+                        "unsloth/mistral-7b-v0.3-bnb-4bit",
+                        "unsloth/mistral-7b-instruct-v0.3-bnb-4bit",
+                        "unsloth/Phi-3.5-mini-instruct",
+                        "unsloth/Phi-3-medium-4k-instruct",
+                        "unsloth/gemma-2-9b-bnb-4bit",
+                        "unsloth/gemma-2-27b-bnb-4bit"
                     ],
-                    value="Llama-3.1-8B-Instruct",
+                    value="unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit",
                     label="Select Model",
                     interactive=True,
+                    scale=3
                 )
-            with gr.Column(scale=1):
                 model_search = gr.Textbox(
                     placeholder="Search for a model",
                     label="Search",
                     interactive=True,
+                    scale=1
+                )
+                load_4bit = gr.Checkbox(
+                    value=True,
+                    label="Load in 4-bit",
+                    info="Enable 4-bit quantization to reduce memory usage. Recommended for most cases.",
+                    interactive=True,
+                    scale=1
                 )
 
-        with gr.Row(elem_classes=["main-content"]):
-            # Left column: Dataset
+        # Main Three-Column Layout
+        with gr.Row(elem_classes=["content-cards"]):
+            # Dataset Card
             with gr.Column(elem_classes=["card"], scale=1):
-                gr.Markdown("## Training Dataset", elem_classes=["section-header"])
+                gr.Markdown("## Training Dataset")
                 upload_btn = gr.UploadButton(
                     "Upload JSON, CSV or Excel",
                     variant="secondary",
+                    elem_classes=["upload-button"],
                 )
                 input_text = gr.Textbox(
-                    placeholder="Type dataset from 🤗HF",
+                    placeholder="Type dataset from 🤗",
                     label="HuggingFace Dataset",
                     interactive=True,
                 )
             
-            # Middle column: Basic Parameters
+            # Parameters Card
             with gr.Column(elem_classes=["card"], scale=1) as basic_params:
-                gr.Markdown("## Training Parameters", elem_classes=["section-header"])
+                gr.Markdown("## Training Parameters")
                 with gr.Column():
                     learning_rate = gr.Dropdown(
                         choices=["1e-5", "2e-5", "5e-5", "1e-4", "2e-4", "5e-4", "1e-3"],
@@ -115,135 +130,130 @@ with gr.Blocks(
                         minimum=1, maximum=20,
                         value=4,
                         label="Number of epochs",
-                        interactive=True,
-                        step=1
-                    )
-                    batch_size = gr.Slider(
-                        minimum=1, maximum=32,
-                        value=2,
-                        label="Batch size",
-                        interactive=True,
-                        step=1
-                    )
-                    grad_accumulation = gr.Slider(
-                        minimum=1, maximum=16,
-                        value=4,
-                        label="Gradient accumulation steps",
-                        interactive=True,
-                        step=1
+                        step=1,
+                        interactive=True
                     )
 
-            # Right column: Training Progress
-            with gr.Column(elem_classes=["card"], scale=1) as training_progress:
-                gr.Markdown("## Training Progress", elem_classes=["section-header"])
+            # Progress Card
+            with gr.Column(elem_classes=["card"], scale=1):
+                gr.Markdown("## Training Progress")
                 loss_plot = gr.Plot(
                     label="Training Loss",
                     show_label=True,
                 )
 
-        # Advanced parameters section (initially hidden)
-        with gr.Column(elem_classes=["card"], scale=1, visible=False) as advanced_params:
-            gr.Markdown("### LoRA Adapter Settings")
-            with gr.Row():
-                lora_r = gr.Slider(
-                    minimum=1, maximum=128,
-                    value=16,
-                    label="LoRA rank (r)",
-                    info="Suggested: 8, 16, 32, 64, 128",
-                    interactive=True,
-                    step=1
-                )
-                lora_alpha = gr.Slider(
-                    minimum=1, maximum=128,
-                    value=16,
-                    label="LoRA alpha",
-                    interactive=True,
-                    step=1
-                )
-            with gr.Row():
-                lora_dropout = gr.Slider(
-                    minimum=0, maximum=1,
-                    value=0,
-                    label="LoRA dropout",
-                    info="0 is optimized",
-                    interactive=True,
-                    step=0.1
-                )
-                use_rslora = gr.Checkbox(
-                    value=True,
-                    label="Use RS-LoRA",
-                    info="Rank stabilized LoRA"
-                )
+        # Mode Toggle
+        with gr.Row(elem_classes=["mode-toggle-container"]):
+            with gr.Column(scale=3):
+                gr.Row()  # Left spacer
+            with gr.Column(scale=2):
+                with gr.Row(elem_classes=["mode-toggle-buttons"]):
+                    mode_basic = gr.Button("Basic", variant="primary", elem_classes=["mode-basic-btn"])
+                    mode_advanced = gr.Button("Advanced", elem_classes=["mode-advanced-btn"])
+            with gr.Column(scale=3):
 
-            gr.Markdown("### Training Optimization")
+                gr.Row()  # Right spacer
+        # Advanced Parameters Section (Initially Hidden)
+        with gr.Column(elem_classes=["card", "advanced-params"], visible=False) as advanced_params:
             with gr.Row():
-                weight_decay = gr.Slider(
-                    minimum=0, maximum=0.1,
-                    value=0.01,
-                    label="Weight Decay",
-                    interactive=True,
-                    step=0.001
-                )
-                warmup_ratio = gr.Slider(
-                    minimum=0, maximum=0.5,
-                    value=0.1,
-                    label="Warmup Ratio",
-                    interactive=True,
-                    step=0.01
-                )
-            with gr.Row():
-                lr_scheduler = gr.Dropdown(
-                    choices=["cosine", "linear", "constant", "constant_with_warmup"],
-                    value="cosine",
-                    label="LR Scheduler",
-                    info="Cosine is recommended",
-                    interactive=True
-                )
-                gradient_checkpointing = gr.Dropdown(
-                    choices=["none", "true", "unsloth"],
-                    value="unsloth",
-                    label="Gradient Checkpointing",
-                    info="'unsloth' uses 30% less VRAM",
-                    interactive=True
-                )
+                with gr.Column(scale=1):
+                    gr.Markdown("### LoRA Adapter Settings")
+                    target_modules = gr.Dropdown(
+                        choices=[
+                            "q_proj", "k_proj", "v_proj", "o_proj",
+                            "gate_proj", "up_proj", "down_proj"
+                        ],
+                        value=["q_proj", "k_proj", "v_proj", "o_proj",
+                              "gate_proj", "up_proj", "down_proj"],
+                        label="Target Modules",
+                        multiselect=True,
+                        interactive=True
+                    )
+                    lora_r = gr.Slider(
+                        minimum=1, maximum=128, value=16,
+                        label="LoRA rank (r)",
+                        info="Suggested values: 8, 16, 32, 64, 128",
+                        interactive=True
+                    )
+                    lora_alpha = gr.Slider(
+                        minimum=1, maximum=128, value=16,
+                        label="LoRA alpha",
+                        interactive=True
+                    )
+                    lora_dropout = gr.Slider(
+                        minimum=0, maximum=1, value=0,
+                        label="LoRA dropout",
+                        info="0 is optimized for best performance",
+                        interactive=True
+                    )
+                    use_rslora = gr.Checkbox(
+                        value=True, 
+                        label="Use RS-LoRA",
+                        interactive=True
+                    )
+                
+                with gr.Column(scale=1):
+                    gr.Markdown("### Training Optimization")
+                    weight_decay = gr.Slider(
+                        minimum=0, maximum=0.1, value=0.01, 
+                        label="Weight Decay",
+                        interactive=True
+                    )
+                    gradient_checkpointing = gr.Dropdown(
+                        choices=["none", "true", "unsloth"],
+                        value="unsloth",
+                        label="Gradient Checkpointing",
+                        info="'unsloth' uses 30% less VRAM",
+                        interactive=True
+                    )
+                    use_rslora = gr.Checkbox(
+                        value=False,
+                        label="Use RS-LoRA",
+                        info="Rank stabilized LoRA for better training stability",
+                        interactive=True
+                    )
+                    random_seed = gr.Number(
+                        value=3407,
+                        label="Random Seed",
+                        precision=0,
+                        interactive=True
+                    )
+                    use_loftq = gr.Checkbox(
+                        value=False,
+                        label="Use LoftQ",
+                        info="Low-rank factorization with quantization",
+                        interactive=True
+                    )
+                    batch_size = gr.Slider(
+                        minimum=1, maximum=32,
+                        value=2,
+                        label="Batch size",
+                        step=1,
+                        interactive=True
+                    )
+                    grad_accumulation = gr.Slider(
+                        minimum=1, maximum=16,
+                        value=4,
+                        label="Gradient accumulation steps",
+                        step=1,
+                        interactive=True
+                    )
+        # Start Training Button
+        with gr.Row(elem_classes=["footer"]):
+            start_btn = gr.Button(
+                "♡ Start finetuning",
+                variant="primary",
+                elem_classes=["gr-button", "start-finetune-btn"],
+            )
 
-            gr.Markdown("### Experiment Tracking")
-            with gr.Row():
-                use_wandb = gr.Checkbox(
-                    value=False,
-                    label="Enable WandB logging",
-                    info="Track your training metrics with Weights & Biases"
-                )
-                wandb_project = gr.Textbox(
-                    value="unsloth-finetune",
-                    label="WandB Project Name",
-                    interactive=True,
-                    visible=False  # Initially hidden until WandB is enabled
-                )
-            with gr.Row(visible=False) as wandb_options:
-                wandb_name = gr.Textbox(
-                    value="",
-                    placeholder="my-experiment-name",
-                    label="Experiment Name",
-                    interactive=True
-                )
-                wandb_tags = gr.Textbox(
-                    value="",
-                    placeholder="tag1,tag2,tag3",
-                    label="Tags (comma-separated)",
-                    interactive=True
-                )
-
-        # Add click handlers for mode toggle
+        # Event Handlers
         def toggle_advanced_mode(advanced: bool):
-            # Only update visibility and button styles, not the parameter values
-            return {
-                advanced_params: gr.update(visible=advanced),
-                mode_advanced: gr.update(variant="primary" if advanced else "secondary"),
-                mode_basic: gr.update(variant="secondary" if advanced else "primary"),
-                # Keep the basic params section always visible
-                basic_params: gr.update(visible=True)
-            }
+            return [
+                gr.update(visible=advanced),
+                gr.update(variant="primary" if advanced else "secondary"),
+                gr.update(variant="secondary" if advanced else "primary"),
+                gr.update(visible=True)
+            ]
 
         mode_basic.click(
             toggle_advanced_mode,
@@ -257,27 +267,6 @@ with gr.Blocks(
             outputs=[advanced_params, mode_advanced, mode_basic, basic_params]
         )
 
-        # Add visibility toggle for WandB options
-        def toggle_wandb_options(enabled):
-            return {
-                wandb_project: gr.update(visible=enabled),
-                wandb_options: gr.update(visible=enabled)
-            }
-
-        use_wandb.change(
-            fn=toggle_wandb_options,
-            inputs=[use_wandb],
-            outputs=[wandb_project, wandb_options]
-        )
-
-        with gr.Row():
-            start_btn = gr.Button(
-                "♡ Start finetuning",
-                variant="primary",
-                elem_classes=["gr-button", "start-finetune-btn"],
-            )
-        
-
 if __name__ == "__main__":
     demo.launch(
         share=True,
@@ -285,3 +274,4 @@ if __name__ == "__main__":
         server_name="0.0.0.0",
         favicon_path="favicon-32x32.png",
     )
+    
