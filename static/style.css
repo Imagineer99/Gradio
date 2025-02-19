@@ -1,13 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Debug style to verify CSS loading */
+body::before {
+    content: 'CSS Loaded';
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #10b981;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    z-index: 9999;
+    display: none; /* Change to block to debug */
+}
+
 /* Base styles */
 :root {
-	--primary-500: #55b685;
+    /* Define a proper type scale */
+    --scale-xxl: 2rem;    /* 32px */
+    --scale-xl: 1.5rem;   /* 24px */
+    --scale-lg: 1.25rem;  /* 20px */
+    --scale-md: 1rem;     /* 16px */
+    --scale-sm: 0.875rem; /* 14px */
+    
+    /* Define proper spacing units */
+    --space-xxl: 3rem;    /* 48px */
+    --space-xl: 2rem;     /* 32px */
+    --space-lg: 1.5rem;   /* 24px */
+    --space-md: 1rem;     /* 16px */
+    --space-sm: 0.5rem;   /* 8px */
+    
+    /* Define a proper color system */
+    --primary-900: #0B815C;
+    --primary-800: #0D9B6F;
+    --primary-700: #10B981; /* New primary color */
+    --primary-600: #34D399;
+    --primary-500: #55b685;
+    
+    --neutral-900: #111827;
+    --neutral-800: #1F2937;
+    --neutral-700: #374151;
+    --neutral-600: #4B5563;
+    --neutral-500: #6B7280;
+    
+    /* Add border radius scale */
+    --radius-sm: 0.5rem;   /* 8px */
+    --radius-md: 0.75rem;  /* 12px */
+    --radius-lg: 1rem;     /* 16px */
+    --radius-xl: 1.25rem;  /* 20px */
+    --radius-full: 9999px;
 }
 body {
 	background-color: #f9fafb;
 	font-family: 'Inter', sans-serif;
 }
 /* Container styling */
-.gradio-container {
+#gradio-app, .gradio-app, [class*="gradio-container"] {
 	max-width: 1200px;
 	margin: 0 auto;
 	padding: 0 1rem !important;
@@ -22,7 +70,7 @@ body {
 /* Navigation buttons */
 .lg.primary, .lg.secondary {
 	padding: 6px 16px !important;
-	border-radius: 20px !important;
+	border-radius: var(--radius-xl) !important;
 	border: none !important;
 	background: transparent !important;
 	cursor: pointer !important;
@@ -37,17 +85,34 @@ body {
 	background: white !important;
 }
 /* Cards */
-.card {
+#gradio-app .card,
+[class*="gradio-container"] .card {
 	background: white !important;
-	border-radius: 1rem !important;
-	padding: 2rem !important;
+	border-radius: var(--radius-lg) !important;
+	padding: 1rem !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+	min-height: 300px !important;
+}
+/* Handle Gradio's visibility states */
+.card.hide {
+	display: none !important;
+}
+.card:not(.hide) {
+	display: flex !important;
+	flex-direction: column !important;
+}
+/* Override any inline display:none style */
+.card[style*="display: none"],
+.card.hide[style*="display"],
+.gradio-container .card[style*="display: none"] {
+	display: none !important;
 }
 /* Model selector */
 .gr-dropdown {
 	background: #111827 !important;
 	color: white !important;
 	padding: 0.75rem 1rem !important;
-	border-radius: 0.5rem !important;
+	border-radius: var(--radius-sm) !important;
 	border: none !important;
 	width: 100% !important;
 }
@@ -56,7 +121,7 @@ body {
 	width: 100% !important;
 	padding: 0.75rem 1rem 0.75rem 2.5rem !important;
 	border: 1px solid #e5e7eb !important;
-	border-radius: 0.5rem !important;
+	border-radius: var(--radius-sm) !important;
 	background: white !important;
 }
 /* Parameter sliders */
@@ -64,7 +129,7 @@ body {
 	width: 100% !important;
 	height: 0.5rem !important;
 	background: #e5e7eb !important;
-	border-radius: 9999px !important;
+	border-radius: var(--radius-full) !important;
 	--slider-color: #10b981 !important;
 }
 .gr-slider-handle {
@@ -79,7 +144,7 @@ body {
 	padding: 0.75rem !important;
 	background: #f8faf9 !important;
 	color: #111827 !important;
-	border-radius: 20px !important;
+	border-radius: var(--radius-xl) !important;
 	border: 1px solid #e5e7eb !important;
 	font-weight: 500 !important;
 	transition: all 0.2s ease !important;
@@ -127,7 +192,7 @@ body {
 	width: 100% !important;
 	padding: 0.75rem !important;
 	border: 1px dashed #e5e7eb !important;
-	border-radius: 0.5rem !important;
+	border-radius: var(--radius-sm) !important;
 	background: white !important;
 	color: #6b7280 !important;
 }
@@ -258,7 +323,7 @@ body {
 /* Mode toggle buttons container */
 .mode-toggle-buttons {
 	background: #f8faf9 !important;
-	border-radius: 24px !important;
+	border-radius: var(--radius-xl) !important;
 	padding: 4px !important;
 	display: inline-flex !important;
 	border: 1px solid #e5e7eb !important;
@@ -268,7 +333,7 @@ body {
 /* Individual toggle buttons */
 .mode-toggle-buttons .primary,.mode-toggle-buttons .secondary {
 	padding: 6px 16px !important;
-	border-radius: 20px !important;
+	border-radius: var(--radius-xl) !important;
 	border: none !important;
 	background: transparent !important;
 	cursor: pointer !important;
@@ -304,37 +369,26 @@ div.svelte-1xp0cw7>*, div.svelte-1xp0cw7>.form>* {
 }
 /* Target the Training Dataset header specifically */
 .block.svelte-11xb1hd .prose h3 {
-	margin-top: -20px !important;
-}
-.card {
-	background: white !important;
-	border-radius: 1rem !important;
-	padding: 2rem !important;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-	min-height: 300px !important;
-	display: flex !important;
-	flex-direction: column !important;
+	margin-top: -0.75rem !important;
 }
 /* Card headers/titles */
 .card .prose h3 {
 	font-size: 1.125rem !important;
 	font-weight: 600 !important;
 	color: #111827 !important;
-	margin-bottom: 1rem !important;
-	margin-top: 0 !important;
+	margin-bottom: 0.75rem !important;
+	margin-top: -0.5rem !important;
 	display: block !important;
-	/* Ensure visibility */
 }
 /* Ensure the content inside cards fills the space properly */
 .card .prose {
-	margin-bottom: 1rem !important;
+	margin-bottom: 0.75rem !important;
 	display: block !important;
-	/* Ensure visibility */
 }
 .gradio-container.gradio-container-5-14-0 .contain .card {
 	background: white !important;
 	border-radius: 1rem !important;
-	padding: 2rem !important;
+	padding: 1rem !important;
 	min-height: 300px !important;
 	display: flex !important;
 	flex-direction: column !important;
@@ -356,18 +410,18 @@ div.svelte-1xp0cw7>*, div.svelte-1xp0cw7>.form>* {
 .gradio-container.gradio-container-5-14-0 .contain .card {
 	background: white !important;
 	border-radius: 1rem !important;
-	padding: 2rem !important;
+	padding: 1rem !important;
 	display: flex !important;
 	flex-direction: column !important;
 	min-height: 320px !important;
-	padding: 10px !important;
-	padding-left: 30px !important;
-	padding-right: 30px !important;
+	padding: 8px !important;
+	padding-left: 20px !important;
+	padding-right: 20px !important;
 }
 /* Neuromorphic input styles */
 .container.svelte-1hfxrpf .wrap.svelte-1hfxrpf {
 	border: 1px solid #e5e7eb !important;
-	border-radius: 12px !important;
+	border-radius: var(--radius-md) !important;
 	transition: all 0.2s ease !important;
 	margin-bottom: 16px !important;
 }
@@ -380,7 +434,7 @@ div.svelte-1xp0cw7>*, div.svelte-1xp0cw7>.form>* {
 /* Style for the textbox */
 label.container.show_textbox_border.svelte-173056l input.svelte-173056l,label.container.show_textbox_border.svelte-173056l textarea.svelte-173056l {
 	border: 1px solid #e5e7eb !important;
-	border-radius: 12px !important;
+	border-radius: var(--radius-md) !important;
 	transition: all 0.2s ease !important;
 	margin-bottom: 17px !important;
 }
@@ -405,7 +459,7 @@ label.container.show_textbox_border.svelte-173056l input.svelte-173056l,label.co
 /* Style for dataset input textbox */
 textarea[placeholder="Type dataset from 🤗HF"].svelte-173056l {
 	border: 1px solid #e5e7eb !important;
-	border-radius: 12px !important;
+	border-radius: var(--radius-md) !important;
 	padding: 8px 12px !important;
 	width: 100% !important;
 	background: white !important;
@@ -459,3 +513,7 @@ textarea[placeholder="Type dataset from 🤗HF"].svelte-173056l:hover,textarea[p
 	padding-left: 0px !important;
 	padding-right: 0px !important;
 }
+
+div.svelte-633qhp {
+    background: transparent !important;
+}	
