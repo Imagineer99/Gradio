@@ -63,7 +63,7 @@ def create_train_interface():
                     choices=["1e-5", "2e-5", "5e-5", "1e-4", "2e-4", "5e-4", "1e-3"],
                     value="5e-5",
                     label="Learning rate",
-                    info="Typically between 1e-5 to 1e-3",
+                    info="Controls how much the model adjusts its weights during training.",
                     allow_custom_value=True,
                     interactive=True
                 )
@@ -71,7 +71,14 @@ def create_train_interface():
                     minimum=1, maximum=20,
                     value=4,
                     label="Number of epochs",
+                    info="Number of times the model will see the entire dataset",
                     step=1,
+                    interactive=True
+                )
+                max_sequence_length = gr.Textbox(
+                    value="2048",
+                    label="Max Sequence Length",
+                    info="Maximum sequence length for the model. Choose any!",
                     interactive=True
                 )
 
@@ -108,43 +115,45 @@ def create_train_interface():
                     value=["q_proj", "k_proj", "v_proj", "o_proj",
                           "gate_proj", "up_proj", "down_proj"],
                     label="Target Modules",
+                    info="Specifies which model layers to apply LoRA fine-tuning to",
                     multiselect=True,
                     interactive=True
                 )
                 lora_r = gr.Slider(
                     minimum=1, maximum=128, value=16,
                     label="LoRA rank (r)",
-                    info="Suggested values: 8, 16, 32, 64, 128",
+                    info="Controls the capacity and compression ratio of LoRA adapters",
                     interactive=True
                 )
                 lora_alpha = gr.Slider(
                     minimum=1, maximum=128, value=16,
                     label="LoRA alpha",
+                    info="Scaling factor for LoRA updates during training",
                     interactive=True
                 )
                 lora_dropout = gr.Slider(
                     minimum=0, maximum=1, value=0,
                     label="LoRA dropout",
-                    info="0 is optimized for best performance",
+                    info="Adds regularization to prevent overfitting during training",
                     interactive=True
                 )
                 gradient_checkpointing = gr.Dropdown(
                     choices=["none", "true", "unsloth"],
                     value="unsloth",
                     label="Gradient Checkpointing",
-                    info="'unsloth' uses 30% less VRAM",
+                    info="Memory optimization technique that trades computation for memory",
                     interactive=True
                 )
                 use_rslora = gr.Checkbox(
                     value=False,
                     label="Use RS-LoRA",
-                    info="Rank stabilized LoRA for better training stability",
+                    info="Stabilizes training by maintaining consistent rank throughout layers",
                     interactive=True
                 )
                 use_loftq = gr.Checkbox(
                     value=False,
                     label="Use LoftQ",
-                    info="Low-rank factorization with quantization",
+                    info="Quantization method that improves memory efficiency of LoRA",
                     interactive=True
                 )
 
@@ -154,11 +163,13 @@ def create_train_interface():
                 weight_decay = gr.Slider(
                     minimum=0, maximum=0.1, value=0.01, 
                     label="Weight Decay",
+                    info="Regularization technique that reduces model complexity by penalizing large weights",
                     interactive=True
                 )
                 random_seed = gr.Number(
                     value=3407,
                     label="Random Seed",
+                    info="Controls randomness in training for reproducible results",
                     precision=0,
                     interactive=True
                 )
@@ -166,6 +177,7 @@ def create_train_interface():
                     minimum=1, maximum=32,
                     value=2,
                     label="Batch size",
+                    info="Number of training examples processed together in one forward/backward pass",
                     step=1,
                     interactive=True
                 )
@@ -173,6 +185,7 @@ def create_train_interface():
                     minimum=1, maximum=16,
                     value=4,
                     label="Gradient accumulation steps",
+                    info="Simulates larger batch sizes by accumulating gradients over multiple forward passes",
                     step=1,
                     interactive=True
                 )
@@ -186,26 +199,27 @@ def create_train_interface():
                 max_steps = gr.Slider(
                     minimum=0, maximum=1000, value=0,
                     label="Max Steps",
-                    info="Set to 0 to use num_epochs instead",
+                    info="Maximum number of training steps. When 0, uses number of epochs instead",
                     step=1,
                     interactive=True
                 )
                 max_seq_length = gr.Slider(
                     minimum=32, maximum=4096, value=512,
                     label="Max Sequence Length",
+                    info="Maximum length of input sequences. Longer sequences will be truncated",
                     step=32,
                     interactive=True
                 )
                 dataset_text_field = gr.Textbox(
                     value="text",
                     label="Dataset Text Field",
-                    info="Column name containing the text in your dataset",
+                    info="Name of the column in your dataset that contains the text to train on",
                     interactive=True
                 )
                 packing = gr.Checkbox(
                     value=False,
                     label="Enable Sequence Packing",
-                    info="Can make training 5x faster for short sequences",
+                    info="Optimizes memory usage by combining multiple sequences into single training examples",
                     interactive=True
                 )
 
