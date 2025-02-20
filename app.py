@@ -1,16 +1,11 @@
 import gradio as gr
-import time
 import os
 
 # Pages
 from train import create_train_interface
 from chat import create_chat_interface
 
-def process_data(text: str) -> str:
-    """Basic text processing function"""
-    time.sleep(0.5)
-    return text.upper()
-
+# CSS loading
 def load_css():
     try:
         base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -22,13 +17,15 @@ def load_css():
     except Exception as e:
         print(f"Failed to load CSS: {e}")
         return ""
-
 css_content = load_css()
+
+# Create interface 
 with gr.Blocks(
     css=css_content,
     title="unsloth - Fast and Easy LLM Finetuning",
     analytics_enabled=False,
-) as demo:
+
+) as demo: 
     # Meta tags for social media
     gr.HTML("""
         <head>
@@ -42,7 +39,7 @@ with gr.Blocks(
         </head>
     """)
     
-    # Header Section
+    # Header Section (logo, navigation buttons, spacer)
     with gr.Row(elem_classes=["header"]):
         with gr.Column(scale=1):
             with gr.Row(elem_classes=["logo-container"]):
@@ -60,7 +57,7 @@ with gr.Blocks(
                 nav_export = gr.Button("Export", elem_classes=["lg", "secondary", "nav-export-btn", "nav-button"])
         
         with gr.Column(scale=2):
-            gr.Row()  # Spacer for layout balance
+            gr.Row()  # Spacer for layout 
 
     # Main Content
     with gr.Column(elem_classes=["main-container"]):
@@ -70,22 +67,26 @@ with gr.Blocks(
         with gr.Column(visible=False) as chat_tab:
             chat_components = create_chat_interface()
 
+    # Tab switching
     def switch_to_chat():
         return gr.update(visible=False), gr.update(visible=True)
 
     def switch_to_train():
         return gr.update(visible=True), gr.update(visible=False)
 
+    # Chat button
     nav_chat.click(
         switch_to_chat,
         outputs=[train_tab, chat_tab]
     )
 
+    # Train button
     nav_train.click(
         switch_to_train,
         outputs=[train_tab, chat_tab]
     )
 
+    # Launch the interface
 if __name__ == "__main__":
     demo.launch(
         share=True,

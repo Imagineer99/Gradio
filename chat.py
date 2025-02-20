@@ -1,5 +1,10 @@
 import gradio as gr
 
+# Image processing
+import base64
+from io import BytesIO
+
+# Mock response to test the chat interface
 def mock_chat_response(message, temperature, top_p, max_length, image=None):
     """Mock response function that returns hardcoded responses"""
     if image is not None:
@@ -97,8 +102,6 @@ def create_chat_interface():
             user_content = message.strip() if message else ""
             if img is not None:
                 # Convert PIL image to base64 string
-                import base64
-                from io import BytesIO
                 
                 # Convert PIL image to base64
                 buffered = BytesIO()
@@ -130,9 +133,11 @@ def create_chat_interface():
         outputs=[msg, image_input, chatbot]
     )
 
+    # Clear chat button
     clear = gr.Button("Clear Chat", elem_classes=["clear-chat-btn"])
     clear.click(lambda: [], None, chatbot, queue=False)
 
+    # Components dictionary
     return {
         'chatbot': chatbot,
         'msg': msg,

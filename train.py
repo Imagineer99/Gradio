@@ -239,19 +239,20 @@ def create_train_interface():
             gr.update(variant="secondary" if advanced else "primary"),
             gr.update(visible=True)
         ]
-
+    # Toggle basic mode
     mode_basic.click(
         toggle_advanced_mode,
         inputs=[gr.State(False)],
         outputs=[advanced_params, mode_advanced, mode_basic, basic_params]
     )
-    
+    # Toggle advanced mode
     mode_advanced.click(
         toggle_advanced_mode,
         inputs=[gr.State(True)],
         outputs=[advanced_params, mode_advanced, mode_basic, basic_params]
     )
 
+    # Components dictionary
     return {
         'model_dropdown': model_dropdown,
         'model_search': model_search,
@@ -269,4 +270,14 @@ def create_train_interface():
         'lora_r': lora_r,
         'lora_alpha': lora_alpha,
         'lora_dropout': lora_dropout,
+        'gradient_checkpointing': gradient_checkpointing,
+        'use_rslora': use_rslora,
+        'use_loftq': use_loftq,
+        'max_sequence_length': max_sequence_length,
+        'input_text': input_text,
+        'upload_btn': upload_btn,
+        'random_seed': random_seed,
+        'weight_decay': weight_decay,
+        'batch_size': batch_size,
+        'grad_accumulation': grad_accumulation
     } 

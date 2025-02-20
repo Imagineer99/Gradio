@@ -16,24 +16,24 @@ body::before {
 
 /* Base styles */
 :root {
-    /* Define a proper type scale */
+    /*type scale */
     --scale-xxl: 2rem;    /* 32px */
     --scale-xl: 1.5rem;   /* 24px */
     --scale-lg: 1.25rem;  /* 20px */
     --scale-md: 1rem;     /* 16px */
     --scale-sm: 0.875rem; /* 14px */
     
-    /* Define proper spacing units */
+    /*spacing units */
     --space-xxl: 3rem;    /* 48px */
     --space-xl: 2rem;     /* 32px */
     --space-lg: 1.5rem;   /* 24px */
     --space-md: 1rem;     /* 16px */
     --space-sm: 0.5rem;   /* 8px */
     
-    /* Define a proper color system */
+    /*color system */
     --primary-900: #0B815C;
     --primary-800: #0D9B6F;
-    --primary-700: #10B981; /* New primary color */
+    --primary-700: #10B981; 
     --primary-600: #34D399;
     --primary-500: #55b685;
     
@@ -43,7 +43,7 @@ body::before {
     --neutral-600: #4B5563;
     --neutral-500: #6B7280;
     
-    /* Add border radius scale */
+    /*border radius scale */
     --radius-sm: 0.5rem;   /* 8px */
     --radius-md: 0.75rem;  /* 12px */
     --radius-lg: 1rem;     /* 16px */
@@ -93,7 +93,7 @@ body {
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
 	min-height: 300px !important;
 }
-/* Handle Gradio's visibility states */
+/*Gradio's visibility states */
 .card.hide {
 	display: none !important;
 }
@@ -101,7 +101,7 @@ body {
 	display: flex !important;
 	flex-direction: column !important;
 }
-/* Override any inline display:none style */
+/* Override inline display:none style */
 .card[style*="display: none"],
 .card.hide[style*="display"],
 .gradio-container .card[style*="display: none"] {
@@ -138,7 +138,7 @@ body {
 	height: 1rem !important;
 	width: 1rem !important;
 }
-/* Start button - keeping neuromorphic style */
+/* Start button */
 .start-button {
 	width: 100% !important;
 	padding: 0.75rem !important;
@@ -154,7 +154,7 @@ body {
 	transform: translateY(-1px) !important;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
 }
-/* Theme toggle - neuromorphic style */
+/* Theme toggle */
 .theme-toggle {
 	padding: 8px !important;
 	border-radius: 50% !important;
@@ -380,7 +380,7 @@ div.svelte-1xp0cw7>*, div.svelte-1xp0cw7>.form>* {
 	margin-top: -0.5rem !important;
 	display: block !important;
 }
-/* Ensure the content inside cards fills the space properly */
+/* Ensure the content inside cards fills the space */
 .card .prose {
 	margin-bottom: 0.75rem !important;
 	display: block !important;
@@ -394,7 +394,7 @@ div.svelte-1xp0cw7>*, div.svelte-1xp0cw7>.form>* {
 	flex-direction: column !important;
 	min-height: 320px !important;
 }
-/* Target only the Upload JSON/CSV/Excel button */
+/* Upload JSON/CSV/Excel button */
 #component-25.lg.secondary.svelte-5st68j {
 	border: 1px solid rgba(255, 255, 255, 0.1) !important;
 	transition: all 0.2s ease !important;
@@ -418,7 +418,7 @@ div.svelte-1xp0cw7>*, div.svelte-1xp0cw7>.form>* {
 	padding-left: 20px !important;
 	padding-right: 20px !important;
 }
-/* Neuromorphic input styles */
+/* input styles */
 .container.svelte-1hfxrpf .wrap.svelte-1hfxrpf {
 	border: 1px solid #e5e7eb !important;
 	border-radius: var(--radius-md) !important;
@@ -431,7 +431,7 @@ div.svelte-1xp0cw7>*, div.svelte-1xp0cw7>.form>* {
 .container.svelte-1hfxrpf .wrap.svelte-1hfxrpf:active {
 	box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1),inset -2px -2px 4px rgba(255, 255, 255, 0.8) !important;
 }
-/* Style for the textbox */
+/* Style for textbox */
 label.container.show_textbox_border.svelte-173056l input.svelte-173056l,label.container.show_textbox_border.svelte-173056l textarea.svelte-173056l {
 	border: 1px solid #e5e7eb !important;
 	border-radius: var(--radius-md) !important;
