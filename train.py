@@ -54,6 +54,28 @@ def create_train_interface():
                 label="HuggingFace Dataset",
                 interactive=True,
             )
+            data_template = gr.Dropdown(
+                choices=[
+                    "Alpaca",
+                    "ShareGPT",
+                    "OpenAssistant",
+                    "Anthropic Claude",
+                    "GPTeacher",
+                    "CodeAlpaca",
+                    "Dolly",
+                    "Baize",
+                    "OpenOrca",
+                    "WizardLM",
+                    "Platypus",
+                    "Vicuna",
+                    "LIMA",
+                    "Custom"  # For user-defined formats
+                ],
+                value="Alpaca",
+                label="Select Dataset Template",
+                interactive=True,
+                scale=3
+            )
         
         # Parameters Card
         with gr.Column(elem_classes=["card"], scale=1) as basic_params:
@@ -263,7 +285,14 @@ def create_train_interface():
         'start_btn': start_btn,
         'warmup_steps': warmup_steps,
         'max_steps': max_steps,
-        'max_seq_length': max_seq_length,
+        'max_seq_length': max_sequence_length,
+        'input_text': input_text,
+        'upload_btn': upload_btn,
+        'random_seed': random_seed,
+        'weight_decay': weight_decay,
+        'batch_size': batch_size,
+        'grad_accumulation': grad_accumulation,
+        'data_template': data_template,
         'dataset_text_field': dataset_text_field,
         'packing': packing,
         'target_modules': target_modules,
@@ -273,11 +302,5 @@ def create_train_interface():
         'gradient_checkpointing': gradient_checkpointing,
         'use_rslora': use_rslora,
         'use_loftq': use_loftq,
-        'max_sequence_length': max_sequence_length,
-        'input_text': input_text,
-        'upload_btn': upload_btn,
-        'random_seed': random_seed,
-        'weight_decay': weight_decay,
-        'batch_size': batch_size,
-        'grad_accumulation': grad_accumulation
+        'max_seq_length': max_seq_length
     } 

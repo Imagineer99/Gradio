@@ -23,7 +23,27 @@ def create_chat_interface():
     # Chat Interface Card
     with gr.Column(elem_classes=["card", "chat-card"]):
         gr.Markdown("## Chat Interface")
-        
+        with gr.Row():
+            model_dropdown = gr.Dropdown(
+                choices=[
+                    "unsloth/Meta-Llama-3.1-8B-bnb-4bit",
+                    "unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit",
+                    "unsloth/Meta-Llama-3.1-70B-bnb-4bit",
+                    "unsloth/Meta-Llama-3.1-405B-bnb-4bit",
+                    "unsloth/Mistral-Nemo-Base-2407-bnb-4bit",
+                    "unsloth/Mistral-Nemo-Instruct-2407-bnb-4bit",
+                    "unsloth/mistral-7b-v0.3-bnb-4bit",
+                    "unsloth/mistral-7b-instruct-v0.3-bnb-4bit",
+                    "unsloth/Phi-3.5-mini-instruct",
+                    "unsloth/Phi-3-medium-4k-instruct",
+                    "unsloth/gemma-2-9b-bnb-4bit",
+                    "unsloth/gemma-2-27b-bnb-4bit"
+                ],
+                value="unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit",
+                label="Select Model",
+                interactive=True,
+                scale=3
+            )          
         # Chat History
         chatbot = gr.Chatbot(
             height=400,
@@ -31,7 +51,7 @@ def create_chat_interface():
             elem_classes=["chat-history"],
             type="messages",
         )
-        
+      
         # Input Area
         with gr.Row():
             with gr.Column(scale=8):
@@ -146,5 +166,6 @@ def create_chat_interface():
         'top_p': top_p,
         'max_length': max_length,
         'repetition_penalty': repetition_penalty,
-        'system_prompt': system_prompt
+        'system_prompt': system_prompt,
+        'model_dropdown': model_dropdown,
     }
