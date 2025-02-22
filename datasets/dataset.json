@@ -1,0 +1,457 @@
+[
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "Kitty; but her letters were always long expected, and always very short. Those to her mother contained little else than that they were just returned from the library, where such and such officers had attended them, and where she had seen such beautiful ornaments as made her quite wild; that she had a new gown, or a new parasol, which she would have described more fully, but was obliged to leave off in a violent hurry, as Mrs. Forster called her, and they were going to the camp; and from her correspondence with her sister there was still less to",
+    "output": "Kitty's letters to her family are consistently brief despite being eagerly anticipated."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "“but it is wholly out of my power. You must feel it; and the usual satisfaction of preaching patience to a sufferer is denied me, because you have always so much.” Mr. Bingley arrived. Mrs. Bennet, through the assistance of servants, contrived to have the earliest tidings of it, that the period of anxiety and fretfulness on her side be as long as it could. She counted the days that must intervene before their invitation could be sent--hopeless of seeing him before. But on the third morning after his arrival in Hertfordshire, she saw him from her dressing-room window enter",
+    "output": "Mrs. Bennet learns about Mr. Bingley's arrival but will not see him until several days later."
+  },
+  {
+    "instruction": "Summarize the paragraph in one sentence:",
+    "input": "added, “A young man, too, like _you_, whose very countenance may vouch for your being amiable.” But she contented herself with--“And one, too, who had probably been his own companion from childhood, connected together, as I think you said, in the closest manner.” “We were born in the same parish, within the same park; the greatest part of our youth was passed together: inmates of the same house, sharing the same amusements, objects of the same parental care. _My_ father began life in the profession which your uncle, Mr. Philips, appears to do so much credit to; but he gave",
+    "output": "The narrator describes two people who share similarities due to their upbringing and family connections."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "a fortnight, and was certain of a willing listener in Jane, whenever she might wish to talk again of either. But there was still something lurking behind, of which prudence forbade the disclosure. She dared not relate the other half of Mr. Darcy’s letter, nor explain to her sister how sincerely she had been valued by his friend. Here was knowledge in which no one could partake; and she was sensible that nothing less than a perfect understanding between the parties could justify her in throwing off this last encumbrance of mystery. “And then,” said she, “if that very improbable",
+    "output": "She felt uncertain about sharing personal matters with her sister due to concerns over discretion."
+  },
+  {
+    "instruction": "Summarize the paragraph in one sentence:",
+    "input": "were yet more acutely painful and more difficult of definition. Astonishment, apprehension, and even horror, oppressed her. She wished to discredit it entirely, repeatedly exclaiming, “This must be false! This cannot be! This must be the grossest falsehood!”--and when she had gone through the whole letter, though scarcely knowing anything of the last page or two, put it hastily away, protesting that she would not regard it, that she would never look in it again. In this perturbed state of mind, with thoughts that could rest on nothing, she walked on; but it would not do: in half a minute",
+    "output": "She tried to disbelieve the contents of an upsetting letter."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "man, asked her how she had liked him. Her answer was warmly in his favour. With an air of indifference, he soon afterwards added, “How long did you say that he was at Rosings?” “Nearly three weeks.” “And you saw him frequently?” “Yes, almost every day.” “His manners are very different from his cousin’s.” “Yes, very different; but I think Mr. Darcy improves on acquaintance.” “Indeed!” cried Wickham, with a look which did not escape her. “And pray may I ask--” but checking himself, he added, in a gayer tone, “Is it in address that he improves? Has he deigned",
+    "output": "Wickham noted differences between Mr. Darcy's behavior and his own."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "an end to by exclamations and inquiries about the other, of whom, however, she could only tell her nieces what they already knew, that Mr. Denny had brought him from London, and that he was to have a lieutenant’s commission in the ----shire. She had been watching him the last hour, she said, as he walked up and down the street,--and had Mr. Wickham appeared, Kitty and Lydia would certainly have continued the occupation; but unluckily no one passed the windows now except a few of the officers, who, in comparison with the stranger, were become “stupid, disagreeable fellows.” Some",
+    "output": "She described Mr. Bingley's movements while walking alone outside."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "I have no pretensions whatever to that kind of elegance which consists in tormenting a respectable man. I would rather be paid the compliment of being believed sincere. I thank you again and again for the honour you have done me in your proposals, but to accept them is absolutely impossible. My feelings in every respect forbid it. Can I speak plainer? Do not consider me now as an elegant female intending to plague you, but as a rational creature speaking the truth from her heart.” “You are uniformly charming!” cried he, with an air of awkward gallantry; “and I",
+    "output": "The speaker declines the proposal due to their strong negative feelings towards accepting it."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "nephew; and as she gave way to all the genuine frankness of her character, in her reply to the letter which announced its arrangement, she sent him language so very abusive, especially of Elizabeth, that for some time all intercourse was at an end. But at length, by Elizabeth’s persuasion, he was prevailed on to overlook the offence, and seek a reconciliation; and, after a little further resistance on the part of his aunt, her resentment gave way, either to her affection for him, or her curiosity to see how his wife conducted herself; and she condescended to wait on",
+    "output": "A family feud between Mr. Darcy's sister and niece comes to an end through Elizabeth's intervention."
+  },
+  {
+    "instruction": "You are a summarization bot, please capture the essence of the following text.",
+    "input": "to answering it, as I foresee that a _little_ writing will not comprise what I have to tell you. I must confess myself surprised by your application; I did not expect it from _you_. Don’t think me angry, however, for I only mean to let you know, that I had not imagined such inquiries to be necessary on _your_ side. If you do not choose to understand me, forgive my impertinence. Your uncle is as much surprised as I am; and nothing but the belief of your being a party concerned would have allowed him to act as he has",
+    "output": "Your unexpected request was met with surprise from both yourself and your uncle."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "the place?” “It is a compliment which I never pay to any place if I can avoid it.” “You have a house in town, I conclude?” Mr. Darcy bowed. “I had once some thoughts of fixing in town myself, for I am fond of superior society; but I did not feel quite certain that the air of London would agree with Lady Lucas.” He paused in hopes of an answer: but his companion was not disposed to make any; and Elizabeth at that instant moving towards them, he was struck with the notion of doing a very gallant thing, and",
+    "output": "Mr. Darcy expresses skepticism about living in London due to its potential effects on his sister-in-law's health."
+  },
+  {
+    "instruction": "Please summarize this input in a concise and object manner",
+    "input": "the game, too eager in making bets and exclaiming after prizes, to have attention for anyone in particular. Allowing for the common demands of the game, Mr. Wickham was therefore at leisure to talk to Elizabeth, and she was very willing to hear him, though what she chiefly wished to hear she could not hope to be told, the history of his acquaintance with Mr. Darcy. She dared not even mention that gentleman. Her curiosity, however, was unexpectedly relieved. Mr. Wickham began the subject himself. He inquired how far Netherfield was from Meryton; and, after receiving her answer, asked in",
+    "output": "Mr. Wickham begins discussing his acquaintance with Mr. Darcy."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "would most suit her. His understanding and temper, though unlike her own, would have answered all her wishes. It was an union that must have been to the advantage of both: by her ease and liveliness, his mind might have been softened, his manners improved; and from his judgment, information, and knowledge of the world, she must have received benefit of greater importance. But no such happy marriage could now teach the admiring multitude what connubial felicity really was. An union of a different tendency, and precluding the possibility of the other, was soon to be formed in their family.",
+    "output": "A match between them would have benefited each through complementing skills."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "to Mrs. Long. But I can guess how it was; everybody says that he is eat up with pride, and I dare say he had heard somehow that Mrs. Long does not keep a carriage, and had to come to the ball in a hack chaise.” “I do not mind his not talking to Mrs. Long,” said Miss Lucas, “but I wish he had danced with Eliza.” “Another time, Lizzy,” said her mother, “I would not dance with _him_, if I were you.” “I believe, ma’am, I may safely promise you _never_ to dance with him.” “His pride,” said Miss",
+    "output": "The writer's cousin seems proud and reluctant to interact socially."
+  },
+  {
+    "instruction": "Summarize the paragraph in one sentence:",
+    "input": "“it is a person whom I never saw in the whole course of my life.” This roused a general astonishment; and he had the pleasure of being eagerly questioned by his wife and five daughters at once. After amusing himself some time with their curiosity, he thus explained:--“About a month ago I received this letter, and about a fortnight ago I answered it; for I thought it a case of some delicacy, and requiring early attention. It is from my cousin, Mr. Collins, who, when I am dead, may turn you all out of this house as soon as he",
+    "output": "The family was astonished to learn that they would lose their home after its owner's death."
+  },
+  {
+    "instruction": "Summarize the paragraph in one sentence:",
+    "input": "motive within her of good-will which could not be overlooked. It was gratitude;--gratitude, not merely for having once loved her, but for loving her still well enough to forgive all the petulance and acrimony of her manner in rejecting him, and all the unjust accusations accompanying her rejection. He who, she had been persuaded, would avoid her as his greatest enemy, seemed, on this accidental meeting, most eager to preserve the acquaintance; and without any indelicate display of regard, or any peculiarity of manner, where their two selves only were concerned, was soliciting the good opinion of her friends, and",
+    "output": "He showed genuine interest in preserving an acquaintance with someone he believed would otherwise shun him."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "when Mrs. Philips understood from him what Rosings was, and who was its proprietor, when she had listened to the description of only one of Lady Catherine’s drawing-rooms, and found that the chimney-piece alone had cost eight hundred pounds, she felt all the force of the compliment, and would hardly have resented a comparison with the housekeeper’s room. In describing to her all the grandeur of Lady Catherine and her mansion, with occasional digressions in praise of his own humble abode, and the improvements it was receiving, he was happily employed until the gentlemen joined them; and he found in",
+    "output": "Mrs. Phillips felt a sense of pride and appreciation for Mr. Bennet's descriptions of Lady Catherine's estate."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "otherwise diversified by little beyond the walks to Meryton, sometimes dirty and sometimes cold, did January and February pass away. March was to take Elizabeth to Hunsford. She had not at first thought very seriously of going thither; but Charlotte, she soon found, was depending on the plan, and she gradually learned to consider it herself with greater pleasure as well as greater certainty. Absence had increased her desire of seeing Charlotte again, and weakened her disgust of Mr. Collins. There was novelty in the scheme; and as, with such a mother and such uncompanionable sisters, home could not be",
+    "output": "Elizabeth agreed to visit her friend Charlotte at Hunsford."
+  },
+  {
+    "instruction": "Please summarize this input in a concise and object manner",
+    "input": "that you should have gone this morning, and never said a word about it till now.” “Now, Kitty, you may cough as much as you choose,” said Mr. Bennet; and, as he spoke, he left the room, fatigued with the raptures of his wife. “What an excellent father you have, girls,” said she, when the door was shut. “I do not know how you will ever make him amends for his kindness; or me either, for that matter. At our time of life, it is not so pleasant, I can tell you, to be making new acquaintances every day; but",
+    "output": "Mr. Bennet leaves the room after being criticized by his wife."
+  },
+  {
+    "instruction": "Summarize the paragraph in one sentence:",
+    "input": "her niece on Wickham’s desertion, and complimented her on bearing it so well. “But, my dear Elizabeth,” she added, “what sort of girl is Miss King? I should be sorry to think our friend mercenary.” “Pray, my dear aunt, what is the difference in matrimonial affairs, between the mercenary and the prudent motive? Where does discretion end, and avarice begin? Last Christmas you were afraid of his marrying me, because it would be imprudent; and now, because he is trying to get a girl with only ten thousand pounds, you want to find out that he is mercenary.” “If you",
+    "output": "Elizabeth questions her aunt's motives for criticizing Mr. Collins' behavior."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "informed that she was very accomplished.” “Your list of the common extent of accomplishments,” said Darcy, “has too much truth. The word is applied to many a woman who deserves it no otherwise than by netting a purse or covering a screen; but I am very far from agreeing with you in your estimation of ladies in general. I cannot boast of knowing more than half-a-dozen in the whole range of my acquaintance that are really accomplished.” “Nor I, I am sure,” said Miss Bingley. “Then,” observed Elizabeth, “you must comprehend a great deal in your idea of an accomplished",
+    "output": "Darcy questions the meaning of 'accomplished' when describing women."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "over to the gardener, who met them at the hall door. As they walked across the lawn towards the river, Elizabeth turned back to look again; her uncle and aunt stopped also; and while the former was conjecturing as to the date of the building, the owner of it himself suddenly came forward from the road which led behind it to the stables. They were within twenty yards of each other; and so abrupt was his appearance, that it was impossible to avoid his sight. Their eyes instantly met, and the cheeks of each were overspread with the deepest blush.",
+    "output": "Elizabeth's encounter with Mr. Darcy is sudden and causes both parties to feel embarrassed."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "relationship.” “Ten thousand pounds! Heaven forbid! How is half such a sum to be repaid?” Mr. Bennet made no answer; and each of them, deep in thought, continued silent till they reached the house. Their father then went to the library to write, and the girls walked into the breakfast-room. “And they are really to be married!” cried Elizabeth, as soon as they were by themselves. “How strange this is! and for _this_ we are to be thankful. That they should marry, small as is their chance of happiness, and wretched as is his character, we are forced to rejoice!",
+    "output": "The news of Lydia's engagement brings mixed emotions among the Bennet sisters."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "them happy together. But enough of this. You alluded to something else. You mentioned _two_ instances. I cannot misunderstand you, but I entreat you, dear Lizzy, not to pain me by thinking _that person_ to blame, and saying your opinion of him is sunk. We must not be so ready to fancy ourselves intentionally injured. We must not expect a lively young man to be always so guarded and circumspect. It is very often nothing but our own vanity that deceives us. Women fancy admiration means more than it does.” “And men take care that they should.” “If it is",
+    "output": "Women tend to misinterpret male attention as being more meaningful than it actually is."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "grieved than astonished to hear, in reply to her minute inquiries, that though Jane always struggled to support her spirits, there were periods of dejection. It was reasonable, however, to hope that they would not continue long. Mrs. Gardiner gave her the particulars also of Miss Bingley’s visit in Gracechurch Street, and repeated conversations occurring at different times between Jane and herself, which proved that the former had, from her heart, given up the acquaintance. Mrs. Gardiner then rallied her niece on Wickham’s desertion, and complimented her on bearing it so well. “But, my dear Elizabeth,” she added, “what sort",
+    "output": "Mrs. Gardiner informed Elizabeth about the current state of Jane's mental health."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "little in the habit of giving invitations, readily obeyed. Mrs. Gardiner looked at her niece, desirous of knowing how _she_, whom the invitation most concerned, felt disposed as to its acceptance, but Elizabeth had turned away her head. Presuming, however, that this studied avoidance spoke rather a momentary embarrassment than any dislike of the proposal, and seeing in her husband, who was fond of society, a perfect willingness to accept it, she ventured to engage for her attendance, and the day after the next was fixed on. Bingley expressed great pleasure in the certainty of seeing Elizabeth again, having still",
+    "output": "Elizabeth's aunt engages her attendance at an upcoming social event."
+  },
+  {
+    "instruction": "You are a summarization bot, please capture the essence of the following text.",
+    "input": "do wish him to choose Miss Darcy,” replied Jane; “but this may be from better feelings than you are supposing. They have known her much longer than they have known me; no wonder if they love her better. But, whatever may be their own wishes, it is very unlikely they should have opposed their brother’s. What sister would think herself at liberty to do it, unless there were something very objectionable? If they believed him attached to me they would not try to part us; if he were so, they could not succeed. By supposing such an affection, you make",
+    "output": "‘I am sure she has many opportunities, but what can she see in Mr. Collins?'"
+  },
+  {
+    "instruction": "Summarize the paragraph in one sentence:",
+    "input": "the next day were not of a kind to make her think him less agreeable. Sir William Lucas, and his daughter Maria, a good-humoured girl, but as empty-headed as himself, had nothing to say that could be worth hearing, and were listened to with about as much delight as the rattle of the chaise. Elizabeth loved absurdities, but she had known Sir William’s too long. He could tell her nothing new of the wonders of his presentation and knighthood; and his civilities were worn out, like his information. It was a journey of only twenty-four miles, and they began it",
+    "output": "Elizabeth traveled from Hunsford to Longbourn."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "was more grieved than astonished to hear, in reply to her minute inquiries, that though Jane always struggled to support her spirits, there were periods of dejection. It was reasonable, however, to hope that they would not continue long. Mrs. Gardiner gave her the particulars also of Miss Bingley’s visit in Gracechurch Street, and repeated conversations occurring at different times between Jane and herself, which proved that the former had, from her heart, given up the acquaintance. Mrs. Gardiner then rallied her niece on Wickham’s desertion, and complimented her on bearing it so well. “But, my dear Elizabeth,” she added,",
+    "output": "Mrs. Gardiner discussed various aspects of Jane's life with her."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "much of your master’s fine person,” said Mrs. Gardiner, looking at the picture; “it is a handsome face. But, Lizzy, you can tell us whether it is like or not.” Mrs. Reynolds’ respect for Elizabeth seemed to increase on this intimation of her knowing her master. “Does that young lady know Mr. Darcy?” Elizabeth coloured, and said, “A little.” “And do not you think him a very handsome gentleman, ma’am?” “Yes, very handsome.” “I am sure _I_ know none so handsome; but in the gallery upstairs you will see a finer, larger picture of him than this. This room was",
+    "output": "Mrs. Gardiner complimented Elizabeth's judgment regarding Mr. Darcy's appearance."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "the hour of possession; and whenever she spoke in a low voice to Mr. Collins, was convinced that they were talking of the Longbourn estate, and resolving to turn herself and her daughters out of the house as soon as Mr. Bennet was dead. She complained bitterly of all this to her husband. “Indeed, Mr. Bennet,” said she, “it is very hard to think that Charlotte Lucas should ever be mistress of this house, that _I_ should be forced to make way for _her_, and live to see her take my place in it!” “My dear, do not give way",
+    "output": "She feared being replaced by Charlotte Lucas as mistress of their home after Mr. Bennet's death."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "to pass your life.” “You make me laugh, Charlotte; but it is not sound. You know it is not sound, and that you would never act in this way yourself.” Occupied in observing Mr. Bingley’s attention to her sister, Elizabeth was far from suspecting that she was herself becoming an object of some interest in the eyes of his friend. Mr. Darcy had at first scarcely allowed her to be pretty: he had looked at her without admiration at the ball; and when they next met, he looked at her only to criticise. But no sooner had he made it",
+    "output": "Elizabeth becomes an unintended object of Mr. Darcy's growing attraction."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "doubtless be congenial with the generality of female minds. But I confess they would have no charms for _me_. I should infinitely prefer a book.” But of this answer Lydia heard not a word. She seldom listened to anybody for more than half a minute, and never attended to Mary at all. In the afternoon Lydia was urgent with the rest of the girls to walk to Meryton, and see how everybody went on; but Elizabeth steadily opposed the scheme. It should not be said, that the Miss Bennets could not be at home half a day before they were",
+    "output": "Elizabeth opposes her sister's plan to visit their friends in Meryton."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "somewhere near Cheapside.” “That is capital,” added her sister; and they both laughed heartily. “If they had uncles enough to fill _all_ Cheapside,” cried Bingley, “it would not make them one jot less agreeable.” “But it must very materially lessen their chance of marrying men of any consideration in the world,” replied Darcy. To this speech Bingley made no answer; but his sisters gave it their hearty assent, and indulged their mirth for some time at the expense of their dear friend’s vulgar relations. With a renewal of tenderness, however, they repaired to her room on leaving the dining-parlour, and",
+    "output": "Bingley's sisters laugh at Mr. Darcy's comment about people from Cheapside being socially undesirable."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "hardly know how Mr. Collins was first introduced to her notice, but he certainly has not known her long.” “You know of course that Lady Catherine de Bourgh and Lady Anne Darcy were sisters; consequently that she is aunt to the present Mr. Darcy.” “No, indeed, I did not. I knew nothing at all of Lady Catherine’s connections. I never heard of her existence till the day before yesterday.” “Her daughter, Miss de Bourgh, will have a very large fortune, and it is believed that she and her cousin will unite the two estates.” This information made Elizabeth smile, as",
+    "output": "Lady Catherine de Bourgh's connection to the Bennet family through marriage would significantly impact their social standing."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "him to dine with them; but, with many expressions of concern, he confessed himself engaged elsewhere. “Next time you call,” said she, “I hope we shall be more lucky.” He should be particularly happy at any time, etc., etc.; and if she would give him leave, would take an early opportunity of waiting on them. “Can you come to-morrow?” Yes, he had no engagement at all for to-morrow; and her invitation was accepted with alacrity. He came, and in such very good time, that the ladies were none of them dressed. In ran Mrs. Bennet to her daughters’ room, in",
+    "output": "He agreed to meet them again another day."
+  },
+  {
+    "instruction": "Please summarize this input in a concise and object manner",
+    "input": "busily searching through the neighbourhood for a proper situation for her daughter; and, without knowing or considering what their income might be, rejected many as deficient in size and importance. “Haye Park might do,” said she, “if the Gouldings would quit it, or the great house at Stoke, if the drawing-room were larger; but Ashworth is too far off. I could not bear to have her ten miles from me; and as for Purvis Lodge, the attics are dreadful.” Her husband allowed her to talk on without interruption while the servants remained. But when they had withdrawn, he said to",
+    "output": "She was looking for a suitable place to live with her daughter, rejecting several options due to concerns about space and prestige."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "the thought will doubtless seem heretical to more than one school of critics, that construction is not the highest merit, the choicest gift, of the novelist. It sets off his other gifts and graces most advantageously to the critical eye; and the want of it will sometimes mar those graces--appreciably, though not quite consciously--to eyes by no means ultra-critical. But a very badly-built novel which excelled in pathetic or humorous character, or which displayed consummate command of dialogue--perhaps the rarest of all faculties--would be an infinitely better thing than a faultless plot acted and told by puppets with pebbles in",
+    "output": "The quality of construction can enhance or detract from a novelist's other talents."
+  },
+  {
+    "instruction": "Summarize the paragraph in one sentence:",
+    "input": "had been concerned in the measures taken to separate Mr. Bingley and Jane, she had never doubted; but she had always attributed to Miss Bingley the principal design and arrangement of them. If his own vanity, however, did not mislead him, _he_ was the cause--his pride and caprice were the cause--of all that Jane had suffered, and still continued to suffer. He had ruined for a while every hope of happiness for the most affectionate, generous heart in the world; and no one could say how lasting an evil he might have inflicted. “There were some very strong objections against",
+    "output": "If his own vanity, however, did not mislead him, he was the cause—his pride and caprice were the cause—of all that Jane had suffered."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "her; but instead of the expected summons, when they approached her, she said to Miss Bennet, “I beg your pardon, madam, for interrupting you, but I was in hopes you might have got some good news from town, so I took the liberty of coming to ask.” “What do you mean, Hill? We have heard nothing from town.” “Dear madam,” cried Mrs. Hill, in great astonishment, “don’t you know there is an express come for master from Mr. Gardiner? He has been here this half hour, and master has had a letter.” Away ran the girls, too eager to get",
+    "output": "Mrs. Hill arrives unexpectedly with information about an express letter sent by Mr. Gardiner."
+  },
+  {
+    "instruction": "Please summarize this input in a concise and object manner",
+    "input": "a novelty to them. The party did not supply much conversation. Elizabeth was ready to speak whenever there was an opening, but she was seated between Charlotte and Miss de Bourgh--the former of whom was engaged in listening to Lady Catherine, and the latter said not a word to her all the dinnertime. Mrs. Jenkinson was chiefly employed in watching how little Miss de Bourgh ate, pressing her to try some other dish and fearing she was indisposed. Maria thought speaking out of the question, and the gentlemen did nothing but eat and admire. When the ladies returned to the",
+    "output": "The dinner party was characterized by minimal conversation among its guests."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "she is unexceptionable. Then too she is a perfectly natural girl. She does not disguise from herself or anybody that she resents Darcy’s first ill-mannered personality with as personal a feeling. (By the way, the reproach that the ill-manners of this speech are overdone is certainly unjust; for things of the same kind, expressed no doubt less stiltedly but more coarsely, might have been heard in more than one ball-room during this very year from persons who ought to have been no worse bred than Darcy.) And she lets the injury done to Jane and the contempt shown to the",
+    "output": "She openly expresses her resentment towards Mr. Darcy's initial behavior."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "to a family dinner. When the engagement was for home, some of the officers always made part of it, of which officers Mr. Wickham was sure to be one; and on these occasions Mrs. Gardiner, rendered suspicious by Elizabeth’s warm commendation of him, narrowly observed them both. Without supposing them, from what she saw, to be very seriously in love, their preference of each other was plain enough to make her a little uneasy; and she resolved to speak to Elizabeth on the subject before she left Hertfordshire, and represent to her the imprudence of encouraging such an attachment. To",
+    "output": "Mrs. Gardiner is concerned about Elizabeth's potential relationship with Mr. Wickham."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "proof of its injustice. She had never heard of him before his entrance into the ----shire militia, in which he had engaged at the persuasion of the young man, who, on meeting him accidentally in town, had there renewed a slight acquaintance. Of his former way of life, nothing had been known in Hertfordshire but what he told [Illustration: “Meeting accidentally in Town” [_Copyright 1894 by George Allen._]] himself. As to his real character, had information been in her power, she had never felt a wish of inquiring. His countenance, voice, and manner, had established him at once in the",
+    "output": "She knew little about Captain Carter's past or true nature beyond what he chose to reveal."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "she beyond youth, health, and good humour, that could make him for her sake forego every chance of benefiting himself by marrying well? As to what restraint the apprehensions of disgrace in the corps might throw on a dishonourable elopement with her, I am not able to judge; for I know nothing of the effects that such a step might produce. But as to your other objection, I am afraid it will hardly hold good. Lydia has no brothers to step forward; and he might imagine, from my father’s behaviour, from his indolence and the little attention he has ever",
+    "output": "The writer believes that Mr. Bennet's objections to Darcy's marriage proposal are likely unfounded."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "of her nephew’s letter, that Charlotte, really rejoicing in the match, was anxious to get away till the storm was blown over. At such a moment, the arrival of her friend was a sincere pleasure to Elizabeth, though in the course of their meetings she must sometimes think the pleasure dearly bought, when she saw Mr. Darcy exposed to all the parading and obsequious civility of her husband. He bore it, however, with admirable calmness. He could even listen to Sir William Lucas, when he complimented him on carrying away the brightest jewel of the country, and expressed his hopes",
+    "output": "Elizabeth's meeting with Charlotte is interrupted by Mr. Darcy's presence."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "Eliza, we cannot wonder at his complaisance; for who would object to such a partner?” Elizabeth looked archly, and turned away. Her resistance had not injured her with the gentleman, and he was thinking of her with some complacency, when thus accosted by Miss Bingley,-- “I can guess the subject of your reverie.” “I should imagine not.” “You are considering how insupportable it would be to pass many evenings in this manner,--in such society; and, indeed, I am quite of your opinion. I was never more annoyed! The insipidity, and yet the noise--the nothingness, and yet the self-importance, of all",
+    "output": "Elizabeth's discomfort during an evening with unsuitable company is shared by Miss Bingley."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "repining at her fate in terms as unreasonable as her accent was peevish. “I cannot see why Mrs. Forster should not ask _me_ as well as Lydia,” said she, “though I am _not_ her particular friend. I have just as much right to be asked as she has, and more too, for I am two years older.” In vain did Elizabeth attempt to make her reasonable, and Jane to make her resigned. As for Elizabeth herself, this invitation was so far from exciting in her the same feelings as in her mother and Lydia, that she considered it as the",
+    "output": "Elizabeth felt indifferent about receiving an invitation alongside Lydia."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "“Your Ladyship has declared it to be impossible.” “It ought to be so; it must be so, while he retains the use of his reason. But _your_ arts and allurements may, in a moment of infatuation, have made him forget what he owes to himself and to all his family. You may have drawn him in.” “If I have, I shall be the last person to confess it.” “Miss Bennet, do you know who I am? I have not been accustomed to such language as this. I am almost the nearest relation he has in the world, and am entitled",
+    "output": "You are accusing me of using my charms to manipulate Mr. Darcy."
+  },
+  {
+    "instruction": "You are a summarization bot, please capture the essence of the following text.",
+    "input": "determined to inquire at all the principal hotels in town, as Mr. Bennet thought it possible they might have gone to one of them, on their first coming to London, before they procured lodgings. Mr. Gardiner himself did not expect any success from this measure; but as his brother was eager in it, he meant to assist him in pursuing it. He added, that Mr. Bennet seemed wholly disinclined at present to leave London, and promised to write again very soon. There was also a postscript to this effect:-- “I have written to Colonel Forster to desire him to find",
+    "output": "Mr. Gardiner assisted Mr. Bennet in inquiring about the whereabouts of his daughters."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "could perhaps believe, that remaining partiality for her might assist his endeavours in a cause where her peace of mind must be materially concerned. It was painful, exceedingly painful, to know that they were under obligations to a person who could never receive a return. They owed the restoration of Lydia, her character, everything to him. Oh, how heartily did she grieve over every ungracious sensation she had ever encouraged, every saucy speech she had ever directed towards him! For herself she was humbled; but she was proud of him,--proud that in a cause of compassion and honour he had",
+    "output": "They were obligated to Mr. Darcy due to their debt to him regarding Lydia's situation."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "When at length they arose to take leave, Mrs. Bennet was most pressingly civil in her hope of seeing the whole family soon at Longbourn; and addressed herself particularly to Mr. Bingley, to assure him how happy he would make them, by eating a family dinner with them at any time, without the ceremony of a formal invitation. Bingley was all grateful pleasure; and he readily engaged for taking the earliest opportunity of waiting on her after his return from London, whither he was obliged to go the next day for a short time. Mrs. Bennet was perfectly satisfied; and",
+    "output": "Mrs. Bennet eagerly awaits the visitation of Mr. Bingley's family."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "was, beyond comparison, the pleasantest man: he certainly admired her, and his situation in life was most eligible; but, to counterbalance these advantages, Mr. Darcy had considerable patronage in the church, and his cousin could have none at all. [Illustration: “On looking up”] CHAPTER XXXIII. [Illustration] More than once did Elizabeth, in her ramble within the park, unexpectedly meet Mr. Darcy. She felt all the perverseness of the mischance that should bring him where no one else was brought; and, to prevent its ever happening again, took care to inform him, at first, that it was a favourite haunt of",
+    "output": "Elizabeth frequently encountered Mr. Darcy while walking alone in the park."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "proposals, but to accept them is absolutely impossible. My feelings in every respect forbid it. Can I speak plainer? Do not consider me now as an elegant female intending to plague you, but as a rational creature speaking the truth from her heart.” “You are uniformly charming!” cried he, with an air of awkward gallantry; “and I am persuaded that, when sanctioned by the express authority of both your excellent parents, my proposals will not fail of being acceptable.” To such perseverance in wilful self-deception Elizabeth would make no reply, and immediately and in silence withdrew; determined, that if he",
+    "output": "Elizabeth refuses Mr. Collins' marriage proposal due to his lack of sincerity."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "who advanced was now near enough to see her, and stepping forward with eagerness, pronounced her name. She had turned away; but on hearing herself called, though in a voice which proved it to be Mr. Darcy, she moved again towards the gate. He had by that time reached it also; and, holding out a letter, which she instinctively took, said, with a look of haughty composure, “I have been walking in the grove some time, in the hope of meeting you. Will you do me the honour of reading that letter?” and then, with a slight bow, turned again",
+    "output": "Mr. Darcy has walked in the grove hoping to meet Elizabeth and asks her to read his letter."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "always contrived to learn some from their aunt. At present, indeed, they were well supplied both with news and happiness by the recent arrival of a militia regiment in the neighbourhood; it was to remain the whole winter, and Meryton was the head-quarters. Their visits to Mrs. Philips were now productive of the most interesting intelligence. Every day added something to their knowledge of the officers’ names and connections. Their lodgings were not long a secret, and at length they began to know the officers themselves. Mr. Philips visited them all, and this opened to his nieces a source of",
+    "output": "The Bennet sisters gained valuable information about local militia officers."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "sixpence of his own. The kindness of my uncle and aunt can never be requited. Their taking her home, and affording her their personal protection and countenance, is such a sacrifice to her advantage as years of gratitude cannot enough acknowledge. By this time she is actually with them! If such goodness does not make her miserable now, she will never deserve to be happy! What a meeting for her, when she first sees my aunt!” “We must endeavour to forget all that has passed on either side,” said Jane: “I hope and trust they will yet be happy. His",
+    "output": "Jane's relatives have taken her into their care, providing her with protection and support."
+  },
+  {
+    "instruction": "You are a summarization bot, please capture the essence of the following text.",
+    "input": "country-town indifference to decorum.” “It shows an affection for her sister that is very pleasing,” said Bingley. “I am afraid, Mr. Darcy,” observed Miss Bingley, in a half whisper, “that this adventure has rather affected your admiration of her fine eyes.” “Not at all,” he replied: “they were brightened by the exercise.” A short pause followed this speech, and Mrs. Hurst began again,-- “I have an excessive regard for Jane Bennet,--she is really a very sweet girl,--and I wish with all my heart she were well settled. But with such a father and mother, and such low connections, I am",
+    "output": "Bingley's sisters criticize his preference for Jane due to her family background."
+  },
+  {
+    "instruction": "Please summarize this input in a concise and object manner",
+    "input": "the regimentals of an ensign. After listening one morning to their effusions on this subject, Mr. Bennet coolly observed,-- “From all that I can collect by your manner of talking, you must be two of the silliest girls in the country. I have suspected it some time, but I am now convinced.” Catherine was disconcerted, and made no answer; but Lydia, with perfect indifference, continued to express her admiration of Captain Carter, and her hope of seeing him in the course of the day, as he was going the next morning to London. “I am astonished, my dear,” said Mrs.",
+    "output": "Mr. Bennet expresses his opinion that his daughters are silly after overhearing them talk about their romantic interests."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "of it. I need not explain myself farther; and though _we_ know this anxiety to be quite needless, yet if she feels it, it will easily account for her behaviour to me; and so deservedly dear as he is to his sister, whatever anxiety she may feel on his behalf is natural and amiable. I cannot but wonder, however, at her having any such fears now, because if he had at all cared about me, we must have met long, long ago. He knows of my being in town, I am certain, from something she said herself; and yet it",
+    "output": "The speaker wonders why Elizabeth's sister would still fear an outcome involving them when they likely could have met earlier."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "for Mr. Wickham among the cluster of red coats there assembled, a doubt of his being present had never occurred to her. The certainty of meeting him had not been checked by any of those recollections that might not unreasonably have alarmed her. She had dressed with more than usual care, and prepared in the highest spirits for the conquest of all that remained unsubdued of his heart, trusting that it was not more than might be won in the course of the evening. But in an instant arose the dreadful suspicion of his being purposely omitted, for Mr. Darcy’s",
+    "output": "a single, objective sentence"
+  },
+  {
+    "instruction": "Please summarize this input in a concise and object manner",
+    "input": "she related the particulars of all the pecuniary transactions in which they had been connected, without actually naming her authority, but stating it to be such as might be relied on. Mrs. Gardiner was surprised and concerned: but as they were now approaching the scene of her former pleasures, every idea gave way to the charm of recollection; and she was too much engaged in pointing out to her husband all the interesting spots in its environs, to think of anything else. Fatigued as she had been by the morning’s walk, they had no sooner dined than she set off",
+    "output": "Mrs. Gardiner's thoughts shifted from financial concerns back to fond memories of her past experiences."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "again. I can remember some expressions which might justly make you hate me.” “The letter shall certainly be burnt, if you believe it essential to the preservation of my regard; but, though we have both reason to think my opinions not entirely unalterable, they are not, I hope, quite so easily changed as that implies.” “When I wrote that letter,” replied Darcy, “I believed myself perfectly calm and cool; but I am since convinced that it was written in a dreadful bitterness of spirit.” “The letter, perhaps, began in bitterness, but it did not end so. The adieu is charity",
+    "output": "Darcy reflects on his past behavior towards Elizabeth Bennet, acknowledging that he may have been overly bitter when writing their initial letters."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "Wickham, and of hearing that he was universally liked. When those dances were over, she returned to Charlotte Lucas, and was in conversation with her, when she found herself suddenly addressed by Mr. Darcy, who took her so much by surprise in his application for her hand, that, without knowing what she did, she accepted him. He walked away again immediately, and she was left to fret over her own want of presence of mind: Charlotte tried to console her. “I dare say you will find him very agreeable.” “Heaven forbid! _That_ would be the greatest misfortune of all! To",
+    "output": "Mr. Darcy unexpectedly proposed marriage to Elizabeth Bennet."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "of tranquillity; for when supper was over, singing was talked of, and she had the mortification of seeing Mary, after very little entreaty, preparing to oblige the company. By many significant looks and silent entreaties did she endeavour to prevent such a proof of complaisance,--but in vain; Mary would not understand them; such an opportunity of exhibiting was delightful to her, and she began her song. Elizabeth’s eyes were fixed on her, with most painful sensations; and she watched her progress through the several stanzas with an impatience which was very ill rewarded at their close; for Mary, on receiving",
+    "output": "Mary begins singing despite Elizabeth's efforts to dissuade her."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "them both. They are not married, nor can I find there was any intention of being so; but if you are willing to perform the engagements which I have ventured to make on your side, I hope it will not be long before they are. All that is required of you is, to assure to your daughter, by settlement, her equal share of the five thousand pounds, secured among your children after the decease of yourself and my sister; and, moreover, to enter into an engagement of allowing her, during your life, one hundred pounds per annum. These are conditions",
+    "output": "I am seeking assurance from Mr. Norris regarding future financial arrangements for his family."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "you were at Lambton? I thought I understood from the Gardiners that you had.” “Yes; he introduced us to his sister.” “And do you like her?” “Very much.” “I have heard, indeed, that she is uncommonly improved within this year or two. When I last saw her, she was not very promising. I am very glad you liked her. I hope she will turn out well.” “I dare say she will; she has got over the most trying age.” “Did you go by the village of Kympton?” “I do not recollect that we did.” “I mention it because it is",
+    "output": "The speaker discusses their acquaintance with someone named Gardiner who seems to know them both."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "himself with coolly replying, that he perceived no other alteration than her being rather tanned,--no miraculous consequence of travelling in the summer. “For my own part,” she rejoined, “I must confess that I never could see any beauty in her. Her face is too thin; her complexion has no brilliancy; and her features are not at all handsome. Her nose wants character; there is nothing marked in its lines. Her teeth are tolerable, but not out of the common way; and as for her eyes, which have sometimes been called so fine, I never could perceive anything extraordinary in them.",
+    "output": "The narrator does not consider Elizabeth to be beautiful."
+  },
+  {
+    "instruction": "You are a summarization bot, please capture the essence of the following text.",
+    "input": "that could come from Pemberley. The present unhappy state of the family rendered any other excuse for the lowness of her spirits unnecessary; nothing, therefore, could be fairly conjectured from _that_,--though Elizabeth, who was by this time tolerably well acquainted with her own feelings, was perfectly aware that, had she known nothing of Darcy, she could have borne the dread of Lydia’s infamy somewhat better. It would have spared her, she thought, one sleepless night out of two. When Mr. Bennet arrived, he had all the appearance of his usual philosophic composure. He said as little as he had ever",
+    "output": "Elizabeth acknowledges the difficulties caused by her knowledge of Darcy's true nature."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "around him and admire, and he was so much struck with the size and furniture of the apartment, that he declared he might almost have supposed himself in the small summer breakfast parlour at Rosings; a comparison that did not at first convey much gratification; but when Mrs. Philips understood from him what Rosings was, and who was its proprietor, when she had listened to the description of only one of Lady Catherine’s drawing-rooms, and found that the chimney-piece alone had cost eight hundred pounds, she felt all the force of the compliment, and would hardly have resented a comparison",
+    "output": "Mrs. Philips is impressed by the grandeur of Lady Catherine's estate after hearing about it."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "sort of happiness which a man would in general wish to owe to his wife; but where other powers of entertainment are wanting, the true philosopher will derive benefit from such as are given. Elizabeth, however, had never been blind to the impropriety of her father’s behaviour as a husband. She had always seen it with pain; but respecting his abilities, and grateful for his affectionate treatment of herself, she endeavoured to forget what she could not overlook, and to banish from her thoughts that continual breach of conjugal obligation and decorum which, in exposing his wife to the contempt",
+    "output": "Elizabeth attempts to reconcile her disapproval of her father's behavior towards her mother with gratitude for their relationship."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "justice, that I am growing every moment more unconcerned and indifferent. Your profusion makes me saving; and if you lament over him much longer, my heart will be as light as a feather.” “Poor Wickham! there is such an expression of goodness in his countenance! such an openness and gentleness in his manner.” “There certainly was some great mismanagement in the education of those two young men. One has got all the goodness, and the other all the appearance of it.” “I never thought Mr. Darcy so deficient in the _appearance_ of it as you used to do.” “And yet",
+    "output": "The speaker expresses concerns about the upbringing of her nephew and cousin."
+  },
+  {
+    "instruction": "Output one or two sentences that summarize the users given input",
+    "input": "to be entailed.” “I am very sensible, madam, of the hardship to my fair cousins, and could say much on the subject, but that I am cautious of appearing forward and precipitate. But I can assure the young ladies that I come prepared to admire them. At present I will not say more, but, perhaps, when we are better acquainted----” He was interrupted by a summons to dinner; and the girls smiled on each other. They were not the only objects of Mr. Collins’s admiration. The hall, the dining-room, and all its furniture, were examined and praised; and his commendation",
+    "output": "Mr. Collins expresses polite admiration for the Bennet family's estate during an initial meeting."
+  },
+  {
+    "instruction": "You are a summarization bot, please capture the essence of the following text.",
+    "input": "not say you will be delighted with her. She is all affability and condescension, and I doubt not but you will be honoured with some portion of her notice when service is over. I have scarcely any hesitation in saying that she will include you and my sister Maria in every invitation with which she honours us during your stay here. Her behaviour to my dear Charlotte is charming. We dine at Rosings twice every week, and are never allowed to walk home. Her Ladyship’s carriage is regularly ordered for us. I _should_ say, one of her Ladyship’s carriages, for",
+    "output": "She plans to invite me and my sister Maria to social events hosted by herself."
+  },
+  {
+    "instruction": "Please summarize this input in a concise and object manner",
+    "input": "had the most generous and forgiving heart in the world, she knew it was a circumstance which must prejudice her against him. “I am certainly the most fortunate creature that ever existed!” cried Jane. “Oh, Lizzy, why am I thus singled from my family, and blessed above them all? If I could but see you as happy! If there were but such another man for you!” “If you were to give me forty such men I never could be so happy as you. Till I have your disposition, your goodness, I never can have your happiness. No, no, let me",
+    "output": "Jane expresses her envy towards Elizabeth's potential relationship with Mr. Darcy."
+  },
+  {
+    "instruction": "Please summarize this input in a concise and object manner",
+    "input": "exposed to all the parading and obsequious civility of her husband. He bore it, however, with admirable calmness. He could even listen to Sir William Lucas, when he complimented him on carrying away the brightest jewel of the country, and expressed his hopes of their all meeting frequently at St. James’s, with very decent composure. If he did shrug his shoulders, it was not till Sir William was out of sight. Mrs. Philips’s vulgarity was another, and, perhaps, a greater tax on his forbearance; and though Mrs. Philips, as well as her sister, stood in too much awe of him",
+    "output": "Mr. Bennet remained composed during interactions with those who flattered or annoyed him."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "My youngest sister has left all her friends--has eloped; has thrown herself into the power of--of Mr. Wickham. They are gone off together from Brighton. _You_ know him too well to doubt the rest. She has no money, no connections, nothing that can tempt him to--she is lost for ever.” Darcy was fixed in astonishment. “When I consider,” she added, in a yet more agitated voice, “that _I_ might have prevented it! _I_ who knew what he was. Had I but explained some part of it only--some part of what I learnt, to my own family! Had his character been",
+    "output": "Darcy's younger sister has run away with Mr. Wickham due to lack of financial or social security."
+  },
+  {
+    "instruction": "Please summarize this input in a concise and object manner",
+    "input": "had believed her wishes to predominate, she began to regret that he came. He had been some time with Mr. Gardiner, who, with two or three other gentlemen from the house, was engaged by the river; and had left him only on learning that the ladies of the family intended a visit to Georgiana that morning. No sooner did he appear, than Elizabeth wisely resolved to be perfectly easy and unembarrassed;--a resolution the more necessary to be made, but perhaps not the more easily kept, because she saw that the suspicions of the whole party were awakened against them, and",
+    "output": "Elizabeth's concerns about her interactions with Darcy are heightened when he arrives unexpectedly at Hunsford."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "want of that cheerfulness which had been used to characterize her style, and which, proceeding from the serenity of a mind at ease with itself, and kindly disposed towards everyone, had been scarcely ever clouded. Elizabeth noticed every sentence conveying the idea of uneasiness, with an attention which it had hardly received on the first perusal. Mr. Darcy’s shameful boast of what misery he had been able to inflict gave her a keener sense of her sister’s sufferings. It was some consolation to think that his visit to Rosings was to end on the day after the next, and a",
+    "output": "Elizabeth notices signs of unease conveyed by Mr. Collins's sentences as she reflects on her sister's suffering due to Mr. Darcy."
+  },
+  {
+    "instruction": "You are a summarization bot, please capture the essence of the following text.",
+    "input": "and life, is a cynic. And in that sense Miss Austen certainly was one. She may even have been one in the further sense that, like her own Mr. Bennet, she took an epicurean delight in dissecting, in displaying, in setting at work her fools and her mean persons. I think she did take this delight, and I do not think at all the worse of her for it as a woman, while she was immensely the better for it as an artist._ _In respect of her art generally, Mr. Goldwin Smith has truly observed that “metaphor has been exhausted",
+    "output": "Miss Austen's writing style often involved dissecting characters to display their flaws."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "youth as the first. And to be kept back on _such_ a motive! I think it would not be very likely to promote sisterly affection or delicacy of mind.” “Upon my word,” said her Ladyship, “you give your opinion very decidedly for so young a person. Pray, what is your age?” “With three younger sisters grown up,” replied Elizabeth, smiling, “your Ladyship can hardly expect me to own it.” Lady Catherine seemed quite astonished at not receiving a direct answer; and Elizabeth suspected herself to be the first creature who had ever dared to trifle with so much dignified impertinence.",
+    "output": "Elizabeth refuses to reveal her true age when asked by Lady Catherine."
+  },
+  {
+    "instruction": "Summarize the paragraph in one sentence:",
+    "input": "she made some slight observation on the dance. He replied, and was again silent. After a pause of some minutes, she addressed him a second time, with-- “It is _your_ turn to say something now, Mr. Darcy. _I_ talked about the dance, and _you_ ought to make some kind of remark on the size of the room, or the number of couples.” He smiled, and assured her that whatever she wished him to say should be said. “Very well; that reply will do for the present. Perhaps, by-and-by, I may observe that private balls are much pleasanter than public ones;",
+    "output": "She suggested he respond to their conversation."
+  },
+  {
+    "instruction": "Summarize the paragraph in one sentence:",
+    "input": "because it is what I have been hoping to receive; and you may be very certain that I shall avail myself of it as soon as possible.” They were all astonished; and Mr. Bennet, who could by no means wish for so speedy a return, immediately said,-- “But is there not danger of Lady Catherine’s disapprobation here, my good sir? You had better neglect your relations than run the risk of offending your patroness.” “My dear sir,” replied Mr. Collins, “I am particularly obliged to you for this friendly caution, and you may depend upon my not taking so material",
+    "output": "Mr. Collins's relatives are advised against visiting him due to potential repercussions from his wealthy patron."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "for resisting every repetition of it. His resentment was in proportion to the distress of his circumstances--and he was doubtless as violent in his abuse of me to others as in his reproaches to myself. After this period, every appearance of acquaintance was dropped. How he lived, I know not. But last summer he was again most painfully obtruded on my notice. I must now mention a circumstance which I would wish to forget myself, and which no obligation less than the present should induce me to unfold to any human being. Having said thus much, I feel no doubt",
+    "output": "The writer's acquaintance has severed ties with them after an argument."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "I let down the side glass next to him, and took off my glove and let my hand just rest upon the window frame, so that he might see the ring, and then I bowed and smiled like anything.” Elizabeth could bear it no longer. She got up and ran out of the room; and returned no more, till she heard them passing through the hall to the dining-parlour. She then joined them soon enough to see Lydia, with anxious parade, walk up to her mother’s right hand, and hear her say to her eldest sister,-- “Ah, Jane, I take",
+    "output": "Elizabeth's cousin Lydia makes an awkward appearance at dinner."
+  },
+  {
+    "instruction": "Provide a critical interpretation of the paragraph in one sentence:",
+    "input": "in the library.” She was gone directly. Her father was walking about the room, looking grave and anxious. “Lizzy,” said he, “what are you doing? Are you out of your senses to be accepting this man? Have not you always hated him?” How earnestly did she then wish that her former opinions had been more reasonable, her expressions more moderate! It would have spared her from explanations and professions which it was exceedingly awkward to give; but they were now necessary, and she assured him, with some confusion, of her attachment to Mr. Darcy. “Or, in other words, you are",
+    "output": "She is explaining her engagement to her father despite having previously disliked Mr. Darcy."
+  },
+  {
+    "instruction": "Highlight the central theme of the paragraph in one sentence:",
+    "input": "expect to excel, if she does not practise a great deal.” “I assure you, madam,” he replied, “that she does not need such advice. She practises very constantly.” “So much the better. It cannot be done too much; and when I next write to her, I shall charge her not to neglect it on any account. I often tell young ladies, that no excellence in music is to be acquired without constant practice. I have told Miss Bennet several times, that she will never play really well, unless she practises more; and though Mrs. Collins has no instrument, she is",
+    "output": "He advises a girl who already practices frequently to continue practicing even further."
+  },
+  {
+    "instruction": "Summarize the paragraph in one sentence:",
+    "input": "two unfeeling sisters, and of his overpowering friend, assisted by the attractions of Miss Darcy and the amusements of London, might be too much, she feared, for the strength of his attachment. As for Jane, _her_ anxiety under this suspense was, of course, more painful than Elizabeth’s: but whatever she felt she was desirous of concealing; and between herself and Elizabeth, therefore, the subject was never alluded to. But as no such delicacy restrained her mother, an hour seldom passed in which she did not talk of Bingley, express her impatience for his arrival, or even require Jane to confess",
+    "output": "The anxiety surrounding Mr. Bingley's intentions weighed heavily on both Jane and Elizabeth."
+  },
+  {
+    "instruction": "Explain the main idea of the paragraph concisely in one sentence",
+    "input": "as she walked up and down the room, endeavouring to compose herself, saw such looks of inquiring surprise in her uncle and aunt as made everything worse. Miss Darcy and her brother appeared, and this formidable introduction took place. With astonishment did Elizabeth see that her new acquaintance was at least as much embarrassed as herself. Since her being at Lambton, she had heard that Miss Darcy was exceedingly proud; but the observation of a very few minutes convinced her that she was only exceedingly shy. She found it difficult to obtain even a word from her beyond a monosyllable.",
+    "output": "Elizabeth observes that Miss Darcy is initially awkward and hesitant in their meeting."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "sentiments of either, I had detached Mr. Bingley from your sister,--and the other, that I had, in defiance of various claims, in defiance of honour and humanity, ruined the immediate prosperity and blasted the prospects of Mr. Wickham. Wilfully and wantonly to have thrown off the companion of my youth, the acknowledged favourite of my father, a young man who had scarcely any other dependence than on our patronage, and who had been brought up to expect its exertion, would be a depravity, to which the separation of two young persons whose affection could be the growth of only a",
+    "output": "I am guilty of detaching Mr. Bingley from Jane Bennet and ruining the life of George Wickham."
+  },
+  {
+    "instruction": "Paraphrase the paragraph to convey the same meaning in simpler words:",
+    "input": "the ladies.” “I daresay you believed it; but I am by no means convinced that you would be gone with such celerity. Your conduct would be quite as dependent on chance as that of any man I know; and if, as you were mounting your horse, a friend were to say, ‘Bingley, you had better stay till next week,’ you would probably do it--you would probably not go--and, at another word, might stay a month.” “You have only proved by this,” cried Elizabeth, “that Mr. Bingley did not do justice to his own disposition. You have shown him off now",
+    "output": "Elizabeth argues that Darcy's statement about her behavior is unjustified."
+  }
+]

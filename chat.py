@@ -43,7 +43,13 @@ def create_chat_interface():
                 label="Select Model",
                 interactive=True,
                 scale=3
-            )          
+            )
+            model_search = gr.Textbox(
+                placeholder="Search for a model",
+                label="Search",
+                interactive=True,
+                scale=1
+            )                      
         # Chat History
         chatbot = gr.Chatbot(
             height=400,
@@ -160,6 +166,7 @@ def create_chat_interface():
     # Components dictionary
     return {
         'chatbot': chatbot,
+        'model_search': model_search,
         'msg': msg,
         'image_input': image_input,
         'temperature': temperature,

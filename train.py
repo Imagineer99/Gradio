@@ -23,20 +23,34 @@ def create_train_interface():
                 value="unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit",
                 label="Select Model",
                 interactive=True,
-                scale=3
+                scale=3,
             )
+            with gr.Row():
+                hf_token = gr.Textbox(
+                    placeholder="Enter your token",
+                    label="Hugging Face Token",
+                    type="password",
+                    interactive=True,
+                    elem_classes="token-input",
+                )
+                paste_btn = gr.Button(
+                    "📋 Paste",
+                    scale=1,
+                    variant="primary",
+                    size="sm",
+                )
             model_search = gr.Textbox(
                 placeholder="Search for a model",
                 label="Search",
                 interactive=True,
-                scale=1
+                scale=1,
             )
             load_4bit = gr.Checkbox(
                 value=True,
                 label="Load in 4-bit",
                 info="Enable 4-bit quantization to reduce memory usage. Recommended for most cases.",
                 interactive=True,
-                scale=1
+                scale=1,
             )
 
     # Main Layout
@@ -48,6 +62,7 @@ def create_train_interface():
                 "Upload JSON, CSV or Excel",
                 variant="secondary",
                 elem_classes=["upload-button"],
+                file_types=[".json", ".csv", ".xlsx", ".xls"]
             )
             input_text = gr.Textbox(
                 placeholder="Type dataset from 🤗",
@@ -76,19 +91,24 @@ def create_train_interface():
                 interactive=True,
                 scale=3
             )
-        
+            # Scan for local JSON datasets
+            def get_json_datasets():
+                import glob
+                import os
+                json_files = glob.glob("datasets/*.json")  # Adjust path as needed
+                return [os.path.basename(f) for f in json_files]
+
+            local_datasets = gr.Dropdown(
+                choices=get_json_datasets(),
+                label="Local Datasets",
+                info="Select one or more JSON datasets to combine",
+                multiselect=True,
+                interactive=True,
+            )        
         # Parameters Card
         with gr.Column(elem_classes=["card"], scale=1) as basic_params:
             gr.Markdown("## Training Parameters")
             with gr.Column():
-                learning_rate = gr.Dropdown(
-                    choices=["1e-5", "2e-5", "5e-5", "1e-4", "2e-4", "5e-4", "1e-3"],
-                    value="5e-5",
-                    label="Learning rate",
-                    info="Controls how much the model adjusts its weights during training.",
-                    allow_custom_value=True,
-                    interactive=True
-                )
                 num_epochs = gr.Slider(
                     minimum=1, maximum=20,
                     value=4,
@@ -140,7 +160,7 @@ def create_train_interface():
                     info="Specifies which model layers to apply LoRA fine-tuning to",
                     multiselect=True,
                     interactive=True
-                )
+                )             
                 lora_r = gr.Slider(
                     minimum=1, maximum=128, value=16,
                     label="LoRA rank (r)",
@@ -182,17 +202,18 @@ def create_train_interface():
          # Training Optimization       
             with gr.Column(scale=1):
                 gr.Markdown("### Training Optimization")
+                learning_rate = gr.Dropdown(
+                    choices=["1e-5", "2e-5", "5e-5", "1e-4", "2e-4", "5e-4", "1e-3"],
+                    value="5e-5",
+                    label="Learning rate",
+                    info="Controls how much the model adjusts its weights during training.",
+                    allow_custom_value=True,
+                    interactive=True
+                )                   
                 weight_decay = gr.Slider(
                     minimum=0, maximum=0.1, value=0.01, 
                     label="Weight Decay",
                     info="Regularization technique that reduces model complexity by penalizing large weights",
-                    interactive=True
-                )
-                random_seed = gr.Number(
-                    value=3407,
-                    label="Random Seed",
-                    info="Controls randomness in training for reproducible results",
-                    precision=0,
                     interactive=True
                 )
                 batch_size = gr.Slider(
@@ -238,13 +259,20 @@ def create_train_interface():
                     info="Name of the column in your dataset that contains the text to train on",
                     interactive=True
                 )
+                random_seed = gr.Number(
+                    value=3407,
+                    label="Random Seed",
+                    info="Controls randomness in training for reproducible results",
+                    precision=0,
+                    interactive=True
+                )
                 packing = gr.Checkbox(
                     value=False,
                     label="Enable Sequence Packing",
                     info="Optimizes memory usage by combining multiple sequences into single training examples",
                     interactive=True
                 )
-
+                
     # Start Training Button
     with gr.Row(elem_classes=["footer"]):
         start_btn = gr.Button(
@@ -274,11 +302,91 @@ def create_train_interface():
         outputs=[advanced_params, mode_advanced, mode_basic, basic_params]
     )
 
+    # Paste HF token
+    def paste_token():
+        import pyperclip
+        return pyperclip.paste()
+
+    paste_btn.click(
+        fn=paste_token,
+        outputs=hf_token,
+    )
+
+    # Handle file upload
+    def handle_file_upload(file, current_selection):
+        import os
+        import json
+        import pandas as pd
+        
+        # Create datasets directory if it doesn't exist
+        os.makedirs('datasets', exist_ok=True)
+        
+        save_path = os.path.join('datasets', os.path.basename(file.name))
+        
+        try:
+            file_ext = file.name.lower().split('.')[-1]
+            if file_ext == 'json':
+                # Read the file line by line to handle JSONL format
+                with open(file.name, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    try:
+                        # Try parsing as single JSON object
+                        data = json.loads(content)
+                    except json.JSONDecodeError:
+                        # If that fails, parsing as JSONL
+                        try:
+                            data = [json.loads(line) for line in content.splitlines() if line.strip()]
+                        except json.JSONDecodeError as e:
+                            return gr.Warning(f"Invalid JSON format. Please ensure your file is valid JSON or JSONL. Error: {str(e)}")
+                
+                # Save the processed data
+                with open(save_path, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, ensure_ascii=False, indent=2)
+                
+            elif file_ext in ['csv', 'xlsx', 'xls']:
+                if file_ext in ['xlsx', 'xls']:
+                    df = pd.read_excel(file.name)
+                    df.to_excel(save_path, index=False)
+                else:
+                    df = pd.read_csv(file.name)
+                    df.to_csv(save_path, index=False)
+            
+            # Get new filename and all dataset choices
+            new_filename = os.path.basename(save_path)
+            choices = get_json_datasets()
+            
+            # Handle current selection
+            if current_selection is None:
+                current_selection = []
+            elif isinstance(current_selection, str):
+                current_selection = [current_selection]
+            
+            # Add new file to selection if not already present
+            if new_filename not in current_selection:
+                updated_selection = current_selection + [new_filename]
+            else:
+                updated_selection = current_selection
+            
+            # Return updated choices and combined selection
+            return gr.update(choices=choices, value=updated_selection)
+            
+        except Exception as e:
+            return gr.Warning(f"Error uploading file: {str(e)}")
+
+    # Update the upload event handler to include current selection
+    upload_btn.upload(
+        fn=handle_file_upload,
+        inputs=[upload_btn, local_datasets],
+        outputs=local_datasets
+    )
+
     # Components dictionary
     return {
         'model_dropdown': model_dropdown,
         'model_search': model_search,
         'load_4bit': load_4bit,
+        'hf_token' : hf_token,
+        'local_datasets' : local_datasets,
         'learning_rate': learning_rate,
         'num_epochs': num_epochs,
         'loss_plot': loss_plot,
@@ -302,5 +410,5 @@ def create_train_interface():
         'gradient_checkpointing': gradient_checkpointing,
         'use_rslora': use_rslora,
         'use_loftq': use_loftq,
-        'max_seq_length': max_seq_length
+        'max_seq_length': max_seq_length,
     } 
