@@ -104,7 +104,12 @@ def create_train_interface():
                 info="Select one or more JSON datasets to combine",
                 multiselect=True,
                 interactive=True,
-            )        
+            )
+            combine_btn = gr.Button(
+                "🔄 Combine Datasets",
+                variant="secondary",
+                elem_classes=["combine-datasets-btn"],
+            )
         # Parameters Card
         with gr.Column(elem_classes=["card"], scale=1) as basic_params:
             gr.Markdown("## Training Parameters")
@@ -130,6 +135,12 @@ def create_train_interface():
             loss_plot = gr.Plot(
                 label="Training Loss",
                 show_label=True,
+            )
+            stop_btn = gr.Button(
+                "⬛ Stop training",
+                variant="stop",
+                elem_classes=["gr-button", "stop-finetune-btn"],
+                interactive=False  # Initially disabled
             )
 
     # Advanced Mode Toggle
@@ -198,8 +209,14 @@ def create_train_interface():
                     info="Quantization method that improves memory efficiency of LoRA",
                     interactive=True
                 )
+                train_on_completions = gr.Checkbox(
+                    value=False,
+                    label="Train on completions",
+                    info="Only train on the assistant outputs",
+                    interactive=True
+                )
 
-         # Training Optimization       
+            # Training Optimization       
             with gr.Column(scale=1):
                 gr.Markdown("### Training Optimization")
                 learning_rate = gr.Dropdown(
@@ -272,16 +289,105 @@ def create_train_interface():
                     info="Optimizes memory usage by combining multiple sequences into single training examples",
                     interactive=True
                 )
+
+            # Add Logging Settings column
+            with gr.Column(scale=1):
+                gr.Markdown("### Logging & Monitoring")
                 
-    # Start Training Button
+                # Weights & Biases Section
+                gr.Markdown("#### Weights & Biases")
+                enable_wandb = gr.Checkbox(
+                    value=False,
+                    label="Enable W&B Logging",
+                    info="Enable logging to Weights & Biases platform",
+                    interactive=True
+                )
+                with gr.Column():
+                    wandb_token = gr.Textbox(
+                        placeholder="Enter your W&B API token",
+                        label="W&B API Token",
+                        type="password",
+                        interactive=True,
+                        visible=False
+                    )
+                    wandb_paste_btn = gr.Button(
+                        "📋 Paste",
+                        scale=1,
+                        variant="primary",
+                        size="sm",
+                        visible=False
+                    )
+                wandb_project = gr.Textbox(
+                    value="llm-finetuning",
+                    label="W&B Project Name",
+                    info="Name of the project in W&B",
+                    interactive=True,
+                    visible=False
+                )
+
+                # TensorBoard Section
+                gr.Markdown("#### TensorBoard")
+                enable_tensorboard = gr.Checkbox(
+                    value=False,
+                    label="Enable TensorBoard",
+                    info="Enable logging to TensorBoard",
+                    interactive=True
+                )
+                with gr.Column(visible=False) as tensorboard_settings:
+                    tensorboard_dir = gr.Textbox(
+                        value="runs",
+                        label="TensorBoard Log Directory",
+                        info="Directory where TensorBoard logs will be saved",
+                        interactive=True
+                    )
+                    log_frequency = gr.Number(
+                        value=10,
+                        label="Logging Frequency",
+                        info="Log metrics every N steps",
+                        precision=0,
+                        interactive=True
+                    )
+
+                # Update visibility toggles for both logging systems
+                def toggle_wandb_fields(enable):
+                    return {
+                        wandb_token: gr.update(visible=enable),
+                        wandb_paste_btn: gr.update(visible=enable),
+                        wandb_project: gr.update(visible=enable)
+                    }
+
+                def toggle_tensorboard_fields(enable):
+                    return {
+                        tensorboard_settings: gr.update(visible=enable)
+                    }
+
+                enable_wandb.change(
+                    fn=toggle_wandb_fields,
+                    inputs=[enable_wandb],
+                    outputs=[wandb_token, wandb_paste_btn, wandb_project]
+                )
+
+                enable_tensorboard.change(
+                    fn=toggle_tensorboard_fields,
+                    inputs=[enable_tensorboard],
+                    outputs=[tensorboard_settings]
+                )
+
+    # Start and Stop Training Buttons
     with gr.Row(elem_classes=["footer"]):
         start_btn = gr.Button(
             "♡ Start finetuning",
             variant="primary",
             elem_classes=["gr-button", "start-finetune-btn"],
+            interactive=True  # Initially enabled
         )
 
     # Event Handlers
+    # Define paste_token function first
+    def paste_token():
+        import pyperclip
+        return pyperclip.paste()
+
     def toggle_advanced_mode(advanced: bool):
         return [
             gr.update(visible=advanced),
@@ -289,12 +395,14 @@ def create_train_interface():
             gr.update(variant="secondary" if advanced else "primary"),
             gr.update(visible=True)
         ]
+
     # Toggle basic mode
     mode_basic.click(
         toggle_advanced_mode,
         inputs=[gr.State(False)],
         outputs=[advanced_params, mode_advanced, mode_basic, basic_params]
     )
+    
     # Toggle advanced mode
     mode_advanced.click(
         toggle_advanced_mode,
@@ -303,13 +411,15 @@ def create_train_interface():
     )
 
     # Paste HF token
-    def paste_token():
-        import pyperclip
-        return pyperclip.paste()
-
     paste_btn.click(
         fn=paste_token,
         outputs=hf_token,
+    )
+
+    # Add paste handler for W&B token
+    wandb_paste_btn.click(
+        fn=paste_token,
+        outputs=wandb_token,
     )
 
     # Handle file upload
@@ -380,6 +490,23 @@ def create_train_interface():
         outputs=local_datasets
     )
 
+    # Update the toggle function
+    def toggle_training_buttons(is_training):
+        return {
+            start_btn: gr.update(interactive=not is_training),
+            stop_btn: gr.update(interactive=is_training)
+        }
+
+    start_btn.click(
+        fn=lambda: toggle_training_buttons(True),
+        outputs=[start_btn, stop_btn]
+    )
+
+    stop_btn.click(
+        fn=lambda: toggle_training_buttons(False),
+        outputs=[start_btn, stop_btn]
+    )
+
     # Components dictionary
     return {
         'model_dropdown': model_dropdown,
@@ -410,5 +537,14 @@ def create_train_interface():
         'gradient_checkpointing': gradient_checkpointing,
         'use_rslora': use_rslora,
         'use_loftq': use_loftq,
+        'train_on_completions': train_on_completions, 
         'max_seq_length': max_seq_length,
+        'enable_wandb': enable_wandb,
+        'wandb_token': wandb_token,
+        'wandb_project': wandb_project,
+        'enable_tensorboard': enable_tensorboard,
+        'tensorboard_dir': tensorboard_dir,
+        'log_frequency': log_frequency,
+        'combine_btn': combine_btn,
+        'stop_btn': stop_btn,
     } 
