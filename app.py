@@ -4,6 +4,7 @@ import os
 # Pages
 from train import create_train_interface
 from chat import create_chat_interface
+from export import create_export_interface
 
 # CSS loading
 def load_css():
@@ -68,24 +69,34 @@ with gr.Blocks(
         
         with gr.Column(visible=False) as chat_tab:
             chat_components = create_chat_interface()
+        
+        with gr.Column(visible=False) as export_tab:
+            export_components = create_export_interface()
 
     # Tab switching
     def switch_to_chat():
-        return gr.update(visible=False), gr.update(visible=True)
+        return gr.update(visible=False), gr.update(visible=True), gr.update(visible=False)
 
     def switch_to_train():
-        return gr.update(visible=True), gr.update(visible=False)
+        return gr.update(visible=True), gr.update(visible=False), gr.update(visible=False)
     
-    # Chat button
+    def switch_to_export():
+        return gr.update(visible=False), gr.update(visible=False), gr.update(visible=True)
+
+    # Click handlers
     nav_chat.click(
         switch_to_chat,
-        outputs=[train_tab, chat_tab]
+        outputs=[train_tab, chat_tab, export_tab]
     )
 
-    # Train button
     nav_train.click(
         switch_to_train,
-        outputs=[train_tab, chat_tab]
+        outputs=[train_tab, chat_tab, export_tab]
+    )
+
+    nav_export.click(
+        switch_to_export,
+        outputs=[train_tab, chat_tab, export_tab]
     )
 
     # Add theme toggle function
