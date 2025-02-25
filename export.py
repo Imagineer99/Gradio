@@ -29,6 +29,7 @@ def create_export_interface():
                 choices=[
                     "16-bit (FP16)",
                     "4-bit (INT4)",
+                    "GGUF",
                 ],
                 value="16-bit (FP16)",
                 label="Model Format",
@@ -36,6 +37,30 @@ def create_export_interface():
                 interactive=True,
             )
             
+            # GGUF Options (initially hidden)
+            with gr.Group(visible=False) as gguf_group:
+                gguf_quant = gr.Radio(
+                    choices=[
+                        "Q4_K_M",
+                        "Q4_0",
+                        "Q5_K_M",
+                        "Q5_0",
+                        "Q8_0",
+                    ],
+                    value="Q4_K_M",
+                    label="GGUF Quantization",
+                    info="Choose GGUF quantization method",
+                    interactive=True,
+                )
+                context_length = gr.Slider(
+                    minimum=512,
+                    maximum=32768,
+                    value=4096,
+                    step=512,
+                    label="Context Length",
+                    info="Maximum sequence length for GGUF model",
+                    interactive=True,
+                )            
             # Export Destinations
             gr.Markdown("### Export Destinations")
             with gr.Row():
@@ -120,7 +145,7 @@ def create_export_interface():
                 - ✅ customer-support-bot → Hugging Face Hub (1 hour ago)
             """)
 
-    # Add visibility toggles
+    # Visibility toggles
     push_to_hub.change(
         fn=lambda x: gr.update(visible=x),
         inputs=[push_to_hub],
@@ -133,10 +158,17 @@ def create_export_interface():
         outputs=[ollama_group]
     )
     
-    # Add paste button handler
+    # Paste button handler
     paste_btn.click(
         fn=lambda: gr.update(value=get_clipboard_content()),
         outputs=[hub_token]
+    )
+
+    # GGUF visibility toggle
+    merge_format.change(
+        fn=lambda x: gr.update(visible=("GGUF" in x)),
+        inputs=[merge_format],
+        outputs=[gguf_group]
     )
 
     # Components dictionary
@@ -144,6 +176,8 @@ def create_export_interface():
         'export_interface': export_interface,
         'export_type': export_type,
         'merge_format': merge_format,
+        'gguf_quant': gguf_quant,
+        'context_length': context_length,
         'local_save': local_save,
         'push_to_hub': push_to_hub,
         'push_to_ollama': push_to_ollama,

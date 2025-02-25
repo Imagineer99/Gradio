@@ -58,12 +58,6 @@ def create_train_interface():
         # Dataset Card
         with gr.Column(elem_classes=["card"], scale=1):
             gr.Markdown("## Training Dataset")
-            upload_btn = gr.UploadButton(
-                "Upload JSON, CSV or Excel",
-                variant="secondary",
-                elem_classes=["upload-button"],
-                file_types=[".json", ".csv", ".xlsx", ".xls"]
-            )
             input_text = gr.Textbox(
                 placeholder="Type dataset from 🤗",
                 label="HuggingFace Dataset",
@@ -72,6 +66,7 @@ def create_train_interface():
             data_template = gr.Dropdown(
                 choices=[
                     "Alpaca",
+                    "Auto-Select",
                     "ShareGPT",
                     "OpenAssistant",
                     "Anthropic Claude",
@@ -86,7 +81,7 @@ def create_train_interface():
                     "LIMA",
                     "Custom"  # For user-defined formats
                 ],
-                value="Alpaca",
+                value="Auto-Select",
                 label="Select Dataset Template",
                 interactive=True,
                 scale=3
@@ -105,6 +100,12 @@ def create_train_interface():
                 multiselect=True,
                 interactive=True,
             )
+            upload_btn = gr.UploadButton(
+                "Upload JSON, CSV or Excel",
+                variant="secondary",
+                elem_classes=["upload-button"],
+                file_types=[".json", ".csv", ".xlsx", ".xls"]
+            )            
             combine_btn = gr.Button(
                 "🔄 Combine Datasets",
                 variant="secondary",

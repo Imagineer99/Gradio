@@ -10,7 +10,7 @@ from export import create_export_interface
 def load_css():
     try:
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        css_path = os.path.join(base_dir, "static", "styles.css")
+        css_path = os.path.join(base_dir, "static", "style.css")
         print(f"Looking for CSS at: {css_path}")
         
         with open(css_path, 'r', encoding='utf-8') as f:
@@ -25,7 +25,6 @@ with gr.Blocks(
     css=css_content,
     title="unsloth - Fast and Easy LLM Finetuning",
     analytics_enabled=False,
-
 ) as demo: 
     # Meta tags for social media
     gr.HTML("""
@@ -58,9 +57,9 @@ with gr.Blocks(
                 nav_export = gr.Button("Export", elem_classes=["lg", "secondary", "nav-export-btn", "nav-button"])
         # Light/dark theme toggle
         with gr.Column(scale=2):
-            gr.Row(elem_classes=["theme-toggle-spacer"])  # Added spacer
+            gr.Row(elem_classes=["theme-toggle-spacer"])
             with gr.Row(elem_classes=["theme-toggle-container"]):
-                theme_toggle = gr.Button("Dark", elem_classes=["theme-toggle-btn"])
+                theme_toggle = gr.Button("☀️ Light", elem_id="theme-toggle-btn", elem_classes=["theme-toggle-btn"])
 
     # Main Content
     with gr.Column(elem_classes=["main-container"]):
@@ -99,14 +98,28 @@ with gr.Blocks(
         outputs=[train_tab, chat_tab, export_tab]
     )
 
-    # Add theme toggle function
+    # Modify the toggle_theme function
     def toggle_theme(btn_text):
-        return "Dark" if btn_text == "Light" else "Light"
-    
+        is_dark = "🌙 Dark" in btn_text
+        new_text = "☀️ Light" if is_dark else "🌙 Dark"
+        debug_msg = f"Button clicked! Changed from '{btn_text}' to '{new_text}'"
+        print(debug_msg)
+        return new_text, debug_msg
+
+    # Click handler - JavaScript
     theme_toggle.click(
-        toggle_theme,
+        fn=None,  # No Python function
         inputs=[theme_toggle],
-        outputs=[theme_toggle]
+        outputs=[theme_toggle],
+        js="(btn_text) => { \
+            const isLight = btn_text.includes('☀️ Light'); \
+            const newTheme = isLight ? 'dark' : 'light'; \
+            const newText = isLight ? '🌙 Dark' : '☀️ Light'; \
+            document.documentElement.setAttribute('data-theme', newTheme); \
+            document.body.setAttribute('data-theme', newTheme); \
+            console.log('Theme set to:', newTheme); \
+            return [newText, 'Theme changed to: ' + newTheme]; \
+        }"
     )
 
     # Launch the interface
@@ -116,5 +129,5 @@ if __name__ == "__main__":
         server_port=8000,
         server_name="0.0.0.0",
         favicon_path="assets/favicon-32x32.png",
+        pwa=True,
     )
-    

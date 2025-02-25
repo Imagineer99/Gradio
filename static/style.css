@@ -1,519 +1,140 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+/* make sure everything is !important */
+
+/* Default theme (light) */
+:root {
+    --background-primary: #ffffff !important;
+    --background-secondary: #f3f4f6 !important;
+    --text-primary: #1f2937 !important;
+    --text-secondary: #4b5563 !important;
+    --border-color: #e5e7eb !important;
+    --accent-color: #2563eb !important;
+    --shadow-color: rgba(0, 0, 0, 0.1) !important;
+    --hover-color: rgba(37, 99, 235, 0.1);
+    --body-background-fill: transparent !important;
+    --body-background: #ffffff !important;
+    --block-background-fill: #ffffff !important;
+}
+
+/* Enhanced dark theme */
+[data-theme="dark"] {
+    --background-primary: #0a0a0a !important;
+    --background-secondary: #1a1a1a !important;
+    --text-primary: #f3f4f6 !important;
+    --text-secondary: #9ca3af !important;
+    --border-color: #333333 !important;
+    --accent-color: #60a5fa !important;
+    --shadow-color: rgba(0, 0, 0, 0.3) !important;
+    --hover-color: rgba(96, 165, 250, 0.2) !important;
+    --body-background-fill: transparent !important;
+    --body-background: #0a0a0a !important;
+    --block-background-fill: #0a0a0a !important;
+}
+
+/* Apply theme variables */
+body {
+    background-color: var(--body-background) !important;
+    color: var(--text-primary);
+}
+
+.theme-toggle-btn {
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    background: var(--background-secondary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 2px 4px var(--shadow-color) !important;
+    transition: all 0.2s ease !important;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 4px 8px var(--shadow-color) !important;
+    background-color: var(--hover-color) !important;
+}
 
 /* Debug style to verify CSS loading */
 body::before {
-    content: 'CSS Loaded';
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: #10b981;
-    color: white;
-    padding: 4px 8px;
-    font-size: 12px;
-    z-index: 9999;
+    content: 'CSS Loaded'!important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    background: #10b981 !important;
+    color: white !important;
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+    z-index: 9999 !important;
     display: none; /* Change to block to debug */
 }
 
-/* Base styles */
-:root {
-    /*type scale */
-    --scale-xxl: 2rem;    /* 32px */
-    --scale-xl: 1.5rem;   /* 24px */
-    --scale-lg: 1.25rem;  /* 20px */
-    --scale-md: 1rem;     /* 16px */
-    --scale-sm: 0.875rem; /* 14px */
-    
-    /*spacing units */
-    --space-xxl: 3rem;    /* 48px */
-    --space-xl: 2rem;     /* 32px */
-    --space-lg: 1.5rem;   /* 24px */
-    --space-md: 1rem;     /* 16px */
-    --space-sm: 0.5rem;   /* 8px */
-    
-    /*color system */
-    --primary-900: #0B815C;
-    --primary-800: #0D9B6F;
-    --primary-700: #10B981; 
-    --primary-600: #34D399;
-    --primary-500: #55b685;
-    
-    --neutral-900: #111827;
-    --neutral-800: #1F2937;
-    --neutral-700: #374151;
-    --neutral-600: #4B5563;
-    --neutral-500: #6B7280;
-    
-    /*border radius scale */
-    --radius-sm: 0.5rem;   /* 8px */
-    --radius-md: 0.75rem;  /* 12px */
-    --radius-lg: 1rem;     /* 16px */
-    --radius-xl: 1.25rem;  /* 20px */
-    --radius-full: 9999px;
-}
-body {
-	background-color: #f9fafb;
-	font-family: 'Inter', sans-serif;
-}
-/* Container styling */
-#gradio-app, .gradio-app, [class*="gradio-container"] {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 0 1rem !important;
-}
-/* Header */
-.header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 2rem;
-}
-/* Navigation buttons */
-.lg.primary, .lg.secondary {
-	padding: 6px 16px !important;
-	border-radius: var(--radius-xl) !important;
-	border: none !important;
-	background: transparent !important;
-	cursor: pointer !important;
-	color: #111827 !important;
-	font-weight: 500 !important;
-	transition: all 0.2s ease !important;
-}
-.lg.secondary:hover {
-	background: rgba(0, 0, 0, 0.05) !important;
-}
-.lg.primary {
-	background: white !important;
-}
-/* Cards */
-#gradio-app .card,
-[class*="gradio-container"] .card {
-	background: white !important;
-	border-radius: var(--radius-lg) !important;
-	padding: 1rem !important;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-	min-height: 300px !important;
-}
-/*Gradio's visibility states */
-.card.hide {
-	display: none !important;
-}
-.card:not(.hide) {
-	display: flex !important;
-	flex-direction: column !important;
-}
-/* Override inline display:none style */
-.card[style*="display: none"],
-.card.hide[style*="display"],
-.gradio-container .card[style*="display: none"] {
-	display: none !important;
-}
-/* Model selector */
-.gr-dropdown {
-	background: #111827 !important;
-	color: white !important;
-	padding: 0.75rem 1rem !important;
-	border-radius: var(--radius-sm) !important;
-	border: none !important;
-	width: 100% !important;
-}
-/* Search input */
-.gr-textbox {
-	width: 100% !important;
-	padding: 0.75rem 1rem 0.75rem 2.5rem !important;
-	border: 1px solid #e5e7eb !important;
-	border-radius: var(--radius-sm) !important;
-	background: white !important;
-}
-/* Parameter sliders */
-.gr-slider {
-	width: 100% !important;
-	height: 0.5rem !important;
-	background: #e5e7eb !important;
-	border-radius: var(--radius-full) !important;
-	--slider-color: #10b981 !important;
-}
-.gr-slider-handle {
-	background: #10b981 !important;
-	border-radius: 50% !important;
-	height: 1rem !important;
-	width: 1rem !important;
-}
-/* Start button */
-.start-button {
-	width: 100% !important;
-	padding: 0.75rem !important;
-	background: #f8faf9 !important;
-	color: #111827 !important;
-	border-radius: var(--radius-xl) !important;
-	border: 1px solid #e5e7eb !important;
-	font-weight: 500 !important;
-	transition: all 0.2s ease !important;
-}
-.start-button:hover {
-	background: white !important;
-	transform: translateY(-1px) !important;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
-}
-/* Theme toggle */
-.theme-toggle {
-	padding: 8px !important;
-	border-radius: 50% !important;
-	background: #f8faf9 !important;
-	border: 1px solid #e5e7eb !important;
-	color: #6b7280 !important;
-	transition: all 0.2s ease !important;
-}
-.theme-toggle:hover {
-	background: white !important;
-	transform: translateY(-1px) !important;
-}
-/* Headers */
-.gr-markdown h1 {
-	font-size: 1.5rem !important;
-	font-weight: 600 !important;
-	color: #111827 !important;
-	margin-bottom: 1rem !important;
-	margin-top: 0.5rem !important;
-}
-.gr-markdown h3 {
-	font-size: 1.125rem !important;
-	font-weight: 600 !important;
-	color: #111827 !important;
-	margin-bottom: 1rem !important;
-}
-/* Labels */
-.gr-label {
-	font-size: 0.875rem !important;
-	color: #6b7280 !important;
-	margin-bottom: 0.5rem !important;
-}
-/* Upload button */
-.upload-button {
-	width: 100% !important;
-	padding: 0.75rem !important;
-	border: 1px dashed #e5e7eb !important;
-	border-radius: var(--radius-sm) !important;
-	background: white !important;
-	color: #6b7280 !important;
-}
-.primary.svelte-5st68j {
-	background: #f8faf9 !important;
-	border: 1px solid #e5e7eb !important;
-	transition: all 0.2s ease !important;
-}
-.primary.svelte-5st68j:hover {
-	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1),-2px -2px 4px rgba(255, 255, 255, 0.8) !important;
-	transform: translateY(1px) !important;
-}
-.primary.svelte-5st68j:active {
-	box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1),inset -2px -2px 4px rgba(255, 255, 255, 0.8) !important;
-	transform: translateY(2px) !important;
-}
-/* Logo styling */
-.logo-container {
-	display: flex !important;
-	align-items: center !important;
-	justify-content: flex-start !important;
-	height: 40px !important;
-	gap: 10px !important;
-	margin: 0 !important;
-}
-.logo-container img {
-	height: 100% !important;
-	width: auto !important;
-	object-fit: contain !important;
-}
-.logo-container h1 {
-	margin: 0 !important;
-	font-size: 1.75rem !important;
-	font-weight: 600 !important;
-	color: #111827 !important;
-	font-family: Hellix, sans-serif !important;
-}
-/* Hide icon buttons for logo */
-.logo-container .icon-button-wrapper {
-	display: none !important;
-}
-.image-container.svelte-dpdy90.svelte-dpdy90 {
-	height: 100%;
-	position: relative;
-	min-width: var(--size-20);
-	margin-top: 10px !important;
-	margin-left: 60px !important;
-}
-.image-frame.svelte-dpdy90.svelte-dpdy90 {
-	width: 75%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-.gradio-container-5-14-0 .prose :last-child {
-	margin-bottom: 0 !important;
-	margin-top: 50px;
-}
-.gradio-container.gradio-container-5-14-0 .contain .logo-container h1 {
-	margin: 0px !important;
-	font-size: 1.95rem !important;
-	font-weight: 600 !important;
-	color: rgb(17, 24, 39) !important;
-	font-family: Hellix, sans-serif !important;
-	margin-top: 25px !important;
-}
-.gradio-container.gradio-container-5-14-0 .contain .gr-button-row {
-	background: rgb(248, 250, 249) !important;
-	border-radius: 24px !important;
-	padding: 4px !important;
-	display: inline-flex !important;
-	border: 1px solid rgb(229, 231, 235) !important;
-	gap: 4px !important;
-	margin-top: 0 !important;
-}
-.gr-button-row {
-	background: transparent !important;
-	border: none !important;
-}
-.gr-button-row button {
-	background: transparent !important;
-	border: none !important;
-}
-.gradio-container.gradio-container-5-14-0 .contain .image-container.svelte-dpdy90.svelte-dpdy90 {
-	height: 100%;
-	position: relative;
-	min-width: var(--size-20);
-	margin-top: 25px !important;
-	margin-left: 60px !important;
-}
-.gradio-container.gradio-container-5-14-0 .contain .gr-button-row {
-	background: rgb(248, 250, 249) !important;
-	border-radius: 24px !important;
-	padding: 4px !important;
-	display: inline-flex !important;
-	border: 1px solid rgb(229, 231, 235) !important;
-	gap: 4px !important;
-	margin-top: 0 !important;
-}
-/* Navigation buttons */
-.navigation-buttons {
-	background: transparent !important;
-	border: none !important;
-	display: inline-flex !important;
-	gap: 4px !important;
-	justify-content: flex-start !important;
-	width: auto !important;
-	padding: 4px !important;
-}
-/* Base style for all navigation buttons */
-.navigation-buttons .lg.primary.svelte-5st68j,.navigation-buttons .lg.secondary.svelte-5st68j {
-	background: transparent !important;
-	border: none !important;
-	padding: 6px 16px !important;
-	margin-top: 37px !important;
-	transition: 0.2s !important;
-}
-/* Style for the active/selected button (Train by default) */
-.navigation-buttons .lg.primary.svelte-5st68j {
-	background: rgb(255 255 255) !important;
-	border: 1px solid rgb(0 0 0 / 52%) !important;
-}
-/* Hover effect for non-selected buttons */
-.navigation-buttons .lg.secondary.svelte-5st68j:hover {
-	background: rgba(0, 0, 0, 0.05) !important;
-}
-/* Mode toggle buttons container */
-.mode-toggle-buttons {
-	background: #f8faf9 !important;
-	border-radius: var(--radius-xl) !important;
-	padding: 4px !important;
-	display: inline-flex !important;
-	border: 1px solid #e5e7eb !important;
-	gap: 4px !important;
-	margin-top: 37px !important;
-}
-/* Individual toggle buttons */
-.mode-toggle-buttons .primary,.mode-toggle-buttons .secondary {
-	padding: 6px 16px !important;
-	border-radius: var(--radius-xl) !important;
-	border: none !important;
-	background: transparent !important;
-	cursor: pointer !important;
-	font-weight: 500 !important;
-	transition: all 0.2s ease !important;
-}
-/* Hover state for non-active buttons */
-.mode-toggle-buttons .secondary:hover {
-	background: rgba(0, 0, 0, 0.05) !important;
-}
-/* Active/selected button state */
-.mode-toggle-buttons .primary {
-	background: white !important;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-div.svelte-1xp0cw7>*, div.svelte-1xp0cw7>.form>* {
-	flex: 1 1 0%;
-	flex-wrap: nowrap !important;
-	min-width: min(160px, 100%);
-}
-.start-finetune-btn.svelte-5st68j {
-	max-width: 25px;
-	padding: 5px !important;
-	margin-top: 5px;
-	background-color: rgb(20, 189, 141) !important;
-	color: white !important;
-	box-shadow: none !important;
-}
-/* Add hover state for better interactivity */
-.start-finetune-btn.svelte-5st68j:hover {
-	background-color: #12a67b !important;
-	box-shadow: none !important;
-}
-/* Target the Training Dataset header specifically */
-.block.svelte-11xb1hd .prose h3 {
-	margin-top: -0.75rem !important;
-}
-/* Card headers/titles */
-.card .prose h3 {
-	font-size: 1.125rem !important;
-	font-weight: 600 !important;
-	color: #111827 !important;
-	margin-bottom: 0.75rem !important;
-	margin-top: -0.5rem !important;
-	display: block !important;
-}
-/* Ensure the content inside cards fills the space */
-.card .prose {
-	margin-bottom: 0.75rem !important;
-	display: block !important;
-}
-.gradio-container.gradio-container-5-14-0 .contain .card {
-	background: white !important;
-	border-radius: 1rem !important;
-	padding: 1rem !important;
-	min-height: 300px !important;
-	display: flex !important;
-	flex-direction: column !important;
-	min-height: 320px !important;
-}
-/* Upload JSON/CSV/Excel button */
-#component-25.lg.secondary.svelte-5st68j {
-	border: 1px solid rgba(255, 255, 255, 0.1) !important;
-	transition: all 0.2s ease !important;
-	background: #f5f5f5 !important;
-}
-#component-25.lg.secondary.svelte-5st68j:hover {
-	box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1),-3px -3px 6px rgba(255, 255, 255, 0.8) !important;
-}
-#component-25.lg.secondary.svelte-5st68j:active {
-	box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1),inset -2px -2px 4px rgba(255, 255, 255, 0.8) !important;
-	transform: translateY(1px) !important;
-}
-.gradio-container.gradio-container-5-14-0 .contain .card {
-	background: white !important;
-	border-radius: 1rem !important;
-	padding: 1rem !important;
-	display: flex !important;
-	flex-direction: column !important;
-	min-height: 320px !important;
-	padding: 8px !important;
-	padding-left: 20px !important;
-	padding-right: 20px !important;
-}
-/* input styles */
-.container.svelte-1hfxrpf .wrap.svelte-1hfxrpf {
-	border: 1px solid #e5e7eb !important;
-	border-radius: var(--radius-md) !important;
-	transition: all 0.2s ease !important;
-	margin-bottom: 16px !important;
-}
-.container.svelte-1hfxrpf .wrap.svelte-1hfxrpf:hover,.container.svelte-1hfxrpf .wrap.svelte-1hfxrpf:focus-within {
-	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1),-2px -2px 4px rgba(255, 255, 255, 0.8) !important;
-}
-.container.svelte-1hfxrpf .wrap.svelte-1hfxrpf:active {
-	box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1),inset -2px -2px 4px rgba(255, 255, 255, 0.8) !important;
-}
-/* Style for textbox */
-label.container.show_textbox_border.svelte-173056l input.svelte-173056l,label.container.show_textbox_border.svelte-173056l textarea.svelte-173056l {
-	border: 1px solid #e5e7eb !important;
-	border-radius: var(--radius-md) !important;
-	transition: all 0.2s ease !important;
-	margin-bottom: 17px !important;
-}
-.gradio-container-5-14-0, .gradio-container-5-14-0 *, .gradio-container-5-14-0 :before, .gradio-container-5-14-0 :after {
-	box-sizing: border-box;
-	border-width: 0;
-	border-style: hidden !important;
-}
-/* Target only the Upload JSON/CSV/Excel button */
-#component-26.lg.secondary.svelte-5st68j {
-	border: 1px solid rgba(255, 255, 255, 0.1) !important;
-	transition: all 0.2s ease !important;
-	background: #f5f5f5 !important;
-}
-#component-26.lg.secondary.svelte-5st68j:hover {
-	box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1),-3px -3px 6px rgba(255, 255, 255, 0.8) !important;
-}
-#component-26.lg.secondary.svelte-5st68j:active {
-	box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1),inset -2px -2px 4px rgba(255, 255, 255, 0.8) !important;
-	transform: translateY(1px) !important;
-}
-/* Style for dataset input textbox */
-textarea[placeholder="Type dataset from 🤗HF"].svelte-173056l {
-	border: 1px solid #e5e7eb !important;
-	border-radius: var(--radius-md) !important;
-	padding: 8px 12px !important;
-	width: 100% !important;
-	background: white !important;
-	margin: -10px !important;
-	transition: all 0.2s ease !important;
-	margin-bottom: 17px !important;
-	resize: none !important;
-	height: 40px !important;
-}
-textarea[placeholder="Type dataset from 🤗HF"].svelte-173056l:hover,textarea[placeholder="Type dataset from 🤗HF"].svelte-173056l:focus {
-	border-color: #d1d5db !important;
-	margin: -10px !important;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
-	outline: none !important;
-}
-/* Target the specific training dataset card */
-#component-24.column.card {
-	max-width: 320px !important;
-}
-/* Style for the model selection container */
-#component-19.row.svelte-1xp0cw7 {
-	max-width: 655px !important;
-	margin-left: -15px;
-}
-/* Style for the search textbox container */
-#component-21.block.svelte-11xb1hd {
-	margin-left: -12px !important;
-}
-/* Style for the main content container */
-#component-17.column.container.svelte-vt1mxs {
-	margin-left: 75px !important;
-}
-#component-24 {
-	box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px !important;
-	max-width: 900px !important;
-}
-#component-29 {
-	box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px !important;
-	max-width: 967px !important;
-}
-#component-19.row.svelte-1xp0cw7 {
-	max-width: 680px !important;
-	min-width: 686px !important;
-	margin-bottom: -15px !important;
-	margin-bottom: -21px !important;
-}
-#component-14.row.mode-toggle-buttons {
-	max-width: 335px !important;
-}
-#component-16.lg.secondary.mode-advanced-btn {
-	padding-left: 0px !important;
-	padding-right: 0px !important;
+/* Apply theme variables to Gradio elements */
+.gradio-container {
+    background-color: var(--background-primary) !important;
 }
 
-div.svelte-633qhp {
-    background: transparent !important;
-}	
+.gr-button {
+    background-color: var(--background-secondary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 2px 4px var(--shadow-color) !important;
+    transition: all 0.2s ease !important;
+}
+
+.gr-button:hover {
+    background-color: var(--hover-color) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 6px var(--shadow-color) !important;
+}
+
+.gr-input, .gr-textarea {
+    background-color: var(--background-secondary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.2s ease !important;
+}
+
+.gr-input:focus, .gr-textarea:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 2px var(--hover-color) !important;
+}
+
+.gr-box {
+    background-color: var(--background-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 2px 4px var(--shadow-color) !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Add these to ensure text remains visible */
+.gr-form, .gr-form-field {
+    background-color: var(--background-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Add smooth transitions for theme changes */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Navigation buttons */
+.nav-button {
+    background-color: var(--background-secondary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.2s ease !important;
+}
+
+.nav-button:hover {
+    background-color: var(--hover-color) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Headers and text */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary) !important;
+}
+
+p, span, label {
+    color: var(--text-secondary) !important;
+}
