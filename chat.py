@@ -99,9 +99,25 @@ def create_chat_interface():
                     value=0.9,
                     step=0.1,
                     label="Top P",
-                    info="Nucleus sampling threshold",
+                    info="Limits token selection to the most likely ones up to probability P",
+                )
+                min_p = gr.Slider(
+                    minimum=0.0,
+                    maximum=1.0,
+                    value=0.1,
+                    step=0.05,
+                    label="Min P",
+                    info="Limits token selection by filtering out tokens below probability P",
                 )
             with gr.Column():
+                top_k = gr.Slider(
+                    minimum=1,
+                    maximum=100,
+                    value=40,
+                    step=1,
+                    label="Top K",
+                    info="Limits token selection to the K value",
+                )                
                 max_length = gr.Slider(
                     minimum=50,
                     maximum=2000,
@@ -119,7 +135,7 @@ def create_chat_interface():
                     info="Penalizes repeated tokens (higher = less repetition)",
                 )
 
-    def user_message(message, chat_history, temp, top_p, max_len, rep_penalty, img):
+    def user_message(message, chat_history, temp, top_p, min_p, top_k, max_len, rep_penalty, img):
         if message or img is not None:
             # Ensure chat_history is a list if it's None
             chat_history = chat_history or []
@@ -155,7 +171,7 @@ def create_chat_interface():
     # Event handlers
     msg.submit(
         user_message,
-        inputs=[msg, chatbot, temperature, top_p, max_length, repetition_penalty, image_input],
+        inputs=[msg, chatbot, temperature, top_p, min_p, top_k, max_length, repetition_penalty, image_input],
         outputs=[msg, image_input, chatbot]
     )
 
@@ -171,6 +187,8 @@ def create_chat_interface():
         'image_input': image_input,
         'temperature': temperature,
         'top_p': top_p,
+        'top_k': top_k,
+        'min_p': min_p,
         'max_length': max_length,
         'repetition_penalty': repetition_penalty,
         'system_prompt': system_prompt,

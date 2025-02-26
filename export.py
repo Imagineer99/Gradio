@@ -98,7 +98,7 @@ def create_export_interface():
                 hub_model_id = gr.Textbox(
                     label="Hub Model ID",
                     placeholder="username/model-name",
-                    elem_classes=["export-input"]
+                    elem_classes=["export-input"],
                 )
                 with gr.Row():
                     hub_token = gr.Textbox(
@@ -112,7 +112,8 @@ def create_export_interface():
                         "📋 Paste",
                         scale=1,
                         variant="primary",
-                        size="sm"
+                        size="sm",
+                        interactive=True,
                     )
             
             # Ollama Options
@@ -128,12 +129,21 @@ def create_export_interface():
                     placeholder="Your ollama.com username",
                     info="Required for publishing to ollama.com"
                 )
-                ollama_key = gr.Textbox(
-                    label="Ollama Public Key",
-                    placeholder="Your ollama.com public key",
-                    type="password",
-                    info="Find this in ollama.com/settings/keys"
-                )
+                with gr.Row():
+                    ollama_key = gr.Textbox(
+                        label="Ollama Public Key",
+                        placeholder="Your ollama.com public key",
+                        type="password",
+                        info="Find this in ollama.com/settings/keys",
+                        scale=3,
+                        interactive=True,
+                    )
+                    ollama_paste_btn = gr.Button(
+                        "📋 Paste",
+                        scale=1,
+                        variant="primary",
+                        size="sm"
+                    )
             
             gr.Button("Export Model", variant="primary", elem_classes=["export-button"])
 
@@ -163,10 +173,16 @@ def create_export_interface():
         fn=lambda: gr.update(value=get_clipboard_content()),
         outputs=[hub_token]
     )
+    
+    # Ollama paste button handler
+    ollama_paste_btn.click(
+        fn=lambda: gr.update(value=get_clipboard_content()),
+        outputs=[ollama_key]
+    )
 
     # GGUF visibility toggle
     merge_format.change(
-        fn=lambda x: gr.update(visible=("GGUF" in x)),
+        fn=lambda x: gr.update(visible=(x == "GGUF")),
         inputs=[merge_format],
         outputs=[gguf_group]
     )

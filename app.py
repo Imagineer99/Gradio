@@ -51,15 +51,15 @@ with gr.Blocks(
         # Navbar
         with gr.Column(scale=3):
             with gr.Row(elem_classes=["navigation-buttons"]):
-                nav_train = gr.Button("Train", elem_classes=["lg", "primary", "nav-train-btn", "nav-button"])
-                nav_evaluate = gr.Button("Evaluate", elem_classes=["lg", "secondary", "nav-evaluate-btn", "nav-button"])
-                nav_chat = gr.Button("Chat", elem_classes=["lg", "secondary", "nav-chat-btn", "nav-button"])
-                nav_export = gr.Button("Export", elem_classes=["lg", "secondary", "nav-export-btn", "nav-button"])
+                nav_train = gr.Button("Train", elem_classes=["nav-button", "primary"])
+                nav_evaluate = gr.Button("Evaluate", elem_classes=["nav-button", "secondary"])
+                nav_chat = gr.Button("Chat", elem_classes=["nav-button", "secondary"])
+                nav_export = gr.Button("Export", elem_classes=["nav-button", "secondary"])
         # Light/dark theme toggle
         with gr.Column(scale=2):
             gr.Row(elem_classes=["theme-toggle-spacer"])
             with gr.Row(elem_classes=["theme-toggle-container"]):
-                theme_toggle = gr.Button("☀️ Light", elem_id="theme-toggle-btn", elem_classes=["theme-toggle-btn"])
+                theme_toggle = gr.Button("", elem_id="theme-toggle-btn", elem_classes=["theme-toggle-btn"])
 
     # Main Content
     with gr.Column(elem_classes=["main-container"]):
@@ -98,27 +98,17 @@ with gr.Blocks(
         outputs=[train_tab, chat_tab, export_tab]
     )
 
-    # Modify the toggle_theme function
-    def toggle_theme(btn_text):
-        is_dark = "🌙 Dark" in btn_text
-        new_text = "☀️ Light" if is_dark else "🌙 Dark"
-        debug_msg = f"Button clicked! Changed from '{btn_text}' to '{new_text}'"
-        print(debug_msg)
-        return new_text, debug_msg
-
-    # Click handler - JavaScript
+    # Simplify the JavaScript click handler
     theme_toggle.click(
         fn=None,  # No Python function
-        inputs=[theme_toggle],
-        outputs=[theme_toggle],
-        js="(btn_text) => { \
-            const isLight = btn_text.includes('☀️ Light'); \
-            const newTheme = isLight ? 'dark' : 'light'; \
-            const newText = isLight ? '🌙 Dark' : '☀️ Light'; \
+        inputs=[],  # No inputs needed
+        outputs=[],  # No outputs needed
+        js="() => { \
+            const currentTheme = document.documentElement.getAttribute('data-theme'); \
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light'; \
             document.documentElement.setAttribute('data-theme', newTheme); \
             document.body.setAttribute('data-theme', newTheme); \
             console.log('Theme set to:', newTheme); \
-            return [newText, 'Theme changed to: ' + newTheme]; \
         }"
     )
 
