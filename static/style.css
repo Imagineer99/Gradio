@@ -76,6 +76,10 @@
 body {
     background-color: var(--body-background) !important;
     color: var(--text-primary);
+    padding-top: 75px !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;  /* Prevent horizontal scrollbar */
+    box-sizing: border-box !important;
 }
 
 /* Updated theme toggle button styles */
@@ -89,8 +93,8 @@ body {
     border: none !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     background: var(--background-primary) !important;
-    box-shadow: 3px 3px 6px var(--shadow-color),
-                -3px -3px 6px var(--background-secondary) !important;
+    box-shadow: 1px 1px 2px var(--shadow-color),
+                -1px -1px 2px rgba(255, 255, 255, 0.05) !important;
     max-width: 70px !important;
     min-width: 70px !important;
 }
@@ -148,13 +152,16 @@ body::before {
     background-color: var(--background-primary) !important;
     font-family: 'Inter', sans-serif !important;
     font-size: var(--scale-md) !important;
+    margin-top: 1rem !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
 }
 
 .gr-button {
     background-color: transparent !important;
     color: var(--text-primary) !important;
     border: 1px solid var(--border-color) !important;
-    box-shadow: 0 2px 4px var(--shadow-color) !important;
+    box-shadow: 0 1px 2px var(--shadow-color) !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     border-radius: var(--radius-md) !important;
     padding: var(--space-sm) var(--space-md) !important;
@@ -163,7 +170,7 @@ body::before {
 .gr-button:hover {
     background-color: rgba(0, 0, 0, 0.05) !important;
     transform: translateY(-1px) !important;
-    box-shadow: 0 4px 6px var(--shadow-color) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
     border-color: var(--primary-700) !important;
 }
 
@@ -189,16 +196,17 @@ body::before {
 
 .gr-input:focus, .gr-textarea:focus {
     border-color: var(--primary-700) !important;
-    box-shadow: 0 0 0 2px var(--hover-color) !important;
+    box-shadow: 0 0 0 1px var(--hover-color) !important;
 }
 
 .gr-box {
     background-color: var(--background-secondary) !important;
     border: 1px solid var(--border-color) !important;
-    box-shadow: 0 2px 4px var(--shadow-color) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     border-radius: var(--radius-md) !important;
     padding: var(--space-md) !important;
+    overflow: visible !important;  /* Prevent scrollbars on boxes themselves */
 }
 
 /* Add these to ensure text remains visible */
@@ -224,7 +232,7 @@ body::before {
                 background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     padding: var(--space-sm) var(--space-md) !important;
     border-radius: var(--radius-full) !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;  /* Changed from 500 to 600 for bold by default */
     min-width: 100px !important;
     height: 40px !important;
     box-sizing: border-box !important;
@@ -237,7 +245,7 @@ body::before {
 /* Primary button style - this is the active/selected page */
 .nav-button.primary {
     border: 1px solid var(--nav-border-color) !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;  /* Increased from 600 to 700 to make selected even bolder */
     animation: fadeInBorder 0.3s ease-in !important;  /* Add fade-in animation */
 }
 
@@ -334,39 +342,73 @@ label.svelte-i3tvor {
 .header {
     display: flex !important;
     align-items: center !important;
-    padding: 1rem 2rem !important;
-    gap: 2rem !important;
-    height: 64px !important;  /* Set fixed height for consistent alignment */
+    justify-content: space-between !important;
+    padding: 0.75rem 2rem !important;
+    height: 75px !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    background-color: var(--background-primary) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 /* Logo styling with Gradio overrides */
 .logo-container {
     display: flex !important;
     align-items: center !important;
-    gap: 0.75rem !important;  /* Reduce gap between logo and text */
-    height: 40px !important;
+    gap: 0.75rem !important;
+    height: 60px !important;
     margin: 0 !important;
-    margin-top: -41px !important;
 }
 
 .logo-container img {
-    height: 80px !important;  /* Set explicit height */
-    width: 80px !important;  /* Set explicit width */
+    height: 55px !important;
+    width: 55px !important;
     object-fit: contain !important;
     margin-right: 10px !important;
-}
-
-/* Moves the logo image container to the right */
-.image-container.svelte-dpdy90 button.svelte-dpdy90 {
-    justify-content: end;
 }
 
 .logo-container h1 {
     margin: 0 !important;
     font-size: 1.75rem !important;
     font-weight: 600 !important;
-    color: var(--text-primary) !important;  /* Use theme variable */
-    line-height: 40px !important;  /* Match height for vertical centering */
+    color: var(--text-primary) !important;
+    line-height: 60px !important;
+}
+
+/* Navigation and theme toggle positioning */
+.navigation-buttons {
+    flex-grow: 1 !important;
+    justify-content: center !important;
+    margin: 0 2rem !important;
+}
+
+/* Theme toggle button positioning */
+.theme-toggle-btn {
+    margin: 0 !important;
+}
+
+/* Override any previous margin adjustments */
+.gradio-container.gradio-container-5-14-0 .contain .theme-toggle-btn {
+    margin: 0 !important;
+    margin-right: 2rem !important;  /* Add right margin */
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .navigation-buttons {
+    margin: 0 2rem !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .logo-container {
+    margin: 0 !important;
+}
+
+/* Moves the logo image container to the right */
+.image-container.svelte-dpdy90 button.svelte-dpdy90 {
+    justify-content: end;
 }
 
 /* Hide icon buttons for logo */
@@ -381,19 +423,110 @@ label.svelte-i3tvor {
 
 /* Update theme toggle button position */
 .theme-toggle-btn {
-    margin-left: 0.5rem !important; /* Reduced margin */
-    margin-right: 0 !important;
+    margin-left: auto !important; /* This will push the button to the right */
+    margin-right: 2rem !important;
 }
+
+/* Remove the previous margin-left that was pushing it to the right */
 .gradio-container.gradio-container-5-14-0 .contain .theme-toggle-btn {
-    margin-left: 23rem !important;
-    margin-right: 0px !important;
+    margin-left: auto !important;
+    margin-right: 2rem !important;
 }
 
 /* move the navigation buttons to the left */
 .gradio-container.gradio-container-5-14-0 .contain .navigation-buttons {
-    margin-left: 100px !important;
+    margin-left: 471px !important;
+    margin-right: auto !important;  /* Keep this to ensure proper spacing */
+    max-width: calc(100% - 520px) !important;  /* Adjusted max-width to account for increased margin */
 }
+
 /* move the logo to the left */
 .gradio-container.gradio-container-5-14-0 .contain .logo-container {
     margin-left: -108px !important;
+}
+
+/* Add scrollbar styles and prevent layout shift */
+html {
+    overflow-y: scroll !important;  /* Always show scrollbar */
+}
+
+/* Custom scrollbar styling with theme transitions */
+::-webkit-scrollbar {
+    width: 10px !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-secondary) !important;
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--neutral-500) !important;
+    border-radius: var(--radius-full) !important;
+    border: 3px solid var(--background-secondary) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neutral-600) !important;
+}
+
+/* Dark theme scrollbar adjustments */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+    background: var(--background-secondary) !important;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: var(--neutral-600) !important;
+    border-color: var(--background-secondary) !important;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--neutral-700) !important;
+}
+
+/* Firefox scrollbar styling */
+* {
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--neutral-500) var(--background-secondary) !important;
+}
+
+[data-theme="dark"] * {
+    scrollbar-color: var(--neutral-600) var(--background-secondary) !important;
+}
+
+/* For dropdown menus that need scrolling */
+.gr-dropdown .options {
+    max-height: 300px !important;  /* Adjust this value as needed */
+    overflow-y: auto !important;   /* Only show scrollbar when needed */
+    scrollbar-width: thin !important;
+}
+
+/* Fix for input boxes - hide scrollbars but keep other UI elements */
+input, select, textarea {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important;  /* IE and Edge */
+}
+
+/* Hide webkit scrollbar while keeping other UI elements */
+input::-webkit-scrollbar, 
+select::-webkit-scrollbar, 
+textarea::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Ensure dropdown arrows and selection circles remain visible */
+select {
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    -moz-appearance: auto !important;
+}
+
+/* Ensure theme toggle button stays on the right */
+.gradio-container.gradio-container-5-14-0 .contain .theme-toggle-btn {
+    margin-left: auto !important;
+    margin-right: 2rem !important;
+    position: relative !important;
+    z-index: 10 !important;  /* Ensure it stays above other elements */
 }
