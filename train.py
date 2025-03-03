@@ -33,12 +33,12 @@ def create_train_interface():
                     interactive=True,
                     elem_classes="token-input",
                 )
-                paste_btn = gr.Button(
-                    "📋 Paste",
-                    scale=1,
-                    variant="primary",
-                    size="sm",
-                )
+#                paste_btn = gr.Button(
+#                    "📋 Paste",
+#                    scale=1,
+#                    variant="primary",
+#                    size="sm",
+#                )
             model_search = gr.Textbox(
                 placeholder="Search for a model",
                 label="Search",
@@ -412,10 +412,10 @@ def create_train_interface():
     )
 
     # Paste HF token
-    paste_btn.click(
-        fn=paste_token,
-        outputs=hf_token,
-    )
+#    paste_btn.click(
+#        fn=paste_token,
+#        outputs=hf_token,
+#    )
 
     # Add paste handler for W&B token
     wandb_paste_btn.click(
