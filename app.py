@@ -71,31 +71,34 @@ with gr.Blocks(
         
         with gr.Column(visible=False) as export_tab:
             export_components = create_export_interface()
+            
+        with gr.Column(visible=False) as evaluate_tab:
+            export_components = create_export_interface()
 
     # Tab switching
     def switch_to_chat():
-        return gr.update(visible=False), gr.update(visible=True), gr.update(visible=False), \
+        return gr.update(visible=False), gr.update(visible=True), gr.update(visible=False), gr.update(visible=False), \
                gr.update(elem_classes=["nav-button", "secondary"]), \
                gr.update(elem_classes=["nav-button", "secondary"]), \
                gr.update(elem_classes=["nav-button", "primary"]), \
                gr.update(elem_classes=["nav-button", "secondary"])
 
     def switch_to_train():
-        return gr.update(visible=True), gr.update(visible=False), gr.update(visible=False), \
+        return gr.update(visible=True), gr.update(visible=False), gr.update(visible=False), gr.update(visible=False), \
                gr.update(elem_classes=["nav-button", "primary"]), \
                gr.update(elem_classes=["nav-button", "secondary"]), \
                gr.update(elem_classes=["nav-button", "secondary"]), \
                gr.update(elem_classes=["nav-button", "secondary"])
     
     def switch_to_export():
-        return gr.update(visible=False), gr.update(visible=False), gr.update(visible=True), \
+        return gr.update(visible=False), gr.update(visible=False), gr.update(visible=True), gr.update(visible=False), \
                gr.update(elem_classes=["nav-button", "secondary"]), \
                gr.update(elem_classes=["nav-button", "secondary"]), \
                gr.update(elem_classes=["nav-button", "secondary"]), \
                gr.update(elem_classes=["nav-button", "primary"])
                
     def switch_to_evaluate():
-        return gr.update(visible=False), gr.update(visible=False), gr.update(visible=False), \
+        return gr.update(visible=False), gr.update(visible=False), gr.update(visible=False), gr.update(visible=True), \
                gr.update(elem_classes=["nav-button", "secondary"]), \
                gr.update(elem_classes=["nav-button", "primary"]), \
                gr.update(elem_classes=["nav-button", "secondary"]), \
@@ -104,22 +107,22 @@ with gr.Blocks(
     # Click handlers
     nav_chat.click(
         switch_to_chat,
-        outputs=[train_tab, chat_tab, export_tab, nav_train, nav_evaluate, nav_chat, nav_export]
+        outputs=[train_tab, chat_tab, export_tab, evaluate_tab, nav_train, nav_evaluate, nav_chat, nav_export]
     )
 
     nav_train.click(
         switch_to_train,
-        outputs=[train_tab, chat_tab, export_tab, nav_train, nav_evaluate, nav_chat, nav_export]
+        outputs=[train_tab, chat_tab, export_tab, evaluate_tab, nav_train, nav_evaluate, nav_chat, nav_export]
     )
 
     nav_export.click(
         switch_to_export,
-        outputs=[train_tab, chat_tab, export_tab, nav_train, nav_evaluate, nav_chat, nav_export]
+        outputs=[train_tab, chat_tab, export_tab, evaluate_tab, nav_train, nav_evaluate, nav_chat, nav_export]
     )
     
     nav_evaluate.click(
         switch_to_evaluate,
-        outputs=[train_tab, chat_tab, export_tab, nav_train, nav_evaluate, nav_chat, nav_export]
+        outputs=[train_tab, chat_tab, export_tab, evaluate_tab, nav_train, nav_evaluate, nav_chat, nav_export]
     )
 
     # Simplify the JavaScript click handler
