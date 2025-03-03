@@ -28,7 +28,7 @@ def create_train_interface():
             with gr.Row():
                 hf_token = gr.Textbox(
                     placeholder="Enter your token",
-                    label="Hugging Face Token",
+                    label="Hugging Face",
                     type="password",
                     interactive=True,
                     elem_classes="token-input",
@@ -48,7 +48,7 @@ def create_train_interface():
             load_4bit = gr.Checkbox(
                 value=True,
                 label="Load in 4-bit",
-                info="Enable 4-bit quantization to reduce memory usage. Recommended for most cases.",
+                info="Enable 4-bit quantization to reduce memory usage.",
                 interactive=True,
                 scale=1,
             )
