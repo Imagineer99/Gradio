@@ -33,12 +33,6 @@ def create_train_interface():
                     interactive=True,
                     elem_classes="token-input",
                 )
-#                paste_btn = gr.Button(
-#                    "📋 Paste",
-#                    scale=1,
-#                    variant="primary",
-#                    size="sm",
-#                )
             model_search = gr.Textbox(
                 placeholder="Search for a model",
                 label="Search",
@@ -53,96 +47,110 @@ def create_train_interface():
                 scale=1,
             )
 
-    # Main Layout
-    with gr.Row(elem_classes=["content-cards"]):
-        # Dataset Card
-        with gr.Column(elem_classes=["card"], scale=1):
-            gr.Markdown("## Training Dataset")
-            input_text = gr.Textbox(
-                placeholder="Type dataset from 🤗",
-                label="HuggingFace Dataset",
-                interactive=True,
-            )
-            data_template = gr.Dropdown(
-                choices=[
-                    "Alpaca",
-                    "Auto-Select",
-                    "ShareGPT",
-                    "OpenAssistant",
-                    "Anthropic Claude",
-                    "GPTeacher",
-                    "CodeAlpaca",
-                    "Dolly",
-                    "Baize",
-                    "OpenOrca",
-                    "WizardLM",
-                    "Platypus",
-                    "Vicuna",
-                    "LIMA",
-                    "Custom"  # For user-defined formats
-                ],
-                value="Auto-Select",
-                label="Select Dataset Template",
-                interactive=True,
-                scale=3
-            )
-            # Scan for local JSON datasets
-            def get_json_datasets():
-                import glob
-                import os
-                json_files = glob.glob("datasets/*.json")  # Adjust path as needed
-                return [os.path.basename(f) for f in json_files]
+    # Main Layout with Three Columns for Dataset, Parameters, and Progress
+    with gr.Row():
+        # Left Column - Dataset
+        with gr.Column(scale=1):
+            with gr.Column(elem_classes=["card"]):
+                gr.Markdown("## Training Dataset")
+                with gr.Column():
+                    input_text = gr.Textbox(
+                        placeholder="Type dataset from 🤗",
+                        label="Hugging Face Dataset",
+                        interactive=True,
+                    )
+                    data_template = gr.Dropdown(
+                        choices=[
+                            "Alpaca",
+                            "Auto-Select",
+                            "ShareGPT",
+                            "OpenAssistant",
+                            "Anthropic Claude",
+                            "GPTeacher",
+                            "CodeAlpaca",
+                            "Dolly",
+                            "Baize",
+                            "OpenOrca",
+                            "WizardLM",
+                            "Platypus",
+                            "Vicuna",
+                            "LIMA",
+                            "Custom"
+                        ],
+                        value="Auto-Select",
+                        label="Dataset Template",
+                        interactive=True,
+                    )
+                    # Scan for local JSON datasets
+                    def get_json_datasets():
+                        import glob
+                        import os
+                        json_files = glob.glob("datasets/*.json")  # Adjust path as needed
+                        return [os.path.basename(f) for f in json_files]
 
-            local_datasets = gr.Dropdown(
-                choices=get_json_datasets(),
-                label="Local Datasets",
-                info="Select one or more JSON datasets to combine",
-                multiselect=True,
-                interactive=True,
-            )
-            upload_btn = gr.UploadButton(
-                "Upload JSON, CSV or Excel",
-                variant="secondary",
-                elem_classes=["upload-button"],
-                file_types=[".json", ".csv", ".xlsx", ".xls"]
-            )            
-            combine_btn = gr.Button(
-                "🔄 Combine Datasets",
-                variant="secondary",
-                elem_classes=["combine-datasets-btn"],
-            )
-        # Parameters Card
-        with gr.Column(elem_classes=["card"], scale=1) as basic_params:
-            gr.Markdown("## Training Parameters")
-            with gr.Column():
-                num_epochs = gr.Slider(
-                    minimum=1, maximum=20,
-                    value=4,
-                    label="Number of epochs",
-                    info="Number of times the model will see the entire dataset",
-                    step=1,
-                    interactive=True
-                )
-                max_sequence_length = gr.Textbox(
-                    value="2048",
-                    label="Max Sequence Length",
-                    info="Maximum sequence length for the model. Choose any!",
-                    interactive=True
-                )
+                    local_datasets = gr.Dropdown(
+                        choices=get_json_datasets(),
+                        label="Local Datasets",
+                        info="Select one or more JSON datasets to combine",
+                        multiselect=True,
+                        interactive=True,
+                    )
+                    with gr.Row():
+                        upload_btn = gr.UploadButton(
+                            "Upload Files",
+                            file_types=[".json", ".csv", ".xlsx", ".xls"],
+                            elem_classes=["upload-button"],
+                            scale=2,
+                        )            
+                        combine_btn = gr.Button(
+                            "🔄 Combine",
+                            elem_classes=["combine-datasets-btn"],
+                            scale=1,
+                        )
 
-        # Progress Card
-        with gr.Column(elem_classes=["card"], scale=1):
-            gr.Markdown("## Training Progress")
-            loss_plot = gr.Plot(
-                label="Training Loss",
-                show_label=True,
-            )
-            stop_btn = gr.Button(
-                "⬛ Stop training",
-                variant="stop",
-                elem_classes=["gr-button", "stop-finetune-btn"],
-                interactive=False  # Initially disabled
-            )
+        # Middle Column - Basic Parameters
+        with gr.Column(scale=1):
+            with gr.Column(elem_classes=["card"]) as basic_params:
+                gr.Markdown("## Training Parameters")
+                with gr.Column():
+                    num_epochs = gr.Slider(
+                        minimum=1, maximum=20,
+                        value=4,
+                        label="Number of epochs",
+                        info="Number of times the model will see the entire dataset",
+                        step=1,
+                        interactive=True
+                    )                   
+                    max_sequence_length = gr.Textbox(
+                        value="2048",
+                        label="Max Sequence Length",
+                        info="Maximum sequence length for the model. Choose any!",
+                        interactive=True
+                    )
+
+        # Right Column - Training Progress
+        with gr.Column(scale=1):
+            with gr.Column(elem_classes=["card", "training-progress-card"]):
+                gr.Markdown("## Training Progress")
+                loss_plot = gr.Plot(
+                    label="Training Loss",
+                    show_label=True,
+                    elem_classes=["plot-container"],
+                    container=False
+                )
+                with gr.Row():
+                    start_btn = gr.Button(  
+                        "♡ Start finetuning",
+                        variant="primary",
+                        elem_classes=["gr-button", "start-finetune-btn"],
+                        interactive=True,
+                    )                    
+                    stop_btn = gr.Button(
+                        "Stop",
+                        variant="stop",
+                        elem_classes=["gr-button", "stop-finetune-btn"],
+                        interactive=False,
+                    )
 
     # Advanced Mode Toggle
     with gr.Row(elem_classes=["mode-toggle-container"]):
@@ -373,15 +381,6 @@ def create_train_interface():
                     inputs=[enable_tensorboard],
                     outputs=[tensorboard_settings]
                 )
-
-    # Start and Stop Training Buttons
-    with gr.Row(elem_classes=["footer"]):
-        start_btn = gr.Button(
-            "♡ Start finetuning",
-            variant="primary",
-            elem_classes=["gr-button", "start-finetune-btn"],
-            interactive=True  # Initially enabled
-        )
 
     # Event Handlers
     # Define paste_token function first
