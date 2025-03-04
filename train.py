@@ -171,230 +171,233 @@ def create_train_interface():
             gr.Row()  # Right spacer
 
     # Advanced Parameters Section (Initially Hidden)
-    with gr.Row(elem_classes=["card", "advanced-params"], visible=False) as advanced_params:
-        with gr.Row():
-            # LoRA Adapter Settings
-            with gr.Column(scale=1):
-                gr.Markdown("### LoRA Adapter Settings")
-                target_modules = gr.Dropdown(
-                    choices=[
-                        "q_proj", "k_proj", "v_proj", "o_proj",
-                        "gate_proj", "up_proj", "down_proj"
-                    ],
-                    value=["q_proj", "k_proj", "v_proj", "o_proj",
-                          "gate_proj", "up_proj", "down_proj"],
-                    label="Target Modules",
-                    info="Specifies which model layers to apply LoRA fine-tuning to",
-                    multiselect=True,
-                    interactive=True
-                )             
-                lora_r = gr.Slider(
-                    minimum=1, maximum=128, value=16,
-                    label="LoRA rank (r)",
-                    info="Controls the capacity and compression ratio of LoRA adapters",
-                    interactive=True
-                )
-                lora_alpha = gr.Slider(
-                    minimum=1, maximum=128, value=16,
-                    label="LoRA alpha",
-                    info="Scaling factor for LoRA updates during training",
-                    interactive=True
-                )
-                lora_dropout = gr.Slider(
-                    minimum=0, maximum=1, value=0,
-                    label="LoRA dropout",
-                    info="Adds regularization to prevent overfitting during training",
-                    interactive=True
-                )
-                gradient_checkpointing = gr.Dropdown(
-                    choices=["none", "true", "unsloth"],
-                    value="unsloth",
-                    label="Gradient Checkpointing",
-                    info="Memory optimization technique that trades computation for memory",
-                    interactive=True
-                )
-                use_rslora = gr.Checkbox(
-                    value=False,
-                    label="Use RS-LoRA",
-                    info="Stabilizes training by maintaining consistent rank throughout layers",
-                    interactive=True
-                )
-                use_loftq = gr.Checkbox(
-                    value=False,
-                    label="Use LoftQ",
-                    info="Quantization method that improves memory efficiency of LoRA",
-                    interactive=True
-                )
-                train_on_completions = gr.Checkbox(
-                    value=False,
-                    label="Train on completions",
-                    info="Only train on the assistant outputs",
-                    interactive=True
-                )
-
-            # Training Optimization       
-            with gr.Column(scale=1):
-                gr.Markdown("### Training Optimization")
-                learning_rate = gr.Dropdown(
-                    choices=["1e-5", "2e-5", "5e-5", "1e-4", "2e-4", "5e-4", "1e-3"],
-                    value="5e-5",
-                    label="Learning rate",
-                    info="Controls how much the model adjusts its weights during training.",
-                    allow_custom_value=True,
-                    interactive=True
-                )  
-                gpu_count = gr.Dropdown(
-                    choices=["auto", "1", "2", "4", "8"],
-                    value="auto",
-                    label="Number of GPUs",
-                    info="Select number of GPUs for training or 'auto' to use all available GPUs",
-                    interactive=True
-                )                                 
-                weight_decay = gr.Slider(
-                    minimum=0, maximum=0.1, value=0.01, 
-                    label="Weight Decay",
-                    info="Regularization technique that reduces model complexity by penalizing large weights",
-                    interactive=True
-                )
-                batch_size = gr.Slider(
-                    minimum=1, maximum=32,
-                    value=2,
-                    label="Batch size",
-                    info="Number of training examples processed together in one forward/backward pass",
-                    step=1,
-                    interactive=True
-                )
-                grad_accumulation = gr.Slider(
-                    minimum=1, maximum=16,
-                    value=4,
-                    label="Gradient accumulation steps",
-                    info="Simulates larger batch sizes by accumulating gradients over multiple forward passes",
-                    step=1,
-                    interactive=True
-                )
-                warmup_steps = gr.Slider(
-                    minimum=0, maximum=100, value=5,
-                    label="Warmup Steps",
-                    info="Number of steps for learning rate warmup",
-                    step=1,
-                    interactive=True
-                )
-                max_steps = gr.Slider(
-                    minimum=0, maximum=1000, value=0,
-                    label="Max Steps",
-                    info="Maximum number of training steps. When 0, uses number of epochs instead",
-                    step=1,
-                    interactive=True
-                )
-                max_seq_length = gr.Slider(
-                    minimum=32, maximum=4096, value=512,
-                    label="Max Sequence Length",
-                    info="Maximum length of input sequences. Longer sequences will be truncated",
-                    step=32,
-                    interactive=True
-                )
-                dataset_text_field = gr.Textbox(
-                    value="text",
-                    label="Dataset Text Field",
-                    info="Name of the column in your dataset that contains the text to train on",
-                    interactive=True
-                )
-                random_seed = gr.Number(
-                    value=3407,
-                    label="Random Seed",
-                    info="Controls randomness in training for reproducible results",
-                    precision=0,
-                    interactive=True
-                )
-                packing = gr.Checkbox(
-                    value=False,
-                    label="Enable Sequence Packing",
-                    info="Optimizes memory usage by combining multiple sequences into single training examples",
-                    interactive=True
-                )
-
-            # Add Logging Settings column
-            with gr.Column(scale=1):
-                gr.Markdown("### Logging & Monitoring")
-                
-                # Weights & Biases Section
-                gr.Markdown("#### Weights & Biases")
-                enable_wandb = gr.Checkbox(
-                    value=False,
-                    label="Enable W&B Logging",
-                    info="Enable logging to Weights & Biases platform",
-                    interactive=True
-                )
-                with gr.Column():
-                    wandb_token = gr.Textbox(
-                        placeholder="Enter your W&B API token",
-                        label="W&B API Token",
-                        type="password",
-                        interactive=True,
-                        visible=False
-                    )
-                    wandb_paste_btn = gr.Button(
-                        "📋 Paste",
-                        scale=1,
-                        variant="primary",
-                        size="sm",
-                        visible=False
-                    )
-                wandb_project = gr.Textbox(
-                    value="llm-finetuning",
-                    label="W&B Project Name",
-                    info="Name of the project in W&B",
-                    interactive=True,
-                    visible=False
-                )
-
-                # TensorBoard Section
-                gr.Markdown("#### TensorBoard")
-                enable_tensorboard = gr.Checkbox(
-                    value=False,
-                    label="Enable TensorBoard",
-                    info="Enable logging to TensorBoard",
-                    interactive=True
-                )
-                with gr.Column(visible=False) as tensorboard_settings:
-                    tensorboard_dir = gr.Textbox(
-                        value="runs",
-                        label="TensorBoard Log Directory",
-                        info="Directory where TensorBoard logs will be saved",
+    with gr.Column(visible=False) as advanced_params:
+        with gr.Column(elem_classes=["advanced-params"]):
+            # First Row - LoRA Adapter Settings
+            with gr.Row():
+                with gr.Column(elem_classes=["card"]):
+                    gr.Markdown("### LoRA Adapter Settings")
+                    target_modules = gr.Dropdown(
+                        choices=[
+                            "q_proj", "k_proj", "v_proj", "o_proj",
+                            "gate_proj", "up_proj", "down_proj"
+                        ],
+                        value=["q_proj", "k_proj", "v_proj", "o_proj",
+                              "gate_proj", "up_proj", "down_proj"],
+                        label="Target Modules",
+                        info="Specifies which model layers to apply LoRA fine-tuning to",
+                        multiselect=True,
+                        interactive=True
+                    )             
+                    lora_r = gr.Slider(
+                        minimum=1, maximum=128, value=16,
+                        label="LoRA rank (r)",
+                        info="Controls the capacity and compression ratio of LoRA adapters",
                         interactive=True
                     )
-                    log_frequency = gr.Number(
-                        value=10,
-                        label="Logging Frequency",
-                        info="Log metrics every N steps",
+                    lora_alpha = gr.Slider(
+                        minimum=1, maximum=128, value=16,
+                        label="LoRA alpha",
+                        info="Scaling factor for LoRA updates during training",
+                        interactive=True
+                    )
+                    lora_dropout = gr.Slider(
+                        minimum=0, maximum=1, value=0,
+                        label="LoRA dropout",
+                        info="Adds regularization to prevent overfitting during training",
+                        interactive=True
+                    )
+                    gradient_checkpointing = gr.Dropdown(
+                        choices=["none", "true", "unsloth"],
+                        value="unsloth",
+                        label="Gradient Checkpointing",
+                        info="Memory optimization technique that trades computation for memory",
+                        interactive=True
+                    )
+                    use_rslora = gr.Checkbox(
+                        value=False,
+                        label="Use RS-LoRA",
+                        info="Stabilizes training by maintaining consistent rank throughout layers",
+                        interactive=True
+                    )
+                    use_loftq = gr.Checkbox(
+                        value=False,
+                        label="Use LoftQ",
+                        info="Quantization method that improves memory efficiency of LoRA",
+                        interactive=True
+                    )
+                    train_on_completions = gr.Checkbox(
+                        value=False,
+                        label="Train on completions",
+                        info="Only train on the assistant outputs",
+                        interactive=True
+                    )
+
+            # Second Row - Training Optimization
+            with gr.Row():
+                with gr.Column(elem_classes=["card"]):
+                    gr.Markdown("### Training Optimization")
+                    learning_rate = gr.Dropdown(
+                        choices=["1e-5", "2e-5", "5e-5", "1e-4", "2e-4", "5e-4", "1e-3"],
+                        value="5e-5",
+                        label="Learning rate",
+                        info="Controls how much the model adjusts its weights during training.",
+                        allow_custom_value=True,
+                        interactive=True
+                    )  
+                    gpu_count = gr.Dropdown(
+                        choices=["auto", "1", "2", "4", "8"],
+                        value="auto",
+                        label="Number of GPUs",
+                        info="Select number of GPUs for training or 'auto' to use all available GPUs",
+                        interactive=True
+                    )                                 
+                    weight_decay = gr.Slider(
+                        minimum=0, maximum=0.1, value=0.01, 
+                        label="Weight Decay",
+                        info="Regularization technique that reduces model complexity by penalizing large weights",
+                        interactive=True
+                    )
+                    batch_size = gr.Slider(
+                        minimum=1, maximum=32,
+                        value=2,
+                        label="Batch size",
+                        info="Number of training examples processed together in one forward/backward pass",
+                        step=1,
+                        interactive=True
+                    )
+                    grad_accumulation = gr.Slider(
+                        minimum=1, maximum=16,
+                        value=4,
+                        label="Gradient accumulation steps",
+                        info="Simulates larger batch sizes by accumulating gradients over multiple forward passes",
+                        step=1,
+                        interactive=True
+                    )
+                    warmup_steps = gr.Slider(
+                        minimum=0, maximum=100, value=5,
+                        label="Warmup Steps",
+                        info="Number of steps for learning rate warmup",
+                        step=1,
+                        interactive=True
+                    )
+                    max_steps = gr.Slider(
+                        minimum=0, maximum=1000, value=0,
+                        label="Max Steps",
+                        info="Maximum number of training steps. When 0, uses number of epochs instead",
+                        step=1,
+                        interactive=True
+                    )
+                    max_seq_length = gr.Slider(
+                        minimum=32, maximum=4096, value=512,
+                        label="Max Sequence Length",
+                        info="Maximum length of input sequences. Longer sequences will be truncated",
+                        step=32,
+                        interactive=True
+                    )
+                    dataset_text_field = gr.Textbox(
+                        value="text",
+                        label="Dataset Text Field",
+                        info="Name of the column in your dataset that contains the text to train on",
+                        interactive=True
+                    )
+                    random_seed = gr.Number(
+                        value=3407,
+                        label="Random Seed",
+                        info="Controls randomness in training for reproducible results",
                         precision=0,
                         interactive=True
                     )
+                    packing = gr.Checkbox(
+                        value=False,
+                        label="Enable Sequence Packing",
+                        info="Optimizes memory usage by combining multiple sequences into single training examples",
+                        interactive=True
+                    )
 
-                # Update visibility toggles for both logging systems
-                def toggle_wandb_fields(enable):
-                    return {
-                        wandb_token: gr.update(visible=enable),
-                        wandb_paste_btn: gr.update(visible=enable),
-                        wandb_project: gr.update(visible=enable)
-                    }
+            # Third Row - Logging & Monitoring
+            with gr.Row():
+                with gr.Column(elem_classes=["card"]):
+                    gr.Markdown("### Logging & Monitoring")
+                    
+                    # Weights & Biases Section
+                    gr.Markdown("#### Weights & Biases")
+                    enable_wandb = gr.Checkbox(
+                        value=False,
+                        label="Enable W&B Logging",
+                        info="Enable logging to Weights & Biases platform",
+                        interactive=True
+                    )
+                    with gr.Column():
+                        wandb_token = gr.Textbox(
+                            placeholder="Enter your W&B API token",
+                            label="W&B API Token",
+                            type="password",
+                            interactive=True,
+                            visible=False
+                        )
+                        wandb_paste_btn = gr.Button(
+                            "📋 Paste",
+                            scale=1,
+                            variant="primary",
+                            size="sm",
+                            visible=False
+                        )
+                    wandb_project = gr.Textbox(
+                        value="llm-finetuning",
+                        label="W&B Project Name",
+                        info="Name of the project in W&B",
+                        interactive=True,
+                        visible=False
+                    )
 
-                def toggle_tensorboard_fields(enable):
-                    return {
-                        tensorboard_settings: gr.update(visible=enable)
-                    }
+                    # TensorBoard Section
+                    gr.Markdown("#### TensorBoard")
+                    enable_tensorboard = gr.Checkbox(
+                        value=False,
+                        label="Enable TensorBoard",
+                        info="Enable logging to TensorBoard",
+                        interactive=True
+                    )
+                    with gr.Column(visible=False) as tensorboard_settings:
+                        tensorboard_dir = gr.Textbox(
+                            value="runs",
+                            label="TensorBoard Log Directory",
+                            info="Directory where TensorBoard logs will be saved",
+                            interactive=True
+                        )
+                        log_frequency = gr.Number(
+                            value=10,
+                            label="Logging Frequency",
+                            info="Log metrics every N steps",
+                            precision=0,
+                            interactive=True
+                        )
 
-                enable_wandb.change(
-                    fn=toggle_wandb_fields,
-                    inputs=[enable_wandb],
-                    outputs=[wandb_token, wandb_paste_btn, wandb_project]
-                )
+                    # Update visibility toggles for both logging systems
+                    def toggle_wandb_fields(enable):
+                        return {
+                            wandb_token: gr.update(visible=enable),
+                            wandb_paste_btn: gr.update(visible=enable),
+                            wandb_project: gr.update(visible=enable)
+                        }
 
-                enable_tensorboard.change(
-                    fn=toggle_tensorboard_fields,
-                    inputs=[enable_tensorboard],
-                    outputs=[tensorboard_settings]
-                )
+                    def toggle_tensorboard_fields(enable):
+                        return {
+                            tensorboard_settings: gr.update(visible=enable)
+                        }
+
+                    enable_wandb.change(
+                        fn=toggle_wandb_fields,
+                        inputs=[enable_wandb],
+                        outputs=[wandb_token, wandb_paste_btn, wandb_project]
+                    )
+
+                    enable_tensorboard.change(
+                        fn=toggle_tensorboard_fields,
+                        inputs=[enable_tensorboard],
+                        outputs=[tensorboard_settings]
+                    )
 
     # Event Handlers
     # Define paste_token function first
@@ -541,7 +544,7 @@ def create_train_interface():
         'weight_decay': weight_decay,
         'batch_size': batch_size,
         'grad_accumulation': grad_accumulation,
-        'data_template': data_template,
+        'data_template': data_template, 
         'dataset_text_field': dataset_text_field,
         'packing': packing,
         'target_modules': target_modules,
