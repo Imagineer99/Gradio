@@ -847,6 +847,36 @@ div.token.svelte-1scun43 {
     padding-right: 0px !important;
 }
 
+/* Add spacing between advanced parameter cards */
+.advanced-params .card {
+    margin: 0 8px !important;
+}
+
+.advanced-params .card:first-child {
+    margin-left: 0 !important;
+}
+
+.advanced-params .card:last-child {
+    margin-right: 0 !important;
+}
+
+/* Advanced parameters layout */
+.advanced-params {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+}
+
+.advanced-params .card {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+/* Ensure each row takes full width */
+.advanced-params .row {
+    width: 100% !important;
+}
+
 
 
 
