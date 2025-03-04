@@ -171,7 +171,7 @@ def create_train_interface():
             gr.Row()  # Right spacer
 
     # Advanced Parameters Section (Initially Hidden)
-    with gr.Column(elem_classes=["card", "advanced-params"], visible=False) as advanced_params:
+    with gr.Row(elem_classes=["card", "advanced-params"], visible=False) as advanced_params:
         with gr.Row():
             # LoRA Adapter Settings
             with gr.Column(scale=1):
