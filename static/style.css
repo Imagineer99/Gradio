@@ -484,11 +484,12 @@ select {
     padding: 1rem !important;
     box-shadow: none !important;
     min-height: 320px !important;
-    padding: 8px !important;
+    padding: 22px !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
     display: flex !important;
     flex-direction: column !important;
+
 }
 
 /* Model Selection Card specific styling */
@@ -499,17 +500,46 @@ select {
 
 .model-selection-card .wrap-inner.svelte-1hfxrpf {
     background: #232833 !important;
+    border-radius: 500px;
 }
 
 .model-selection-card .wrap-inner.svelte-1hfxrpf .secondary-wrap.svelte-1hfxrpf {
     background: #232833 !important;
 }
 
+.model-selection-card .wrap.svelte-1hfxrpf.svelte-1hfxrpf {
+    border-radius: none !important;
+    background: #ffffff00 !important;
+    border: none !important;
+}
+
 .model-selection-card .wrap-inner.svelte-1hfxrpf input {
     background: #232833 !important;
     color: aliceblue !important;
+    border-radius: 200px !important;
 }
 
+/* Remove focus outline and add custom focus styles for model selection card elements */
+.model-selection-card input:focus,
+.model-selection-card button:focus,
+.model-selection-card select:focus,
+.model-selection-card .wrap.svelte-1hfxrpf:focus,
+.model-selection-card .wrap-inner.svelte-1hfxrpf:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(197, 7, 7, 0) !important;
+}
+
+/* Remove default focus ring from dropdown */
+.model-selection-card .wrap.svelte-1hfxrpf.svelte-1hfxrpf:focus-within {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(204, 4, 4, 0) !important;
+}
+
+/*border to input boxes for model selection card */
+label.container.show_textbox_border.svelte-173056l input.svelte-173056l, label.container.show_textbox_border.svelte-173056l textarea.svelte-173056l {
+    border: var(--input-border-width) solid var(--input-border-color);
+    border-radius: 500px;
+}
 .model-selection-card .wrap-inner.svelte-1hfxrpf .icon-wrap.svelte-1hfxrpf svg path {
     fill: aliceblue !important;
 }
@@ -565,3 +595,52 @@ div.svelte-633qhp {
 .tab-panel.selected {
     display: block !important;
 }
+
+
+.training-progress-card {
+    max-width: 490px !important;  /* Limit maximum width */
+}
+
+/* Training progress card button styling */
+.training-progress-card .gr-button {
+    font-size: 14px !important;
+    height: 36px !important;
+    line-height: 20px !important;
+}
+
+/* Start button specific styling */
+.start-finetune-btn {
+    background-color: var(--primary-700) !important;
+    color: white !important;
+    border: none !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.start-finetune-btn:hover {
+    background-color: var(--primary-800) !important;
+}
+
+/* Update button styles for all buttons in cards */
+.upload-button,
+.combine-datasets-btn,
+.start-finetune-btn,
+.stop-finetune-btn {
+    border-radius: 500px !important;
+}
+
+/* Ensure number input is always on the right */
+.svelte-10lj3xl .tab-like-container {
+    margin-left: auto !important;
+}
+
+
+/* Target Training Dataset wrap div specifically */
+div.wrap.svelte-1hfxrpf {
+    border-radius: 500px !important;
+}
+
+/* Target additional wrap div */
+div.wrap.svelte-1scun43 {
+    border-radius: 500px !important;
+}
+
