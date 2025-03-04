@@ -23,7 +23,7 @@
     --primary-700: #10B981 !important; 
     --primary-600: #34D399 !important;
     --primary-500: #55b685 !important;
-    
+    --secondary-50: #55b6861a !important;
     /* Neutral color palette */
     --neutral-900: #111827 !important;
     --neutral-800: #1F2937 !important;
@@ -479,10 +479,10 @@ select {
 
 /* Cards */
 .card {
-    background: white !important;
+    background: white;
     border-radius: 30px !important;
     padding: 1rem !important;
-    box-shadow: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.007) !important;
     min-height: 320px !important;
     padding: 22px !important;
     padding-left: 20px !important;
@@ -492,19 +492,33 @@ select {
 
 }
 
+/* Dark theme card styling */
+[data-theme="dark"] .card {
+    background: #292929 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid #232833 !important;
+    outline: none !important;
+}
+[data-theme="dark"] .gradio-container.gradio-container-5-14-0 .contain .card {
+    min-height: 226px !important;
+    padding-top: 30px !important;
+    border: 1px solid rgb(223 223 223 / 30%) !important;
+} 
+
 /* Model Selection Card specific styling */
 .model-selection-card {
-    --block-background-fill: #e9f3f0 !important;
+    --block-background-fill: #e9f3f0;
     background: var(--block-background-fill) !important;
+    margin-bottom: 3px !important;
 }
 
 .model-selection-card .wrap-inner.svelte-1hfxrpf {
-    background: #232833 !important;
+    background: #232833;
     border-radius: 500px;
 }
 
 .model-selection-card .wrap-inner.svelte-1hfxrpf .secondary-wrap.svelte-1hfxrpf {
-    background: #232833 !important;
+    background: #232833;
 }
 
 .model-selection-card .wrap.svelte-1hfxrpf.svelte-1hfxrpf {
@@ -544,8 +558,9 @@ label.container.show_textbox_border.svelte-173056l input.svelte-173056l, label.c
     fill: aliceblue !important;
 }
 
+/* Dark theme model selection card background */
 [data-theme="dark"] .model-selection-card {
-    --block-background-fill: #333333 !important;
+    --block-background-fill: #989ef5 !important;
     background: var(--block-background-fill) !important;
 }
 
@@ -634,13 +649,73 @@ div.svelte-633qhp {
 }
 
 
+
 /* Target Training Dataset wrap div specifically */
 div.wrap.svelte-1hfxrpf {
     border-radius: 500px !important;
 }
 
 /* Target additional wrap div */
-div.wrap.svelte-1scun43 {
+.local-datasets-dropdown div.wrap.svelte-1scun43 {
+    border: 1px solid var(--border-color) !important;
+    border-radius: calc(min(32px, 100%)) !important;  /* Will be capped at 32px even as element grows */
+}
+
+/* Prevent border highlight on focus and selection */
+.local-datasets-dropdown div.wrap.svelte-1scun43:focus,
+.local-datasets-dropdown div.wrap.svelte-1scun43:focus-within,
+.local-datasets-dropdown div.wrap.svelte-1scun43:active,
+.local-datasets-dropdown div.wrap.svelte-1scun43.selected {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Token styling */
+.token.svelte-1scun43,
+.token.svelte-1scun43 span,
+.local-datasets-dropdown .token.svelte-1scun43,
+div.token.svelte-1scun43 {
     border-radius: 500px !important;
 }
+
+/* Empty state container styling */
+.empty.svelte-1oiin9d.large.unpadded_box {
+    min-height: 151px !important;
+}
+
+/* Make buttons smaller */
+.upload-button, .combine-datasets-btn {
+    height: 32px !important;
+    min-width: 0 !important;
+    padding: 4px 12px !important;
+    font-size: 0.9rem !important;
+    margin-left: 0 !important;  /* Remove left margin */
+    margin-right: 0 !important;  /* Remove right margin */
+}
+
+/* Adjust the row containing the buttons */
+.card .gr-form > div > div:last-child {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: -2px !important;  /* Fine-tune alignment */
+    margin-right: -2px !important;  /* Fine-tune alignment */
+}
+
+/* Scroll hide styling */
+[data-theme="dark"] .scroll-hide.svelte-173056l {
+    background: #232833 !important;
+    border-radius: 500px !important;
+}
+
+
+[data-theme="dark"] .scroll-hide.svelte-173056l,
+[data-theme="dark"] .scroll-hide.svelte-173056l input,
+[data-theme="dark"] .scroll-hide.svelte-173056l .secondary-wrap {
+    background: #23283385 !important;
+    color: var(--neutral-900) !important;
+    border: none !important ;
+}
+
+
+
 
