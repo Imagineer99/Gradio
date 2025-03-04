@@ -54,33 +54,37 @@ def create_train_interface():
             with gr.Column(elem_classes=["card"]):
                 gr.Markdown("## Training Dataset")
                 with gr.Column():
-                    input_text = gr.Textbox(
-                        placeholder="Type dataset from 🤗",
-                        label="Hugging Face Dataset",
-                        interactive=True,
-                    )
-                    data_template = gr.Dropdown(
-                        choices=[
-                            "Alpaca",
-                            "Auto-Select",
-                            "ShareGPT",
-                            "OpenAssistant",
-                            "Anthropic Claude",
-                            "GPTeacher",
-                            "CodeAlpaca",
-                            "Dolly",
-                            "Baize",
-                            "OpenOrca",
-                            "WizardLM",
-                            "Platypus",
-                            "Vicuna",
-                            "LIMA",
-                            "Custom"
-                        ],
-                        value="Auto-Select",
-                        label="Dataset Template",
-                        interactive=True,
-                    )
+                    with gr.Row():  
+                        input_text = gr.Textbox(
+                            placeholder="Type dataset from 🤗",
+                            label="Hugging Face Dataset",
+                            interactive=True,
+                            scale=1,
+                        )
+                        data_template = gr.Dropdown(
+                            choices=[
+                                "Alpaca",
+                                "Auto-Select",
+                                "ShareGPT",
+                                "OpenAssistant",
+                                "Anthropic Claude",
+                                "GPTeacher",
+                                "CodeAlpaca",
+                                "Dolly",
+                                "Baize",
+                                "OpenOrca",
+                                "WizardLM",
+                                "Platypus",
+                                "Vicuna",
+                                "LIMA",
+                                "Custom"
+                            ],
+                            value="Auto-Select",
+                            label="Dataset Template",
+                            interactive=True,
+                            scale=1,
+                        )
+
                     # Scan for local JSON datasets
                     def get_json_datasets():
                         import glob
@@ -88,30 +92,33 @@ def create_train_interface():
                         json_files = glob.glob("datasets/*.json")  # Adjust path as needed
                         return [os.path.basename(f) for f in json_files]
 
-                    local_datasets = gr.Dropdown(
-                        choices=get_json_datasets(),
-                        label="Local Datasets",
-                        info="Select one or more JSON datasets to combine",
-                        multiselect=True,
-                        interactive=True,
-                    )
-                    with gr.Row():
-                        upload_btn = gr.UploadButton(
-                            "Upload Files",
-                            file_types=[".json", ".csv", ".xlsx", ".xls"],
-                            elem_classes=["upload-button"],
-                            scale=2,
-                        )            
-                        combine_btn = gr.Button(
-                            "🔄 Combine",
-                            elem_classes=["combine-datasets-btn"],
-                            scale=1,
+                    with gr.Column():
+                        local_datasets = gr.Dropdown(
+                            choices=get_json_datasets(),
+                            label="Local Datasets",
+                            info="Select one or more JSON datasets to combine",
+                            multiselect=True,
+                            interactive=True,
+                            elem_classes="local-datasets-dropdown",
                         )
+                        # Nested row for buttons
+                        with gr.Row():
+                            upload_btn = gr.UploadButton(
+                                "Upload Files",
+                                file_types=[".json", ".csv", ".xlsx", ".xls"],
+                                elem_classes=["upload-button"],
+                                scale=2,
+                            )            
+                            combine_btn = gr.Button(
+                                "🔄 Combine",
+                                elem_classes=["combine-datasets-btn"],
+                                scale=1,
+                            )
 
         # Middle Column - Basic Parameters
         with gr.Column(scale=1):
             with gr.Column(elem_classes=["card"]) as basic_params:
-                gr.Markdown("## Training Parameters")
+                gr.Markdown("## Configure Parameters")
                 with gr.Column():
                     num_epochs = gr.Slider(
                         minimum=1, maximum=20,
