@@ -242,7 +242,14 @@ def create_train_interface():
                     info="Controls how much the model adjusts its weights during training.",
                     allow_custom_value=True,
                     interactive=True
-                )                   
+                )  
+                gpu_count = gr.Dropdown(
+                    choices=["auto", "1", "2", "4", "8"],
+                    value="auto",
+                    label="Number of GPUs",
+                    info="Select number of GPUs for training or 'auto' to use all available GPUs",
+                    interactive=True
+                )                                 
                 weight_decay = gr.Slider(
                     minimum=0, maximum=0.1, value=0.01, 
                     label="Weight Decay",
@@ -552,6 +559,7 @@ def create_train_interface():
         'enable_tensorboard': enable_tensorboard,
         'tensorboard_dir': tensorboard_dir,
         'log_frequency': log_frequency,
+        'gpu_count': gpu_count,
         'combine_btn': combine_btn,
         'stop_btn': stop_btn,
     } 
