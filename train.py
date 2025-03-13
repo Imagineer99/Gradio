@@ -42,7 +42,7 @@ def create_train_interface():
             load_4bit = gr.Checkbox(
                 value=True,
                 label="Load in 4-bit",
-                info="Enable 4-bit quantization to reduce memory usage.",
+                info="Enable 4-bit to reduce memory usage.",
                 interactive=True,
                 scale=1,
             )

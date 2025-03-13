@@ -1,4 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
 /* make sure everything is !important */
 
 /* Default theme (light) */
@@ -375,7 +377,7 @@ label.svelte-i3tvor {
 
 .logo-container img {
     height: 55px !important;
-    width: 55px !important;
+    width: 64px !important;
     object-fit: contain !important;
     margin-right: 10px !important;
 }
@@ -1041,3 +1043,6 @@ div.token.svelte-1scun43 {
     margin-top: 1rem !important;
 }
 
+.logo-container h1 {
+    font-family: 'Poppins' !important;
+}
