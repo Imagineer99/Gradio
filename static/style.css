@@ -1052,3 +1052,8 @@ div.token.svelte-1scun43 {
 .logo-container h1 {
     font-family: 'Poppins' !important;
 }
+
+/* Target the form element directly with a very specific selector */
+.model-selection-card div.form.svelte-633qhp {
+    max-width: 390px !important; /* Extreme value to test if selector works */
+}
