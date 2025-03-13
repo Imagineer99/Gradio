@@ -524,6 +524,12 @@ select {
     margin-bottom: 3px !important;
 }
 
+/* Make the dropdown container take less space */
+.model-selection-card .wrap.svelte-1hfxrpf {
+    max-width: 370px !important;
+    width: 100% !important;
+}
+
 .model-selection-card .wrap-inner.svelte-1hfxrpf {
     background: #232833;
     border-radius: 500px;
