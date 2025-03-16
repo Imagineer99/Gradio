@@ -493,15 +493,14 @@ select {
 .card {
     background: white;
     border-radius: 30px !important;
-    padding: 1rem !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.007) !important;
     min-height: 320px !important;
     padding: 22px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 45px !important;
+    padding-right: 45px !important;
+    padding-bottom: 30px !important;
     display: flex !important;
     flex-direction: column !important;
-
 }
 
 /* Dark theme card styling */
@@ -522,6 +521,12 @@ select {
     --block-background-fill: #e9f3f0;
     background: var(--block-background-fill) !important;
     margin-bottom: 3px !important;
+}
+
+/* Add this new style for the inner form/column */
+.model-selection-card > .form.svelte-633qhp {
+    max-width: 275px !important;
+    margin: 0 auto !important;  /* Centers the form if needed */
 }
 
 /* Make the dropdown container take less space */
@@ -891,8 +896,9 @@ div.token.svelte-1scun43 {
     margin: 0 !important;
     min-height: 320px !important;
     padding: 22px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    padding-bottom: 30px !important;
 }
 
 /* Ensure each row takes full width */
@@ -908,8 +914,9 @@ div.token.svelte-1scun43 {
 /* Compact card styling */
 .compact-card {
     padding: 22px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    padding-bottom: 30px !important;
     margin: 0 !important;
 }
 
@@ -1056,4 +1063,9 @@ div.token.svelte-1scun43 {
 /* Target the form element directly with a very specific selector */
 .model-selection-card div.form.svelte-633qhp {
     max-width: 390px !important; /* Extreme value to test if selector works */
+}
+
+/* Model Selection Card column styling */
+.search-input-with-icon.svelte-vt1mxs {
+    max-width: 275px !important;
 }
