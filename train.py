@@ -25,26 +25,28 @@ def create_train_interface():
                 interactive=True,
                 scale=3,
             )
-            with gr.Row():
-                hf_token = gr.Textbox(
-                    placeholder="Enter your token",
-                    label="Hugging Face",
-                    type="password",
+            with gr.Column(elem_classes=["model-selection-card"]):
+                model_search = gr.Textbox(
+                    placeholder="Search for a model",
+                    label="Search",
                     interactive=True,
-                    elem_classes="token-input",
-                )
-            model_search = gr.Textbox(
-                placeholder="Search for a model",
-                label="Search",
+                    scale=1,    
+                    elem_classes="search-input-with-icon",
+            )
+            hf_token = gr.Textbox(
+                placeholder="Enter your token",
+                label="Hugging Face",
                 interactive=True,
                 scale=1,
+                elem_classes="token-input",
             )
             load_4bit = gr.Checkbox(
                 value=True,
                 label="Load in 4-bit",
-                info="Enable 4-bit to reduce VRAM usage",
+                info="Enable 4-bit to reduce VRAM",
                 interactive=True,
                 scale=1,
+                elem_classes="load-4bit-checkbox",
             )
 
     # Main Layout with Three Columns for Dataset, Parameters, and Progress
@@ -124,7 +126,7 @@ def create_train_interface():
                         minimum=1, maximum=20,
                         value=4,
                         label="Number of epochs",
-                        info="Number of times the model will see the entire dataset",
+                        info="Times the model will see the entire dataset",
                         step=1,
                         interactive=True
                     )                   
@@ -147,8 +149,8 @@ def create_train_interface():
                 )
                 with gr.Row():
                     start_btn = gr.Button(  
-                        "♡ Start finetuning",
-                        variant="primary",
+                        "Start finetuning",
+                        variant="primary", 
                         elem_classes=["gr-button", "start-finetune-btn"],
                         interactive=True,
                     )                    
