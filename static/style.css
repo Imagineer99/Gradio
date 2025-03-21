@@ -639,9 +639,11 @@ div.svelte-633qhp {
 
 /* Training progress card button styling */
 .training-progress-card .gr-button {
-    font-size: 14px !important;
-    height: 36px !important;
+    font-size: 0.9rem !important;
+    height: 38px !important;
     line-height: 20px !important;
+    padding-top: 10px !important;
+    padding-bottom: 28px !important;
 }
 
 /* Start button specific styling */
@@ -789,17 +791,15 @@ div.token.svelte-1scun43 {
     min-height: 180px !important;
 }
 
-/* Make buttons smaller */
+/* Training dataset card buttons */
 .upload-button, .combine-datasets-btn {
-    height: 32px !important;
-    min-width: 0 !important;
-    padding: 4px 12px !important;
     font-size: 0.9rem !important;
-    margin-left: 0 !important;  /* Remove left margin */
-    margin-right: 0 !important;  /* Remove right margin */
+    height: 38px !important;
+    line-height: 20px !important;
+    padding-top: 10px !important;
+    padding-bottom: 28px !important;
 }
-
-/* Adjust the row containing the buttons */
+/* Row containing the buttons */
 .card .gr-form > div > div:last-child {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -1138,3 +1138,6 @@ div.token.svelte-1scun43 {
 .column.model-selection-card.svelte-vt1mxs.gap {
     min-width: 399px !important;
 }
+
+
+
