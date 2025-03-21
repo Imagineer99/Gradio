@@ -495,10 +495,11 @@ select {
     border-radius: 30px !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.007) !important;
     min-height: 320px !important;
-    padding: 22px !important;
-    padding-left: 45px !important;
-    padding-right: 45px !important;
-    padding-bottom: 30px !important;
+    padding: 32px !important;
+    padding-top: 40px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    padding-bottom: 32px !important;
     display: flex !important;
     flex-direction: column !important;
 }
@@ -523,15 +524,11 @@ select {
     margin-bottom: 3px !important;
 }
 
-/* Add this new style for the inner form/column */
-.model-selection-card > .form.svelte-633qhp {
-    max-width: 275px !important;
-    margin: 0 auto !important;  /* Centers the form if needed */
-}
 
-/* Make the dropdown container take less space */
+/* Model selection card width */
 .model-selection-card .wrap.svelte-1hfxrpf {
     max-width: 370px !important;
+    min-width: 456px;
     width: 100% !important;
 }
 
@@ -577,6 +574,7 @@ label.container.show_textbox_border.svelte-173056l input.svelte-173056l, label.c
     border: var(--input-border-width) solid var(--input-border-color);
     border-radius: 500px;
 }
+
 .model-selection-card .wrap-inner.svelte-1hfxrpf .icon-wrap.svelte-1hfxrpf svg path {
     fill: aliceblue !important;
 }
@@ -1062,10 +1060,81 @@ div.token.svelte-1scun43 {
 
 /* Target the form element directly with a very specific selector */
 .model-selection-card div.form.svelte-633qhp {
-    max-width: 390px !important; /* Extreme value to test if selector works */
+    max-width: 482px !important; /* Extreme value to test if selector works */
 }
 
 /* Model Selection Card column styling */
 .search-input-with-icon.svelte-vt1mxs {
     max-width: 275px !important;
+}
+
+.card {
+    background: white;
+    border-radius: 30px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.007) !important;
+    padding: 32px !important;
+    padding-top: 32px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    padding-bottom: 32px !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.model-selection-card > .form.svelte-633qhp {
+    max-width: 275px !important;
+    gap: 0px !important;
+
+}
+
+.model-selection-card {
+    padding-bottom: 16px !important;
+}
+
+/* Search input styling */
+.model-selection-card .form.svelte-633qhp {
+    min-width: 430px !important;
+    max-width: 430px !important;
+}
+.search-input-with-icon label {
+    min-width: 350px !important;
+    max-width: 375px !important;
+}
+
+/* Model Selection card column styling */
+.column.model-selection-card.gap {
+    flex-grow: 0 !important;
+    min-width: unset !important;    
+    width: auto !important;
+}
+
+/* Remove gap in Model Selection card */
+.model-selection-card .row.svelte-1xp0cw7.unequal-height {
+    gap: 0 !important;
+}   
+
+/* Textbox styling */
+.block.load-4bit-checkbox.svelte-11xb1hd.padded {
+    margin-left: 10px !important;
+}
+
+.svelte-5ncdh7 {
+    margin-top: 8px !important;
+}
+
+/* Hide text in textboxes of HF token input */
+.token-input .scroll-hide.svelte-173056l {
+    -webkit-text-security: disc !important;
+    -moz-text-security: disc !important;
+    text-security: disc !important;
+}
+.token-input .scroll-hide.svelte-173056l::placeholder {
+    -webkit-text-security: none !important;
+    -moz-text-security: none !important;
+    text-security: none !important;
+}
+
+/* Search bar in model selection styling */
+.column.model-selection-card.svelte-vt1mxs.gap {
+    min-width: 399px !important;
 }
