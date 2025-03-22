@@ -230,14 +230,18 @@ body::before {
     border: 1px solid transparent !important;  /* Add transparent border by default */
     transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    padding: var(--space-sm) var(--space-md) !important;
-    border-radius: var(--radius-full) !important;
+    padding: 0px !important;
+    border-radius: 10px !important;
     font-weight: 600 !important;  /* Changed from 500 to 600 for bold by default */
     min-width: 100px !important;
-    height: 40px !important;
+    min-height: 40px !important;
+    height: 45px !important;
     box-sizing: border-box !important;
 }
-
+.lg.secondary.nav-button.primary.svelte-5st68j {
+    padding: 0px !important;
+    border-radius: 100px !important;
+}
 .nav-button:hover {
     color: var(--primary-700) !important;
 }
@@ -361,9 +365,10 @@ label.svelte-i3tvor {
     z-index: 1000 !important;   
     background-color: var(--background-primary) !important;
     width: 100% !important;
+    max-width: 120rem;
     box-sizing: border-box !important;
     margin-top: -100px !important;
-    margin-bottom: 130px !important;
+    margin-bottom: 110px !important;
 }
 
 /* Logo styling with Gradio overrides */
@@ -1152,3 +1157,10 @@ div.token.svelte-1scun43 {
     background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 21L16.65 16.65M11 6C13.7614 6 16 8.23858 16 11M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z' stroke='%23f3f4f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 
+.row.logo-container.svelte-1xp0cw7.unequal-height {
+    margin-left: -34px !important;
+}
+
+.row.navigation-buttons.svelte-1xp0cw7.unequal-height {
+    margin-left: 58px !important;
+}
