@@ -6,7 +6,7 @@ from train import create_train_interface
 from chat import create_chat_interface
 from export import create_export_interface
 
-# CSS loading
+# CSS 
 def load_css():
     try:
         base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -25,8 +25,9 @@ with gr.Blocks(
     css=css_content,
     title="unsloth - Fast and Easy LLM Finetuning",
     analytics_enabled=False,
+    theme="system"
 ) as demo: 
-    # Meta tags for social media
+    # Meta tags 
     gr.HTML("""
         <head>
             <meta property="og:title" content="unsloth - Fast and Easy LLM Finetuning">
@@ -127,9 +128,9 @@ with gr.Blocks(
 
     # Simplify the JavaScript click handler
     theme_toggle.click(
-        fn=None,  # No Python function
-        inputs=[],  # No inputs needed
-        outputs=[],  # No outputs needed
+        fn=None,  
+        inputs=[],  
+        outputs=[], 
         js="() => { \
             const currentTheme = document.documentElement.getAttribute('data-theme'); \
             const newTheme = currentTheme === 'light' ? 'dark' : 'light'; \

@@ -43,7 +43,7 @@ def create_train_interface():
             load_4bit = gr.Checkbox(
                 value=True,
                 label="Load in 4-bit",
-                info="Enable 4-bit to reduce VRAM",
+                info="Reduce VRAM use",
                 interactive=True,
                 scale=1,
                 elem_classes="load-4bit-checkbox",
@@ -53,7 +53,7 @@ def create_train_interface():
     with gr.Row():
         # Left Column - Dataset
         with gr.Column(scale=1):
-            with gr.Column(elem_classes=["card"]):
+            with gr.Column(elem_classes=["card", "training-dataset-card"]):
                 gr.Markdown("## Training Dataset")
                 with gr.Column():
                     with gr.Row():  
@@ -102,6 +102,7 @@ def create_train_interface():
                             multiselect=True,
                             interactive=True,
                             elem_classes="local-datasets-dropdown",
+                            value=get_json_datasets()[0] if get_json_datasets() else None
                         )
                         # Nested row for buttons
                         with gr.Row():
@@ -112,14 +113,14 @@ def create_train_interface():
                                 scale=2,
                             )            
                             combine_btn = gr.Button(
-                                "🔄 Combine",
+                                "Combine",
                                 elem_classes=["combine-datasets-btn"],
                                 scale=1,
                             )
 
         # Middle Column - Basic Parameters
         with gr.Column(scale=1):
-            with gr.Column(elem_classes=["card", "basic-params-card"]) as basic_params:
+            with gr.Column(elem_classes=["card", "basic-params-card", "Configure-Parameters-Card"]) as basic_params:
                 gr.Markdown("## Configure Parameters")
                 with gr.Column():
                     num_epochs = gr.Slider(
@@ -129,11 +130,11 @@ def create_train_interface():
                         info="Times the model will see the entire dataset",
                         step=1,
                         interactive=True
-                    )                   
+                    )                                       
                     max_sequence_length = gr.Textbox(
                         value="2048",
-                        label="Max Sequence Length",
-                        info="Maximum sequence length for the model. Choose any!",
+                        label="Max Context Length",
+                        info="Maximum sequence length for the model",
                         interactive=True
                     )
 
@@ -250,7 +251,7 @@ def create_train_interface():
                                 with gr.Column(scale=1, min_width=100):
                                     train_on_completions = gr.Checkbox(
                                         value=False,
-                                        label="Train on completions",
+                                        label="Outputs only",
                                         info="Assistant outputs only",
                                         interactive=True,
                                         elem_classes=["checkbox"]
@@ -258,7 +259,7 @@ def create_train_interface():
 
             # Second Row - Training Optimization
             with gr.Row():
-                with gr.Column(elem_classes=["card", "compact-card"]):
+                with gr.Column(elem_classes=["card", "compact-card", "training-optimization-card"]):
                     gr.Markdown("## Training Optimization")
                     
                     # Group 1: Learning Rate and GPU Settings
@@ -280,7 +281,14 @@ def create_train_interface():
                                 info="Select GPUs or 'auto'",
                                 interactive=True
                             )
-
+                        with gr.Column(scale=1):
+                            random_seed = gr.Number(
+                                value=3407,
+                                label="Random Seed",
+                                info="For reproducibility",
+                                precision=0,
+                                interactive=True
+                            )
                     # Group 2: Batch Processing Settings
                     with gr.Row():
                         with gr.Column(scale=1):
@@ -328,32 +336,14 @@ def create_train_interface():
                                 interactive=True
                             )
                         with gr.Column(scale=1):
-                            max_seq_length = gr.Slider(
-                                minimum=32, maximum=4096, value=512,
-                                label="Max Sequence Length",
-                                info="Truncates longer sequences",
-                                step=32,
+                            save_steps = gr.Slider(
+                                minimum=0, maximum=1000, value=0,
+                                label="Save Steps",
+                                info="Steps between saving model",
+                                step=1,
                                 interactive=True
                             )
-
-                    # Group 4: Additional Settings
-                    with gr.Row():
-                        with gr.Column(scale=2):
-                            dataset_text_field = gr.Textbox(
-                                value="text",
-                                label="Dataset Text Field",
-                                info="Column name containing training text",
-                                interactive=True
-                            )
-                        with gr.Column(scale=1):
-                            random_seed = gr.Number(
-                                value=3407,
-                                label="Random Seed",
-                                info="For reproducibility",
-                                precision=0,
-                                interactive=True
-                            )
-                    
+                                
                     # Group 5: Sequence Packing Option
                     with gr.Row():
                         packing = gr.Checkbox(
@@ -583,7 +573,6 @@ def create_train_interface():
         'batch_size': batch_size,
         'grad_accumulation': grad_accumulation,
         'data_template': data_template, 
-        'dataset_text_field': dataset_text_field,
         'packing': packing,
         'target_modules': target_modules,
         'lora_r': lora_r,
@@ -593,7 +582,6 @@ def create_train_interface():
         'use_rslora': use_rslora,
         'use_loftq': use_loftq,
         'train_on_completions': train_on_completions, 
-        'max_seq_length': max_seq_length,
         'enable_wandb': enable_wandb,
         'wandb_token': wandb_token,
         'wandb_project': wandb_project,
@@ -603,4 +591,5 @@ def create_train_interface():
         'gpu_count': gpu_count,
         'combine_btn': combine_btn,
         'stop_btn': stop_btn,
+        'save_steps': save_steps,
     } 

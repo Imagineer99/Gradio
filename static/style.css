@@ -86,8 +86,8 @@ body {
 /* Updated theme toggle button styles */
 .theme-toggle-btn {
     position: relative !important;
-    width: 70px !important;
-    height: 34px !important;
+    width: 80px !important;      /* Increased from 70px */
+    height: 40px !important;     /* Increased from 34px */
     border-radius: var(--radius-full) !important;
     cursor: pointer !important;
     padding: 0 !important;
@@ -96,23 +96,23 @@ body {
     background: var(--background-primary) !important;
     box-shadow: 1px 1px 2px var(--shadow-color),
                 -1px -1px 2px rgba(255, 255, 255, 0.05) !important;
-    max-width: 70px !important;
-    min-width: 70px !important;
+    max-width: 80px !important;  /* Increased from 70px to match width */
+    min-width: 80px !important;  /* Increased from 70px to match width */
 }
 
 .theme-toggle-btn::after {
     content: '' !important;
     position: absolute !important;
-    top: 4px !important;
-    left: 4px !important;
-    width: 26px !important;
-    height: 26px !important;
+    top: 5px !important;         /* Adjusted from 4px to center the circle */
+    left: 5px !important;        /* Adjusted from 4px to center the circle */
+    width: 30px !important;      /* Increased from 26px */
+    height: 30px !important;     /* Increased from 26px */
     border-radius: 50% !important;
     background-color: var(--background-primary) !important;
     box-shadow: inset 4px 4px 8px var(--shadow-color),
                 inset -1px -1px 2px var(--background-secondary) !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    background-size: 18px !important;
+    background-size: 20px !important;  /* Increased from 18px to scale icon with button */
     background-position: center !important;
     background-repeat: no-repeat !important;
 }
@@ -127,7 +127,7 @@ body {
 body[data-theme="dark"] .theme-toggle-btn::after,
 :root[data-theme="dark"] .theme-toggle-btn::after {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 15.8442C20.6866 16.4382 19.2286 16.7688 17.6935 16.7688C11.9153 16.7688 7.23116 12.0847 7.23116 6.30654C7.23116 4.77135 7.5618 3.3134 8.15577 2C4.52576 3.64163 2 7.2947 2 11.5377C2 17.3159 6.68414 22 12.4623 22C16.7053 22 20.3584 19.4742 22 15.8442Z' stroke='%23f3f4f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-    transform: translateX(36px) !important;
+    transform: translateX(40px) !important;  /* Increased from 36px to account for wider button */
 }
 
 .theme-toggle-btn:active {
@@ -177,7 +177,7 @@ body::before {
 .gr-button.primary {
     background-color: var(--primary-700) !important;
     color: white !important;
-    border: 1px solid var(--primary-800) !important;
+    border: none !important;
 }
 
 .gr-button.primary:hover {
@@ -368,7 +368,7 @@ label.svelte-i3tvor {
     max-width: 120rem;
     box-sizing: border-box !important;
     margin-top: -100px !important;
-    margin-bottom: 110px !important;
+    margin-bottom: 120px !important;
 }
 
 /* Logo styling with Gradio overrides */
@@ -799,7 +799,7 @@ div.token.svelte-1scun43 {
 /* Training dataset card buttons */
 .upload-button, .combine-datasets-btn {
     font-size: 0.9rem !important;
-    height: 38px !important;
+    height: 41px !important;
     line-height: 20px !important;
     padding-top: 10px !important;
     padding-bottom: 28px !important;
@@ -1102,8 +1102,8 @@ div.token.svelte-1scun43 {
     max-width: 430px !important;
 }
 .search-input-with-icon label {
-    min-width: 350px !important;
-    max-width: 375px !important;
+    min-width: 397px !important;
+    max-width: 397px !important;
 }
 
 /* Model Selection card column styling */
@@ -1124,7 +1124,7 @@ div.token.svelte-1scun43 {
 }
 
 .svelte-5ncdh7 {
-    margin-top: 8px !important;
+    margin-top: 9px !important;
 }
 
 /* Hide text in textboxes of HF token input */
@@ -1147,20 +1147,188 @@ div.token.svelte-1scun43 {
 
 .model-selection-card .search-input-with-icon .scroll-hide.svelte-173056l {
     padding-left: 40px !important;
-    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 21L16.65 16.65M11 6C13.7614 6 16 8.23858 16 11M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
     background-repeat: no-repeat !important;
     background-position: 12px center !important;
     background-size: 20px !important;
 }
 
 [data-theme="dark"] .model-selection-card .search-input-with-icon .scroll-hide.svelte-173056l {
-    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 21L16.65 16.65M11 6C13.7614 6 16 8.23858 16 11M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z' stroke='%23f3f4f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z' stroke='%23f3f4f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 
+/* Header spacing */
 .row.logo-container.svelte-1xp0cw7.unequal-height {
     margin-left: -34px !important;
 }
-
 .row.navigation-buttons.svelte-1xp0cw7.unequal-height {
     margin-left: 58px !important;
+}
+
+
+/* Model Selection Card column styling */
+.model-selection-card .form.svelte-633qhp {
+    max-width: 582px !important;
+}
+.block.token-input.svelte-11xb1hd.padded {
+    margin-left: 21px !important;
+}
+.svelte-j9uq24 {
+    min-width: 213px !important;
+}
+.block.load-4bit-checkbox.svelte-11xb1hd.padded {
+    overflow: hidden !important;
+}
+
+/* model selection card button heights*/
+.wrap-inner.svelte-1hfxrpf {
+    height: 45px !important;
+}
+.scroll-hide.svelte-173056l {
+    height: 45px !important;
+}
+.scroll-hide.svelte-173056l {
+    height: 45px !important;
+}
+
+/* model selection card width */
+.gradio-container.gradio-container-5-14-0 .contain .model-selection-card div.form.svelte-633qhp {
+    max-width: 497px !important;
+}
+
+/* search input with icon margin */
+.block.search-input-with-icon.svelte-11xb1hd.padded {
+    margin-left: -9px !important;
+}
+
+
+.training-progress-card .gr-button {
+    font-size: 0.9rem !important;
+    height: 41px !important;
+    line-height: 20px !important;
+    padding-top: 10px !important;
+    padding-bottom: 28px !important;  
+}
+
+/* Configure Param card height */
+.column.card.basic-params-card.svelte-vt1mxs.gap {
+    min-height: 383px !important;
+    max-height: 383px !important; 
+}
+
+/* Training progress card height */
+.gradio-container.gradio-container-5-14-0 .contain .empty.svelte-1oiin9d.large.unpadded_box {
+    min-height: 191px !important;
+}
+
+/* Traning Dataset, local dataset selection bar height */
+.wrap.svelte-1scun43 {
+    min-height: 49px !important;
+}
+
+
+.scroll-hide.svelte-173056l {   
+    min-height: 43px !important;
+}
+
+/* Configure Parameters card spacing */
+.basic-params-card .svelte-j9uq24 {
+    margin-bottom: 19px !important;
+}
+.basic-params-card .svelte-173056l.container.show_textbox_border {
+    margin-bottom: -13px !important;
+}
+.basic-params-card .block.svelte-11xb1hd.padded.hide-container.auto-margin {
+    overflow: hidden !important;
+}
+.gradio-container.gradio-container-5-14-0 .contain .basic-params-card .svelte-173056l.container.show_textbox_border {
+    margin-bottom: -4px !important;
+}
+
+.column.card.basic-params-card.svelte-vt1mxs.gap {
+    padding-bottom: 13px !important;
+}
+.advanced-params .card {
+    padding: 32px !important;
+    padding-top: 32px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    padding-bottom: 32px !important;
+} 
+
+/* padding of the text inside the textboxes. */
+.gradio-container.gradio-container-5-14-0 .contain .scroll-hide.svelte-173056l {
+    padding-top: 11px !important;
+}
+/* dropdown height */
+.gradio-container.gradio-container-5-14-0 .contain .wrap-inner.svelte-1hfxrpf {
+    height: 44px !important;
+}
+
+.wrap-inner.svelte-1hfxrpf {
+    height: 43px !important;
+}
+
+.block.plot-container.svelte-11xb1hd.hide-container.auto-margin {
+    min-height: 194px !important;
+}
+
+/* Target scroll-hide elements specifically in Configure Parameters card */
+.basic-params-card .scroll-hide.svelte-173056l {
+    height: 41px !important;
+    min-height: 41px !important;
+    max-height: 41px !important;
+    padding-top: 11px !important;
+    margin-top: 4px !important;
+    padding-left: 13px !important;
+}
+
+.md.svelte-7ddecg.chatbot.prose {
+    margin-bottom: 24px !important;
+}
+
+.basic-params-card .slider_input_container.svelte-10lj3xl.svelte-10lj3xl  {
+    margin-top: -8px !important;
+    margin-bottom: 8px !important;
+}
+
+/* Note to self: reduce left and right padding of cards */ 
+/*
+<h2 style="
+    margin-bottom: 0.25rem !important;
+">Model Selection</h2> */
+
+/* Moves upload & combine datasets button up */
+.gradio-container.gradio-container-5-14-0 .contain .upload-button, .gradio-container.gradio-container-5-14-0 .contain .combine-datasets-btn {
+    transform: translateY(-1px) !important;
+}
+.block.checkbox.svelte-11xb1hd.padded.auto-margin {
+    overflow: hidden !important;
+}
+
+/* Training optimization input bar styling */
+.svelte-1hfxrpf.container {
+    max-width: 432px !important;
+    margin-left: 1px !important;
+}
+
+/* Training optimization card column styling */
+.card.compact-card.training-optimization-card .column.svelte-vt1mxs.gap {
+    max-width: 454px !important;
+}
+
+/* Advanced carc toggle container margin */
+.row.mode-toggle-container.svelte-1xp0cw7.unequal-height {
+    margin-top: -7px !important;
+}
+
+/* Model selection card margin */
+.model-selection-card .block.svelte-11xb1hd.padded.hide-container.auto-margin {
+    margin-bottom: -0.75rem !important;
+}
+
+/* Card padding */
+.card {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
 }
