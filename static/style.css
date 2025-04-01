@@ -1132,6 +1132,7 @@ div.token.svelte-1scun43 {
     -webkit-text-security: disc !important;
     -moz-text-security: disc !important;
     text-security: disc !important;
+    padding-left: 21px;
 }
 .token-input .scroll-hide.svelte-173056l::placeholder {
     -webkit-text-security: none !important;
@@ -1278,7 +1279,7 @@ div.token.svelte-1scun43 {
     height: 41px !important;
     min-height: 41px !important;
     max-height: 41px !important;
-    padding-top: 11px !important;
+    padding-top: 10px !important;
     margin-top: 4px !important;
     padding-left: 13px !important;
 }
@@ -1331,4 +1332,322 @@ div.token.svelte-1scun43 {
 .card {
     padding-left: 28px !important;
     padding-right: 28px !important;
+}
+
+.upload-svg-wrapper {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-svg-wrapper svg {
+    color: #666;
+    transition: color 0.2s;
+    cursor: pointer;  /* Add cursor pointer to the SVG itself */
+}
+
+/* Also add it to the path to ensure it works everywhere */
+.upload-svg-wrapper svg path {
+    cursor: pointer;
+}
+
+.upload-svg-wrapper:hover svg {
+    color: #333;
+}
+
+.upload-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.upload-svg-wrapper {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-svg-wrapper svg {
+    color: #666;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.upload-svg-wrapper svg path {
+    cursor: pointer;
+}
+
+.upload-svg-wrapper:hover svg {
+    color: #333;
+}
+
+/* Style the image preview */
+.chat-image-input {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+}
+
+.chat-image-input img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* Hide the file input but keep the preview visible */
+.chat-image-input .hide {
+    display: none !important;
+}
+
+.chat-image-input:not(:has(img)) {
+    display: none !important;
+}
+
+.upload-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.chat-image-input {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+}
+
+.chat-image-input img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+.upload-svg-wrapper {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-svg-wrapper svg {
+    color: #666;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.upload-svg-wrapper:hover svg {
+    color: #333;
+}
+
+.upload-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.chat-image-input {
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    background: #f0f0f0 !important;
+}
+
+.chat-image-input img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 4px !important;
+}
+
+/* Hide the default file input elements but keep the preview */
+.chat-image-input .hide,
+.chat-image-input > div:not(:has(img)) {
+    display: none !important;
+}
+
+.upload-svg-wrapper {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-svg-wrapper svg {
+    color: #666;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.upload-svg-wrapper:hover svg {
+    color: #333;
+}
+
+/* Style for the preview container */
+.chat-image-input > div {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.custom-upload {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.thumbnail-preview {
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 4px !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    border: 1px solid #ddd !important;
+}
+
+.upload-svg-wrapper {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-svg-wrapper svg {
+    color: #666;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.upload-svg-wrapper:hover svg {
+    color: #333;
+}
+
+.upload-svg-wrapper {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-svg-wrapper svg {
+    color: #666;
+    transition: color 0.2s;
+}
+
+.upload-svg-wrapper:hover svg {
+    color: #333;
+}
+
+/* Style for textarea only */
+.gradio-container.gradio-container-5-14-0 .contain label.container.show_textbox_border.svelte-173056l textarea.svelte-173056l:not(.search-input-with-icon *) {
+    padding-left: 20px !important;
+}
+
+/* Style specifically for search input */
+.gradio-container.gradio-container-5-14-0 .contain .model-selection-card .search-input-with-icon .scroll-hide.svelte-173056l {
+    padding-left: 42px !important;
+}
+/* prompt card styling */
+.prompting-card .system-prompt-input .scroll-hide.svelte-173056l {
+    min-height: 161px !important;
+    max-height: 500px !important;
+    border-radius: 26px !important;
+}
+.prompting-card div.svelte-j9uq24>.md.prose * {
+    color: var(--block-info-text-color);
+    margin-bottom: 18px !important;
+}
+
+.chat-input {
+    border-radius: 500px !important;
+    max-width: 599px;
+    margin-left: 25rem;
+    margin-right: -1rem;
+}
+
+.model-selection-container {
+    background: white !important;
+    border-radius: 30px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.007) !important;
+    padding: 28px !important;
+    margin-bottom: 20px !important;
+    border: solid 1px #dfdfdf !important;
+}
+
+[data-theme="dark"] .model-selection-container {
+    background: #292929 !important;
+    border: 1px solid rgb(223 223 223 / 30%) !important;
+}
+
+/* Chat input card width */
+.chat-card .column.svelte-vt1mxs.gap {  
+    max-width: 998px;
+}
+.chat-history.modern-chat.svelte-11xb1hd.flex.auto-margin {
+    border-radius: 19px !important;
+    min-height: 50rem !important;
+}
+
+/* Monitoring and logging width */
+.gradio-container.gradio-container-5-14-0 .contain .card.logging-monitoring-card {
+    max-width: 761px !important;
+    margin-left: 500px !important;
+    width: 100% !important;
+}
+
+.message-row.bubble.user-row.svelte-pcjl1g.with_avatar.with_opposite_avatar {
+    margin-right: 362px !important;
+}
+
+.message-row.bubble.bot-row.svelte-pcjl1g.with_avatar.with_opposite_avatar {
+    margin-left: 362px !important;
+}
+
+
+.user.svelte-pcjl1g.message {
+    background-color: #f0f0f000 !important;
+    border-color: #b5e2d5 !important;
+}
+
+.bot.svelte-pcjl1g.message {
+    border-color: #1818c80a !important;
+    background-color: rgb(227 234 253 / 74%) !important
+}
+
+
+.gradio-container.gradio-container-5-14-0 .contain label.container.show_textbox_border.svelte-173056l textarea.svelte-173056l {
+    white-space: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    resize: none !important;
+}
+
+.chat-card .secondary-wrap.svelte-1hfxrpf {
+    background: #232833 !important;
+}
+
+.chat-card input.svelte-1hfxrpf.svelte-1hfxrpf {
+    color: aliceblue !important;
+}
+
+.chat-card .wrap.svelte-1hfxrpf {
+    background: #232833 !important;
+}
+
+.chat-card .wrap-inner.svelte-1hfxrpf {
+    color: aliceblue !important;
 }
