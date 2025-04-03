@@ -1713,3 +1713,49 @@ div.token.svelte-1scun43 {
 .chat-history.modern-chat.svelte-11xb1hd.flex.auto-margin {
     overflow: hidden !important;
 }
+
+.custom-send.svelte-11xb1hd.hide-container.auto-margin {
+    height: 55px !important;
+}
+
+#chat-examples {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    z-index: 100;
+}
+
+[data-theme="dark"] #chat-examples {
+    background: var(--background-primary);
+}
+
+#welcome-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.example-btn {
+    padding: 1rem !important;
+    background: linear-gradient(to bottom right, #f7faff, #ffffff) !important;
+    box-shadow: none !important;
+    border-radius: 20px !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.example-btn:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-1px) !important;
+}
+
+[data-theme="dark"] .example-btn {
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0.1)) !important;
+}
