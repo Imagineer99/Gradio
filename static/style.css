@@ -878,8 +878,12 @@ div.token.svelte-1scun43 {
     margin: 0 8px !important;
 }
 
-.advanced-params .card:first-child {
+.advanced-params .card:first-child:not(.logging-monitoring-card) {
     margin-left: 0 !important;
+}
+/* Monitoring and logging card margin */
+.advanced-params .card.logging-monitoring-card:first-child {
+    margin-left: 372px !important;
 }
 
 .advanced-params .card:last-child {
@@ -1577,6 +1581,7 @@ div.token.svelte-1scun43 {
     max-width: 599px;
     margin-left: 25rem;
     margin-right: -1rem;
+    position: relative !important;
 }
 
 .model-selection-container {
@@ -1602,21 +1607,23 @@ div.token.svelte-1scun43 {
     min-height: 50rem !important;
 }
 
-/* Monitoring and logging width */
-.gradio-container.gradio-container-5-14-0 .contain .card.logging-monitoring-card {
-    max-width: 761px !important;
-    margin-left: 500px !important;
-    width: 100% !important;
-}
+
 
 .message-row.bubble.user-row.svelte-pcjl1g.with_avatar.with_opposite_avatar {
-    margin-right: 362px !important;
+    margin-right: 364px !important;
 }
 
 .message-row.bubble.bot-row.svelte-pcjl1g.with_avatar.with_opposite_avatar {
-    margin-left: 362px !important;
+    margin-left: 348px !important;
 }
 
+.avatar-container.svelte-1u5aj92 {
+    margin-left: 342px !important;
+}
+.message-content.svelte-1u5aj92 {
+    background-color: rgb(227 234 253 / 74%) !important;
+    border-radius: 500px 500px 500px 0px !important;
+}
 
 .user.svelte-pcjl1g.message {
     background-color: #f0f0f000 !important;
@@ -1636,18 +1643,73 @@ div.token.svelte-1scun43 {
     resize: none !important;
 }
 
-.chat-card .secondary-wrap.svelte-1hfxrpf {
-    background: #232833 !important;
+/* Monitoring and logging width */
+.gradio-container.gradio-container-5-14-0 .contain .card.logging-monitoring-card {
+    max-width: 761px !important;
+    margin-left: 500px !important;
+    width: 100% !important;
 }
 
-.chat-card input.svelte-1hfxrpf.svelte-1hfxrpf {
-    color: aliceblue !important;
+.block.model-search.svelte-11xb1hd.padded {
+    position: relative !important;
+    left: -583px !important;
 }
 
-.chat-card .wrap.svelte-1hfxrpf {
-    background: #232833 !important;
+.gradio-container.gradio-container-5-14-0 .contain .card input[aria-label="Logging Frequency"], .gradio-container.gradio-container-5-14-0 .contain .card input[aria-label="W&B API Token"], .gradio-container.gradio-container-5-14-0 .contain .card input[aria-label="W&B Project Name"], .gradio-container.gradio-container-5-14-0 .contain .card input[aria-label="TensorBoard Log Directory"], .gradio-container.gradio-container-5-14-0 .contain .card input[aria-label="Random Seed"] {
+    min-height: 2.8rem !important;
 }
 
-.chat-card .wrap-inner.svelte-1hfxrpf {
-    color: aliceblue !important;
+.chat-card .block.svelte-11xb1hd.padded.hide-container.auto-margin {
+    margin-bottom: -0.75rem !important;
+}
+
+.send-svg-wrapper {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+    width: 36px !important;
+    height: 36px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto !important;  /* Re-enable pointer events just for the button */
+}
+
+.send-svg-wrapper:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.send-svg-wrapper svg {
+    width: 28px !important;  /* Increased from 20px */
+    height: 28px !important;  /* Increased from 20px */
+}
+
+.chat-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: absolute !important;
+    right: 60px !important;  /* Position from right edge of input */
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 10 !important;
+}
+
+.custom-send {
+    position: absolute !important;
+    right: 180px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 9999 !important;
+    pointer-events: none !important;  /* Allow click-through on the container */
+    overflow: hidden !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .custom-upload {
+    margin-left: -14px !important;
+}
+
+.chat-history.modern-chat.svelte-11xb1hd.flex.auto-margin {
+    overflow: hidden !important;
 }

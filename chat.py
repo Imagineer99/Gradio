@@ -1,5 +1,6 @@
 import gradio as gr
 from PIL import Image
+import time
 
 # Image processing
 import base64
@@ -8,9 +9,6 @@ from io import BytesIO
 # Mock response to test the chat interface
 def mock_chat_response(message, temperature, top_p, max_length, image=None):
     """Mock response function that returns hardcoded responses"""
-    if image is not None:
-        return "I see you've shared an image!"
-    
     responses = [
         "That's an interesting point! Let me think about it...",
         "I understand what you're asking. Here's my perspective...",
@@ -18,7 +16,15 @@ def mock_chat_response(message, temperature, top_p, max_length, image=None):
         "That's a great question! Here's what I think...",
     ]
     import random
-    return random.choice(responses)
+    response = random.choice(responses)
+    
+    if image is not None:
+        response = "I see you've shared an image!"
+    
+    # Stream the response character by character
+    for i in range(len(response)):
+        yield response[:i+1]
+        time.sleep(0.05)  # Add a small delay between characters
 
 def create_chat_interface():
     with gr.Blocks() as chat_interface:
@@ -69,11 +75,10 @@ def create_chat_interface():
             with gr.Row(elem_classes=["chat-input-row"]):
                 with gr.Column(scale=8):
                     msg = gr.Textbox(
-                        placeholder="Message...",
+                        placeholder="Ask anything...",
                         show_label=False,
                         elem_classes=["chat-input", "modern-input"],
                         container=False,
-                        
                     )
                 with gr.Column(scale=1, elem_classes=["chat-controls"]):
                     image_input = gr.Image(
@@ -84,17 +89,28 @@ def create_chat_interface():
                         container=False,
                         visible=False
                     )
-                    upload_icon = gr.HTML(
-                        value="""
-                        <div class="upload-svg-wrapper" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
-                            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" 
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        """,
-                        elem_classes=["custom-upload"]
-                    )
+                    with gr.Row():
+                        send_button = gr.HTML(
+                            value="""
+                            <div class="send-svg-wrapper">
+                                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            """,
+                            elem_classes=["custom-send"]
+                        )
+                        upload_icon = gr.HTML(
+                            value="""
+                            <div class="upload-svg-wrapper" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" 
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            """,
+                            elem_classes=["custom-upload"]
+                        )
 
                     def on_image_upload(image):
                         print("Image uploaded:", image)
@@ -219,6 +235,9 @@ def create_chat_interface():
         return img
 
     def user_message(message, chat_history, temp, top_p, min_p, top_k, max_len, rep_penalty, img, system_prompt):
+        # Add delay at the start of message processing
+        time.sleep(0.001)  # Small initial delay
+        
         if message or img is not None:
             chat_history = chat_history or []
             
@@ -241,12 +260,16 @@ def create_chat_interface():
                 else:
                     user_content = img_data
             
-            response = mock_chat_response(message, temp, top_p, max_len, img)
+            # Add user message to history
+            chat_history.append({"role": "user", "content": user_content})
             
-            chat_history.extend([
-                {"role": "user", "content": user_content},
-                {"role": "assistant", "content": response}
-            ])
+            # Initialize assistant's message
+            chat_history.append({"role": "assistant", "content": ""})
+            
+            # Stream the assistant's response
+            for partial_response in mock_chat_response(message, temp, top_p, max_len, img):
+                chat_history[-1]["content"] = partial_response
+                yield "", None, chat_history
             
             return "", None, chat_history
         return message, img, chat_history
@@ -256,7 +279,17 @@ def create_chat_interface():
         user_message,
         inputs=[msg, chatbot, temperature, top_p, min_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
         outputs=[msg, image_input, chatbot],
-        show_progress=False
+        show_progress=False,
+        queue=True
+    )
+
+    # Add click handler for send button
+    send_button.click(
+        user_message,
+        inputs=[msg, chatbot, temperature, top_p, min_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
+        outputs=[msg, image_input, chatbot],
+        show_progress=False,
+        queue=True
     )
 
     # Clear chat button
