@@ -1433,46 +1433,6 @@ div.token.svelte-1scun43 {
     object-fit: cover !important;
 }
 
-.upload-svg-wrapper {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.upload-svg-wrapper svg {
-    color: #666;
-    transition: color 0.2s;
-    cursor: pointer;
-}
-
-.upload-svg-wrapper:hover svg {
-    color: #333;
-}
-
-.upload-row {
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-}
-
-.chat-image-input {
-    width: 24px !important;
-    height: 24px !important;
-    border-radius: 4px !important;
-    overflow: hidden !important;
-    background: #f0f0f0 !important;
-}
-
-.chat-image-input img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    border-radius: 4px !important;
-}
-
 /* Hide the default file input elements but keep the preview */
 .chat-image-input .hide,
 .chat-image-input > div:not(:has(img)) {
@@ -1517,25 +1477,6 @@ div.token.svelte-1scun43 {
     background-position: center !important;
     background-repeat: no-repeat !important;
     border: 1px solid #ddd !important;
-}
-
-.upload-svg-wrapper {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.upload-svg-wrapper svg {
-    color: #666;
-    transition: color 0.2s;
-    cursor: pointer;
-}
-
-.upload-svg-wrapper:hover svg {
-    color: #333;
 }
 
 .upload-svg-wrapper {
@@ -1759,3 +1700,167 @@ div.token.svelte-1scun43 {
 [data-theme="dark"] .example-btn {
     background: linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0.1)) !important;
 }
+
+/* Add these new styles at the end of the file */
+.chat-input-initial {
+    max-width: 768px !important;  /* Wider initial state */
+    height: 60px !important;      /* Taller input box */
+    padding: 20px 25px !important;
+    font-size: 1.1rem !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid var(--border-color) !important;
+    margin-top: 150px !important;
+}
+
+.chat-input-initial .scroll-hide.svelte-173056l {
+    padding-top: 0px !important;
+}
+
+/* Control positioning for initial state */
+.chat-input-initial ~ .chat-controls {
+    right: calc(50% - 350px) !important;
+}
+
+/* Initial state styling */
+.upload-svg-wrapper.initial-state {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.upload-svg-wrapper.initial-state svg {
+    transform: scale(1) !important;
+}
+
+.send-svg-wrapper.initial-state {
+    width: 42px !important;
+    height: 42px !important;
+    padding: 10px !important;
+}
+
+.send-svg-wrapper.initial-state svg {
+    transform: scale(1.2) !important;
+}
+
+/* Active state styling */
+.upload-svg-wrapper:not(.initial-state) {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.upload-svg-wrapper:not(.initial-state) svg {
+    transform: scale(1) !important;
+}
+
+.send-svg-wrapper:not(.initial-state) {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 8px !important;
+}
+
+.send-svg-wrapper:not(.initial-state) svg {
+    transform: scale(1) !important;
+}
+
+/* Smooth transitions */
+.upload-svg-wrapper,
+.send-svg-wrapper,
+.chat-controls,
+.upload-svg-wrapper svg,
+.send-svg-wrapper svg {
+    transition: all 0.3s ease !important;
+}
+
+.block.custom-send.svelte-11xb1hd.hide-container.auto-margin {
+    margin-top: 180px;
+}
+
+.block.custom-upload.svelte-11xb1hd.hide-container.auto-margin .initial-state {
+    margin-top: 356px;
+}
+
+.block.custom-send.svelte-11xb1hd.hide-container.auto-margin {
+    right: 72px !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .custom-upload {
+    margin-left: 39px !important;
+}
+
+
+.gradio-container.gradio-container-5-14-0 .contain .upload-svg-wrapper.initial-state {
+    transform: translateX(180px);
+    margin-left: -9px;
+    margin-top: 361px !important;
+}
+
+/* Initial state only - add the margin-top */
+.gradio-container.gradio-container-5-14-0 .contain .block.custom-send.svelte-11xb1hd.hide-container.auto-margin.initial-state {
+    margin-top: 180px;
+}
+
+/* Active state - override the margin-top */
+.gradio-container.gradio-container-5-14-0 .contain .block.custom-send.svelte-11xb1hd.hide-container.auto-margin.active-chat {
+    margin-top: -13px !important; /* Reset to the active state margin */
+}
+
+/* Container styling for upload button in initial state */
+.block.custom-upload.svelte-11xb1hd.hide-container.auto-margin.initial-state {
+    transform: translateX(180px);
+    margin-top: 361px !important;
+}
+
+/* Container styling for upload button in active state */
+.block.custom-upload.svelte-11xb1hd.hide-container.auto-margin.active-chat {
+    transform: translateX(0);
+    margin-top: 0 !important;
+}
+
+/* Container styling for send button in initial state */
+.block.custom-send.svelte-11xb1hd.hide-container.auto-margin.initial-state {
+    margin-top: 180px;
+}
+
+/* Container styling for send button in active state */
+.block.custom-send.svelte-11xb1hd.hide-container.auto-margin.active-chat {
+    margin-top: -13px !important;
+}
+.gradio-container.gradio-container-5-14-0 .contain .block.custom-upload.svelte-11xb1hd.hide-container.auto-margin.active-chat {
+    margin-top: 42px !important;
+    margin-left: -131px !important;
+}
+.block.custom-upload.svelte-11xb1hd.hide-container.auto-margin.initial-state {
+    /* Your styles for initial state only */
+    margin-top: 361px !important;
+    transform: translateX(180px);
+}
+.gradio-container.gradio-container-5-14-0 .contain .custom-upload {
+    margin-left: 11px !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .block.custom-upload.svelte-11xb1hd.hide-container.auto-margin .initial-state {
+    margin-left: -119px !important;
+}
+.gradio-container.gradio-container-5-14-0 .contain .block.custom-send.svelte-11xb1hd.hide-container.auto-margin.active-chat {
+    margin-top: 19px !important;
+}
+.gradio-container.gradio-container-5-14-0 .contain .upload-svg-wrapper:not(.initial-state) {
+    width: 24px !important;
+    height: 24px !important;
+    margin-left: 23px;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .block.custom-send.svelte-11xb1hd.hide-container.auto-margin.active-chat {
+    margin-top: 23px !important;
+    right: 240px !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .block.custom-upload.svelte-11xb1hd.hide-container.auto-margin.active-chat {
+    margin-top: 45px !important;
+    margin-left: -131px !important;
+}
+
+.block.custom-upload.svelte-11xb1hd.hide-container.auto-margin.initial-state {
+    transform: translateX(180px);
+    margin-top: 361px !important;
+}
+

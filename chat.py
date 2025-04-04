@@ -42,18 +42,18 @@ def create_chat_interface():
                  gr.Markdown("##")
 
             # Initial popup/example section inside chat container
-            with gr.Column(elem_id="chat-examples", visible=True) as example_block:
-                with gr.Row():
-                    with gr.Column(scale=2):
-                        gr.Markdown("## Welcome to Unsloth Chat", elem_id="welcome-title")
-                        gr.Markdown("Making the community's best AI chat models available to everyone.")
-                    with gr.Column(scale=1):
-                        gr.Markdown("Chat UI is now open sourced on Hugging Face Hub")
-                        gr.Markdown("check out the [↗ repository](https://huggingface.co/spaces/unsloth/chat)")
-                
-                gr.Markdown("### Try these examples:")
-                with gr.Row():
-                    example_buttons = [gr.Button(example, elem_classes=["example-btn"]) for example in examples]
+            #with gr.Column(elem_id="chat-examples", visible=True) as example_block:
+            #    with gr.Row():
+            #        with gr.Column(scale=2):
+            #            gr.Markdown("## Welcome to Unsloth Chat", elem_id="welcome-title")
+            #            gr.Markdown("Making the community's best AI chat models available to everyone.")
+            #        with gr.Column(scale=1):
+            #            gr.Markdown("Chat UI is now open sourced on Hugging Face Hub")
+            #            gr.Markdown("check out the [↗ repository](https://huggingface.co/spaces/unsloth/chat)")
+            #    
+            #    gr.Markdown("### Try these examples:")
+            #    with gr.Row():
+            #        example_buttons = [gr.Button(example, elem_classes=["example-btn"]) for example in examples]
 
             # Chat History
             chatbot = gr.Chatbot(
@@ -63,43 +63,42 @@ def create_chat_interface():
                 container=True,
                 type="messages",
                 avatar_images=["user.png", "assistant.png"],
-                layout="bubble"
+                layout="bubble",
+                visible=False
             )
 
             # Input Area
             with gr.Row(elem_classes=["chat-input-row"]):
                 with gr.Column(scale=8):
                     msg = gr.Textbox(
-                        placeholder="Ask anything...", show_label=False,
-                        elem_classes=["chat-input", "modern-input"], container=False
+                        placeholder="Type your message here...",
+                        show_label=False,
+                        container=False,
+                        elem_classes=["chat-input", "modern-input", "chat-input-initial"]  # Start with initial state
                     )
-                with gr.Column(scale=1, elem_classes=["chat-controls"]):
-                    image_input = gr.Image(
-                        label="", type="pil", elem_classes=["chat-image-input"],
-                        show_label=False, container=False, visible=False
-                    )
-                    with gr.Row(equal_height=True):
-                        upload_icon = gr.HTML(
-                            value="""
-                            <div class="upload-svg-wrapper" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
-                                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            """,
-                            elem_classes=["custom-upload"]
+                with gr.Column(scale=1, elem_classes=["chat-controls-container"]):
+                    with gr.Row(elem_classes=["chat-controls"]):
+                        image_input = gr.Image(
+                            label="", type="pil", elem_classes=["chat-image-input"],
+                            show_label=False, container=False, visible=False
                         )
-                        send_button = gr.HTML(
-                            value="""
-                            <div class="send-svg-wrapper" title="Send Message">
-                                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            """,
-                            elem_classes=["custom-send"]
-                        )
+                        upload_html = f"""
+                        <div class="upload-svg-wrapper initial-state" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        """
+                        send_html = f"""
+                        <div class="send-svg-wrapper initial-state" title="Send Message">
+                            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        """
+                        upload_icon = gr.HTML(upload_html, elem_classes=["custom-upload"])
+                        send_button = gr.HTML(send_html, elem_classes=["custom-send"])
 
         # Settings panel - Now visible at the bottom
         with gr.Column(visible=True, elem_id="settings-panel-column") as settings_panel:
@@ -227,8 +226,56 @@ def create_chat_interface():
         def user_message(message, chat_history, temp, top_p, min_p, top_k, max_len, rep_penalty, img, system_prompt):
             time.sleep(0.001)  
 
-            if not message.strip() and img is None: 
-                return message, img, chat_history 
+            # Define SVG HTML generators with different sizes based on state
+            def get_initial_svg_html():
+                return """
+                <div class="send-svg-wrapper" title="Send Message" style="width: 42px; height: 42px; transform: scale(1.2);">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                """
+
+            def get_active_svg_html():
+                return """
+                <div class="send-svg-wrapper" title="Send Message" style="width: 24px; height: 24px; transform: scale(1);">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                """
+
+            def get_initial_upload_html():
+                return """
+                <div class="upload-svg-wrapper" title="Upload Image" style="width: 32px; height: 32px; transform: scale(1.2);" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                """
+
+            def get_active_upload_html():
+                return """
+                <div class="upload-svg-wrapper" title="Upload Image" style="width: 24px; height: 24px; transform: scale(1);" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                """
+
+            # If no message and no image, keep initial state
+            if not message.strip() and img is None:
+                return (
+                    message,
+                    img,
+                    chat_history,
+                    gr.update(visible=False),
+                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]),
+                    gr.update(value=get_initial_upload_html(), elem_classes=["custom-upload", "initial-state"]),
+                    gr.update(value=get_initial_svg_html(), elem_classes=["custom-send", "initial-state"])
+                )
 
             chat_history = chat_history or []
 
@@ -261,16 +308,24 @@ def create_chat_interface():
             response_stream = mock_chat_response(message, temp, top_p, max_len, img)
             for partial_response in response_stream:
                 chat_history[-1]["content"] = partial_response
-                yield "", processed_img, chat_history
+                yield "", processed_img, chat_history, gr.update(visible=True), gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active"]), gr.update(value=get_active_upload_html(), elem_classes=["custom-upload", "active-chat"]), gr.update(value=get_active_svg_html(), elem_classes=["custom-send", "active-chat"])
 
-            return "", processed_img, chat_history
-
+            # When returning, update to active state
+            return (
+                "",
+                processed_img,
+                chat_history,
+                gr.update(visible=True),
+                gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active"]),
+                gr.update(value=get_active_upload_html(), elem_classes=["custom-upload", "active-chat"]),
+                gr.update(value=get_active_svg_html(), elem_classes=["custom-send", "active-chat"])
+            )
 
         # Event handlers for message submission
         msg.submit(
             user_message,
             inputs=[msg, chatbot, temperature, top_p, min_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
-            outputs=[msg, image_input, chatbot],
+            outputs=[msg, image_input, chatbot, chatbot, msg, upload_icon, send_button],
             show_progress=False,
             queue=True
         )
@@ -278,35 +333,179 @@ def create_chat_interface():
         send_button.click(
             user_message,
             inputs=[msg, chatbot, temperature, top_p, min_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
-            outputs=[msg, image_input, chatbot],
+            outputs=[msg, image_input, chatbot, chatbot, msg, upload_icon, send_button],
             show_progress=False,
             queue=True
         )
 
-        # Clear chat button action
-        clear.click(lambda: ([], "You are a helpful AI assistant."), None, [chatbot, system_prompt], queue=False) 
+        # Update the clear chat button action to reset to initial state
+        def clear_chat():
+            initial_upload_html = """
+            <div class="upload-svg-wrapper initial-state" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            """
+            
+            initial_send_html = """
+            <div class="send-svg-wrapper initial-state" title="Send Message">
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            """
+            
+            return (
+                [],
+                "You are a helpful AI assistant.",
+                gr.update(visible=False),
+                gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]),
 
-        # Add event handlers for example buttons
-        def set_example(example):
-            return example, gr.update(visible=False)
-
-        for btn in example_buttons:
-            btn.click(
-                fn=set_example,
-                inputs=[btn],
-                outputs=[msg, example_block]
             )
 
-        # Hide examples when message is submitted
-        msg.submit(
-            fn=lambda: gr.update(visible=False),
-            inputs=None,
-            outputs=example_block,
-        ).then(
-            fn=user_message,
-            inputs=[msg, chatbot, temperature, top_p, min_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
-            outputs=[msg, image_input, chatbot]
+        clear.click(
+            clear_chat,
+            None,
+            [chatbot, system_prompt, chatbot, msg, upload_icon, send_button],
+            queue=False
         )
+
+        # Add event handlers for example buttons
+        #def set_example(example):
+        #    return example, gr.update(visible=False)
+
+        #for btn in example_buttons:
+        #    btn.click(
+        #        fn=set_example,
+        #        inputs=[btn],
+        #        outputs=[msg, example_block]
+        #    )
+
+        # Hide examples when message is submitted
+        #msg.submit(
+        #    fn=lambda: gr.update(visible=False),
+        #    inputs=None,
+        #    outputs=example_block,
+        #).then(
+        #    fn=user_message,
+        #    inputs=[msg, chatbot, temperature, top_p, min_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
+        #    outputs=[msg, image_input, chatbot]
+        #)
+
+        # Add JavaScript to handle SVG state changes
+        js = """
+        <script>
+            function updateSVGState() {
+                const input = document.querySelector('.chat-input textarea');  // Changed to target textarea
+                const uploadWrapper = document.querySelector('.upload-svg-wrapper');
+                const sendWrapper = document.querySelector('.send-svg-wrapper');
+                const uploadContainer = document.querySelector('.block.custom-upload.svelte-11xb1hd');
+                const sendContainer = document.querySelector('.block.custom-send.svelte-11xb1hd');
+                
+                if (input && uploadWrapper && sendWrapper && uploadContainer && sendContainer) {
+                    console.log('Input value:', input.value);  // Debug log
+                    console.log('Initial classes:', uploadWrapper.className, sendWrapper.className);  // Debug log
+                    
+                    if (input.value.trim()) {
+                        console.log('Removing initial-state class, adding active-chat');  // Debug log
+                        uploadWrapper.classList.remove('initial-state');
+                        sendWrapper.classList.remove('initial-state');
+                        uploadContainer.classList.remove('initial-state');
+                        sendContainer.classList.remove('initial-state');
+                        
+                        uploadContainer.classList.add('active-chat');
+                        sendContainer.classList.add('active-chat');
+                        
+                        input.closest('.chat-input').classList.remove('chat-input-initial');
+                        input.closest('.chat-input').classList.add('chat-input-active');
+                    } else {
+                        console.log('Adding initial-state class, removing active-chat');  // Debug log
+                        uploadWrapper.classList.add('initial-state');
+                        sendWrapper.classList.add('initial-state');
+                        uploadContainer.classList.add('initial-state');
+                        sendContainer.classList.add('initial-state');
+                        
+                        uploadContainer.classList.remove('active-chat');
+                        sendContainer.classList.remove('active-chat');
+                        
+                        input.closest('.chat-input').classList.remove('chat-input-active');
+                        input.closest('.chat-input').classList.add('chat-input-initial');
+                    }
+                    
+                    console.log('Final classes:', uploadWrapper.className, sendWrapper.className);  // Debug log
+                } else {
+                    console.log('Could not find required elements:', {
+                        input: !!input,
+                        uploadWrapper: !!uploadWrapper,
+                        sendWrapper: !!sendWrapper,
+                        uploadContainer: !!uploadContainer,
+                        sendContainer: !!sendContainer
+                    });  // Debug log
+                }
+            }
+
+            // Add input event listener
+            function initializeEventListeners() {
+                console.log('Initializing event listeners');  // Debug log
+                const input = document.querySelector('.chat-input textarea');
+                if (input) {
+                    console.log('Found input element');  // Debug log
+                    input.addEventListener('input', updateSVGState);
+                    // Also handle initial state
+                    setTimeout(updateSVGState, 100); // Small delay to ensure DOM is ready
+                    
+                    // Also update state on interaction with the chat
+                    document.addEventListener('click', function(e) {
+                        if (e.target.closest('.custom-upload') || e.target.closest('.custom-send')) {
+                            setTimeout(updateSVGState, 100);
+                        }
+                    });
+                } else {
+                    console.log('Input element not found');  // Debug log
+                    // Retry after a short delay
+                    setTimeout(initializeEventListeners, 500);
+                }
+            }
+
+            // Initialize on DOM content loaded
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initializeEventListeners);
+            } else {
+                initializeEventListeners();
+            }
+
+            // Also initialize when Gradio fully loads
+            document.addEventListener('gradio-loaded', function() {
+                initializeEventListeners();
+                // Set initial state classes on containers when the page loads
+                const uploadContainer = document.querySelector('.block.custom-upload.svelte-11xb1hd');
+                const sendContainer = document.querySelector('.block.custom-send.svelte-11xb1hd');
+                if (uploadContainer && sendContainer) {
+                    uploadContainer.classList.add('initial-state');
+                    sendContainer.classList.add('initial-state');
+                }
+            });
+
+            // Observe DOM changes to handle dynamic updates
+            const observer = new MutationObserver((mutations) => {
+                for (const mutation of mutations) {
+                    if (mutation.addedNodes.length) {
+                        initializeEventListeners();
+                    }
+                }
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        </script>
+        """
+
+        # Add the JavaScript to the page
+        gr.HTML(js)
 
         # Return all components needed by event handlers or for external access
         return {
