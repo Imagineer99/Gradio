@@ -1,6 +1,8 @@
 import gradio as gr
 from PIL import Image
 import time
+import uuid
+from datetime import datetime
 
 # Image processing
 import base64
@@ -100,6 +102,17 @@ def create_chat_interface():
                         upload_icon = gr.HTML(upload_html, elem_classes=["custom-upload"])
                         send_button = gr.HTML(send_html, elem_classes=["custom-send"])
 
+        # Chat History Sidebar
+        with gr.Column(scale=2, elem_classes=["chat-history-sidebar"]):
+            gr.Markdown("## Chat History")
+            
+            # Container for saved chats
+            saved_chats = gr.HTML(elem_id="saved-chats-container")
+            
+            # New Chat Button
+            new_chat_btn = gr.Button("New Chat", elem_classes=["new-chat-btn"])
+
+
         # Settings panel - Now visible at the bottom
         with gr.Column(visible=True, elem_id="settings-panel-column") as settings_panel:
             gr.Markdown("## Settings")
@@ -182,33 +195,51 @@ def create_chat_interface():
                         )
 
             # Clear Chat Button (moved inside settings)
-            clear = gr.Button("Clear Chat")
+            #clear = gr.Button("Clear Chat")
 
         # --- Image Upload Icon Change Logic ---
-        def on_image_upload(image):
-            print("Image uploaded:", image is not None)
-            if image is not None:
-                 return """
-                 <div class="upload-svg-wrapper has-image initial-state" title="Image Attached" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
-                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                         <path d="M16 5L18 7L22 3M12.5 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H17C17.93 21 18.395 21 18.7765 20.8978C19.8117 20.6204 20.6204 19.8117 20.8978 18.7765C21 18.395 21 17.93 21 17M10.5 8.5C10.5 9.60457 9.60457 10.5 8.5 10.5C7.39543 10.5 6.5 9.60457 6.5 8.5C6.5 7.39543 7.39543 6.5 8.5 6.5C9.60457 6.5 10.5 7.39543 10.5 8.5ZM14.99 11.9181L6.53115 19.608C6.05536 20.0406 5.81747 20.2568 5.79643 20.4442C5.77819 20.6066 5.84045 20.7676 5.96319 20.8755C6.10478 21 6.42628 21 7.06929 21H16.456C17.8951 21 18.6147 21 19.1799 20.7582C19.8894 20.4547 20.4547 19.8894 20.7582 19.1799C21 18.6147 21 17.8951 21 16.456C21 15.9717 21 15.7296 20.9471 15.5042C20.8805 15.2208 20.753 14.9554 20.5733 14.7264C20.4303 14.5442 20.2412 14.3929 19.8631 14.0905L17.0658 11.8527C16.6874 11.5499 16.4982 11.3985 16.2898 11.3451C16.1061 11.298 15.9129 11.3041 15.7325 11.3627C15.5279 11.4291 15.3486 11.5921 14.99 11.9181Z"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                     </svg>
-                 </div>
-                 """
+        def on_image_upload(image, msg, chatbot):
+            
+            # More explicit state check - we're in initial state if:
+            # 1. Either chatbot is None or empty list
+            # 2. AND message is either None or empty string after stripping
+            is_initial_state = True  # Start with initial state
+            
+            if chatbot and len(chatbot) > 0:
+                is_initial_state = False
+            if msg and msg.strip():
+                is_initial_state = False
+            
+            print("Is initial state:", is_initial_state)  # Debug print
+            
+            if image is not None and is_initial_state:
+                return """
+                <div class="upload-svg-wrapper has-image initial-state" title="Image Attached" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 5L18 7L22 3M12.5 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H17C17.93 21 18.395 21 18.7765 20.8978C19.8117 20.6204 20.6204 19.8117 20.8978 18.7765C21 18.395 21 17.93 21 17M10.5 8.5C10.5 9.60457 9.60457 10.5 8.5 10.5C7.39543 10.5 6.5 9.60457 6.5 8.5C6.5 7.39543 7.39543 6.5 8.5 6.5C9.60457 6.5 10.5 7.39543 10.5 8.5ZM14.99 11.9181L6.53115 19.608C6.05536 20.0406 5.81747 20.2568 5.79643 20.4442C5.77819 20.6066 5.84045 20.7676 5.96319 20.8755C6.10478 21 6.42628 21 7.06929 21H16.456C17.8951 21 18.6147 21 19.1799 20.7582C19.8894 20.4547 20.4547 19.8894 20.7582 19.1799C21 18.6147 21 17.8951 21 16.456C21 15.9717 21 15.7296 20.9471 15.5042C20.8805 15.2208 20.753 14.9554 20.5733 14.7264C20.4303 14.5442 20.2412 14.3929 19.8631 14.0905L17.0658 11.8527C16.6874 11.5499 16.4982 11.3985 16.2898 11.3451C16.1061 11.298 15.9129 11.3041 15.7325 11.3627C15.5279 11.4291 15.3486 11.5921 14.99 11.9181Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                """
+            elif image is not None and not is_initial_state:
+                return """
+                <div class="upload-svg-wrapper has-image active-chat" title="Image Attached" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 5L18 7L22 3M12.5 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H17C17.93 21 18.395 21 18.7765 20.8978C19.8117 20.6204 20.6204 19.8117 20.8978 18.7765C21 18.395 21 17.93 21 17M10.5 8.5C10.5 9.60457 9.60457 10.5 8.5 10.5C7.39543 10.5 6.5 9.60457 6.5 8.5C6.5 7.39543 7.39543 6.5 8.5 6.5C9.60457 6.5 10.5 7.39543 10.5 8.5ZM14.99 11.9181L6.53115 19.608C6.05536 20.0406 5.81747 20.2568 5.79643 20.4442C5.77819 20.6066 5.84045 20.7676 5.96319 20.8755C6.10478 21 6.42628 21 7.06929 21H16.456C17.8951 21 18.6147 21 19.1799 20.7582C19.8894 20.4547 20.4547 19.8894 20.7582 19.1799C21 18.6147 21 17.8951 21 16.456C21 15.9717 21 15.7296 20.9471 15.5042C20.8805 15.2208 20.753 14.9554 20.5733 14.7264C20.4303 14.5442 20.2412 14.3929 19.8631 14.0905L17.0658 11.8527C16.6874 11.5499 16.4982 11.3985 16.2898 11.3451C16.1061 11.298 15.9129 11.3041 15.7325 11.3627C15.5279 11.4291 15.3486 11.5921 14.99 11.9181Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                """
             else:
                 return """
-                <div class="upload-svg-wrapper initial-state" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                <div class="upload-svg-wrapper" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
                 """
 
         image_input.change(
             fn=on_image_upload,
-            inputs=[image_input],
+            inputs=[image_input, msg, chatbot],
             outputs=[upload_icon],
             show_progress=False
         )
@@ -338,13 +369,52 @@ def create_chat_interface():
             queue=True
         )
 
-        # Update the clear chat button action to reset to initial state
-        def clear_chat():
+        # Add state for storing chat sessions
+        chat_sessions = gr.State([])  # List of {id, title, timestamp, messages}
+        current_chat_id = gr.State(None)
+
+        # Modify the clear_chat function:
+        def clear_chat(chat_sessions_list, current_chat, chatbot_history):
+            # Save current chat if it exists and has messages
+            if chatbot_history and len(chatbot_history) > 0:
+                chat_id = current_chat if current_chat else str(uuid.uuid4())
+                # Get first user message as title, or use timestamp if no messages
+                title = next((msg["content"][:30] + "..." for msg in chatbot_history if msg["role"] == "user"), 
+                            f"Chat {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+                
+                new_session = {
+                    "id": chat_id,
+                    "title": title,
+                    "timestamp": datetime.now().isoformat(),
+                    "messages": chatbot_history
+                }
+                
+                # Update sessions list
+                if not current_chat:  # New chat
+                    chat_sessions_list.append(new_session)
+                else:  # Update existing chat
+                    for i, session in enumerate(chat_sessions_list):
+                        if session["id"] == current_chat:
+                            chat_sessions_list[i] = new_session
+                            break
+            
+            # Generate HTML for saved chats
+            saved_chats_html = """
+            <div class="saved-chats-list" id="saved-chats-list">
+            """
+            for session in sorted(chat_sessions_list, key=lambda x: x["timestamp"], reverse=True):
+                saved_chats_html += f"""
+                <div class="saved-chat-item" data-chat-id="{session['id']}" onclick="handleChatClick('{session['id']}')">
+                    <div class="chat-title">{session['title']}</div>
+                    <div class="chat-timestamp">{datetime.fromisoformat(session['timestamp']).strftime('%Y-%m-%d %H:%M')}</div>
+                </div>
+                """
+            saved_chats_html += "</div>"
+            
             initial_upload_html = """
             <div class="upload-svg-wrapper initial-state" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
             """
@@ -358,43 +428,118 @@ def create_chat_interface():
             """
             
             return (
-                [],
-                "You are a helpful AI assistant.",
-                gr.update(visible=False),
-                gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]),
-
+                [],  # Clear chat history
+                "You are a helpful AI assistant.",  # Reset system prompt
+                gr.update(visible=False),  # Hide chatbot
+                gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]),  # Reset input style
+                gr.update(value=initial_upload_html, elem_classes=["custom-upload", "initial-state"]),  # Reset upload button
+                gr.update(value=initial_send_html, elem_classes=["custom-send", "initial-state"]),  # Reset send button
+                gr.update(value=None, visible=False),  # Clear and hide image input
+                chat_sessions_list,  # Return updated sessions
+                None,  # Clear current chat ID
+                saved_chats_html  # Update saved chats display
             )
 
-        clear.click(
+        # Add function to load a saved chat
+        def load_chat(chat_id, chat_sessions_list):
+            for session in chat_sessions_list:
+                if session["id"] == chat_id:
+                    return (
+                        session["messages"],  # Load chat history
+                        session["messages"][0]["content"] if session["messages"] else "You are a helpful AI assistant.",  # Load system prompt
+                        gr.update(visible=True),  # Show chatbot
+                        gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active"]),  # Set input style
+                        chat_id  # Set current chat ID
+                    )
+            return [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]), None
+
+        # Modify the handle_chat_click function
+        def handle_chat_click(raw_value, chat_sessions_list):
+            # Extract chat_id from the raw value if it exists
+            chat_id = None
+            try:
+                # The raw_value will be the HTML of the clicked item
+                import re
+                # First try to get the chat ID from the data attribute
+                match = re.search(r'data-chat-id="([^"]+)"', raw_value)
+                if match:
+                    chat_id = match.group(1)
+                    print(f"Found chat ID: {chat_id}")  # Debug print
+                
+                if not chat_id:
+                    return [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]), gr.update(), gr.update(), gr.update(value=None, visible=False), None
+            
+            except Exception as e:
+                print(f"Error extracting chat ID: {e}")
+                return [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]), gr.update(), gr.update(), gr.update(value=None, visible=False), None
+
+            # Find the matching session
+            matching_session = None
+            for session in chat_sessions_list:
+                if session["id"] == chat_id:
+                    matching_session = session
+                    break
+            
+            if matching_session:
+                messages = matching_session["messages"]
+                system_prompt_val = messages[0]["content"] if messages else "You are a helpful AI assistant."
+                
+                initial_upload_html = """
+                <div class="upload-svg-wrapper active-chat" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                """
+                
+                initial_send_html = """
+                <div class="send-svg-wrapper active-chat" title="Send Message">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                """
+                
+                return (
+                    messages,  # chatbot
+                    system_prompt_val,  # system_prompt
+                    gr.update(visible=True),  # chatbot visibility
+                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active"]),  # msg style
+                    gr.update(value=initial_upload_html, elem_classes=["custom-upload", "active-chat"]),  # upload_icon
+                    gr.update(value=initial_send_html, elem_classes=["custom-send", "active-chat"]),  # send_button
+                    gr.update(value=None, visible=False),  # image_input
+                    chat_id  # current_chat_id
+                )
+            
+            # Return default values if chat not found
+            return (
+                [],  # Empty chat history
+                "You are a helpful AI assistant.",  # Default system prompt
+                gr.update(visible=False),  # Hide chatbot
+                gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]),  # Initial input style
+                gr.update(value=initial_upload_html, elem_classes=["custom-upload", "initial-state"]),  # Initial upload button
+                gr.update(value=initial_send_html, elem_classes=["custom-send", "initial-state"]),  # Initial send button
+                gr.update(value=None, visible=False),  # Clear image input
+                None  # Clear current chat ID
+            )
+
+        # Update the click handler registration to use click instead of select
+        saved_chats.click(
+            fn=handle_chat_click,
+            inputs=[saved_chats, chat_sessions],
+            outputs=[chatbot, system_prompt, chatbot, msg, upload_icon, send_button, image_input, current_chat_id],
+            show_progress=False
+        )
+
+        # Update the new chat button click handler
+        new_chat_btn.click(
             clear_chat,
-            None,
-            [chatbot, system_prompt, chatbot, msg, upload_icon, send_button],
+            inputs=[chat_sessions, current_chat_id, chatbot],
+            outputs=[chatbot, system_prompt, chatbot, msg, upload_icon, send_button, image_input, chat_sessions, current_chat_id, saved_chats],
             queue=False
         )
 
-        # Add event handlers for example buttons
-        #def set_example(example):
-        #    return example, gr.update(visible=False)
-
-        #for btn in example_buttons:
-        #    btn.click(
-        #        fn=set_example,
-        #        inputs=[btn],
-        #        outputs=[msg, example_block]
-        #    )
-
-        # Hide examples when message is submitted
-        #msg.submit(
-        #    fn=lambda: gr.update(visible=False),
-        #    inputs=None,
-        #    outputs=example_block,
-        #).then(
-        #    fn=user_message,
-        #    inputs=[msg, chatbot, temperature, top_p, min_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
-        #    outputs=[msg, image_input, chatbot]
-        #)
-
-        # Add JavaScript to handle SVG state changes
+        # First, define the base JavaScript content
         js = """
         <script>
             function updateSVGState() {
@@ -405,11 +550,7 @@ def create_chat_interface():
                 const sendContainer = document.querySelector('.block.custom-send.svelte-11xb1hd');
                 
                 if (input && uploadWrapper && sendWrapper && uploadContainer && sendContainer) {
-                    console.log('Input value:', input.value);  // Debug log
-                    console.log('Initial classes:', uploadWrapper.className, sendWrapper.className);  // Debug log
-                    
                     if (input.value.trim()) {
-                        console.log('Removing initial-state class, adding active-chat');  // Debug log
                         uploadWrapper.classList.remove('initial-state');
                         sendWrapper.classList.remove('initial-state');
                         uploadContainer.classList.remove('initial-state');
@@ -421,7 +562,6 @@ def create_chat_interface():
                         input.closest('.chat-input').classList.remove('chat-input-initial');
                         input.closest('.chat-input').classList.add('chat-input-active');
                     } else {
-                        console.log('Adding initial-state class, removing active-chat');  // Debug log
                         uploadWrapper.classList.add('initial-state');
                         sendWrapper.classList.add('initial-state');
                         uploadContainer.classList.add('initial-state');
@@ -433,53 +573,33 @@ def create_chat_interface():
                         input.closest('.chat-input').classList.remove('chat-input-active');
                         input.closest('.chat-input').classList.add('chat-input-initial');
                     }
-                    
-                    console.log('Final classes:', uploadWrapper.className, sendWrapper.className);  // Debug log
-                } else {
-                    console.log('Could not find required elements:', {
-                        input: !!input,
-                        uploadWrapper: !!uploadWrapper,
-                        sendWrapper: !!sendWrapper,
-                        uploadContainer: !!uploadContainer,
-                        sendContainer: !!sendContainer
-                    });  // Debug log
                 }
             }
 
-            // Add input event listener
             function initializeEventListeners() {
-                console.log('Initializing event listeners');  // Debug log
                 const input = document.querySelector('.chat-input textarea');
                 if (input) {
-                    console.log('Found input element');  // Debug log
                     input.addEventListener('input', updateSVGState);
-                    // Also handle initial state
-                    setTimeout(updateSVGState, 100); // Small delay to ensure DOM is ready
+                    setTimeout(updateSVGState, 100);
                     
-                    // Also update state on interaction with the chat
                     document.addEventListener('click', function(e) {
                         if (e.target.closest('.custom-upload') || e.target.closest('.custom-send')) {
                             setTimeout(updateSVGState, 100);
                         }
                     });
                 } else {
-                    console.log('Input element not found');  // Debug log
-                    // Retry after a short delay
                     setTimeout(initializeEventListeners, 500);
                 }
             }
 
-            // Initialize on DOM content loaded
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', initializeEventListeners);
             } else {
                 initializeEventListeners();
             }
 
-            // Also initialize when Gradio fully loads
             document.addEventListener('gradio-loaded', function() {
                 initializeEventListeners();
-                // Set initial state classes on containers when the page loads
                 const uploadContainer = document.querySelector('.block.custom-upload.svelte-11xb1hd');
                 const sendContainer = document.querySelector('.block.custom-send.svelte-11xb1hd');
                 if (uploadContainer && sendContainer) {
@@ -488,7 +608,6 @@ def create_chat_interface():
                 }
             });
 
-            // Observe DOM changes to handle dynamic updates
             const observer = new MutationObserver((mutations) => {
                 for (const mutation of mutations) {
                     if (mutation.addedNodes.length) {
@@ -501,21 +620,92 @@ def create_chat_interface():
                 childList: true,
                 subtree: true
             });
+
+            // Update the click handler for saved chats
+            function handleChatClick(chatId) {
+                const savedChatsContainer = document.getElementById('saved-chats-container');
+                if (savedChatsContainer) {
+                    // Find the specific chat item
+                    const clickedItem = document.querySelector(`[data-chat-id="${chatId}"]`);
+                    if (clickedItem) {
+                        // Create a temporary container with just the clicked item
+                        const tempContainer = document.createElement('div');
+                        tempContainer.innerHTML = clickedItem.outerHTML;
+                        
+                        // Trigger the click event with the specific item's HTML
+                        const event = new Event('click', { bubbles: true });
+                        savedChatsContainer.innerHTML = tempContainer.innerHTML;
+                        savedChatsContainer.dispatchEvent(event);
+                        
+                        // Restore the original content after a short delay
+                        setTimeout(() => {
+                            savedChatsContainer.innerHTML = document.querySelector('.saved-chats-list').outerHTML;
+                            initializeChatClickHandlers();
+                        }, 100);
+                    }
+                }
+            }
+
+            // Initialize click handlers for saved chat items
+            function initializeChatClickHandlers() {
+                const chatItems = document.querySelectorAll('.saved-chat-item');
+                chatItems.forEach(item => {
+                    item.onclick = function(e) {
+                        e.stopPropagation(); // Prevent event bubbling
+                        const chatId = this.getAttribute('data-chat-id');
+                        handleChatClick(chatId);
+                    };
+                });
+            }
+
+            // Add to existing observers
+            const chatObserver = new MutationObserver((mutations) => {
+                for (const mutation of mutations) {
+                    if (mutation.addedNodes.length) {
+                        initializeChatClickHandlers();
+                    }
+                }
+            });
+
+            // Observe the saved chats container
+            const savedChatsContainer = document.getElementById('saved-chats-container');
+            if (savedChatsContainer) {
+                chatObserver.observe(savedChatsContainer, {
+                    childList: true,
+                    subtree: true
+                });
+            }
+
+            // Initialize on page load
+            document.addEventListener('DOMContentLoaded', initializeChatClickHandlers);
+            document.addEventListener('gradio-loaded', initializeChatClickHandlers);
         </script>
         """
 
-        # Add the JavaScript to the page
+        # Then, add this JavaScript to the page after all the other components are defined
         gr.HTML(js)
 
-        # Return all components needed by event handlers or for external access
+        # Return all components including new ones
         return {
-            'chatbot': chatbot, 'msg': msg, 'image_input': image_input,
-            'temperature': temperature, 'top_p': top_p, 'top_k': top_k,
-            'min_p': min_p, 'max_length': max_length, 'repetition_penalty': repetition_penalty,
-            'system_prompt': system_prompt, 'model_dropdown': model_dropdown,
-            'model_search': model_search, 'chat_template': chat_template,
-            'settings_panel': settings_panel, 'clear_button': clear, 
-            'send_button': send_button, 'upload_icon': upload_icon, 
+            'chatbot': chatbot,
+            'msg': msg,
+            'image_input': image_input,
+            'temperature': temperature,
+            'top_p': top_p,
+            'top_k': top_k,
+            'min_p': min_p,
+            'max_length': max_length,
+            'repetition_penalty': repetition_penalty,
+            'system_prompt': system_prompt,
+            'model_dropdown': model_dropdown,
+            'model_search': model_search,
+            'chat_template': chat_template,
+            'settings_panel': settings_panel,
+            'send_button': send_button,
+            'upload_icon': upload_icon,
+            'chat_sessions': chat_sessions,
+            'current_chat_id': current_chat_id,
+            'saved_chats': saved_chats
         }
 
 # If running this file directly (for testing)
