@@ -12,10 +12,10 @@ from io import BytesIO
 def mock_chat_response(message, temperature, top_p, max_length, image=None):
     """Mock response function that returns hardcoded responses"""
     responses = [
-        "That's an interesting point! Let me think about it...",
-        "I understand what you're asking. Here's my perspective...",
+        "That's an interesting point!",
+        "I understand what you're asking.",
         "Based on my knowledge, I would say...",
-        "That's a great question! Here's what I think...",
+        "That's a great question!",
     ]
     import random
     response = random.choice(responses)
@@ -23,10 +23,10 @@ def mock_chat_response(message, temperature, top_p, max_length, image=None):
     if image is not None:
         response = "I see you've shared an image!"
     
-    # Stream the response character by character
+    # Stream the response character by character !placeholder for demo purposes!
     for i in range(len(response)):
         yield response[:i+1]
-        time.sleep(0.05)  # Add a small delay between characters
+        time.sleep(0.05)  # Add a small delay between characters !placeholder for demo purposes!
 
 def create_chat_interface():
     examples = [
@@ -41,7 +41,7 @@ def create_chat_interface():
         with gr.Column(scale=10): # Make this column take most space
             # Header row - removed settings button
             with gr.Row(elem_classes=["chat-header"], equal_height=True):
-                 gr.Markdown("##")
+                 gr.Markdown("## Welcome to Unsloth Chat")
 
             # Initial popup/example section inside chat container
             #with gr.Column(elem_id="chat-examples", visible=True) as example_block:
@@ -210,7 +210,7 @@ def create_chat_interface():
             if msg and msg.strip():
                 is_initial_state = False
             
-            print("Is initial state:", is_initial_state)  # Debug print
+            print("Is initial state:", is_initial_state) 
             
             if image is not None and is_initial_state:
                 return """
@@ -243,7 +243,6 @@ def create_chat_interface():
             outputs=[upload_icon],
             show_progress=False
         )
-        # --- End Image Upload Icon Change Logic ---
 
         def resize_image(img, max_size=800):
             """Resize image while maintaining aspect ratio if either dimension exceeds max_size"""
@@ -369,16 +368,15 @@ def create_chat_interface():
             queue=True
         )
 
-        # Add state for storing chat sessions
+        # !State for storing chat sessions for demo purposes!
+        # !This is a placeholder, we will probably use a database to store the chat sessions!
         chat_sessions = gr.State([])  # List of {id, title, timestamp, messages}
         current_chat_id = gr.State(None)
 
-        # Modify the clear_chat function:
         def clear_chat(chat_sessions_list, current_chat, chatbot_history):
-            # Save current chat if it exists and has messages
+            # Save current chat if it exists
             if chatbot_history and len(chatbot_history) > 0:
                 chat_id = current_chat if current_chat else str(uuid.uuid4())
-                # Get first user message as title, or use timestamp if no messages
                 title = next((msg["content"][:30] + "..." for msg in chatbot_history if msg["role"] == "user"), 
                             f"Chat {datetime.now().strftime('%Y-%m-%d %H:%M')}")
                 
@@ -389,16 +387,15 @@ def create_chat_interface():
                     "messages": chatbot_history
                 }
                 
-                # Update sessions list
-                if not current_chat:  # New chat
+                if not current_chat:
                     chat_sessions_list.append(new_session)
-                else:  # Update existing chat
+                else:
                     for i, session in enumerate(chat_sessions_list):
                         if session["id"] == current_chat:
                             chat_sessions_list[i] = new_session
                             break
             
-            # Generate HTML for saved chats
+            # Generate saved chats HTML
             saved_chats_html = """
             <div class="saved-chats-list" id="saved-chats-list">
             """
@@ -410,16 +407,17 @@ def create_chat_interface():
                 </div>
                 """
             saved_chats_html += "</div>"
-            
-            initial_upload_html = """
+
+            # Keep the original SVG HTML content
+            upload_html = f"""
             <div class="upload-svg-wrapper initial-state" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
             """
-            
-            initial_send_html = """
+
+            send_html = f"""
             <div class="send-svg-wrapper initial-state" title="Send Message">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -432,15 +430,15 @@ def create_chat_interface():
                 "You are a helpful AI assistant.",  # Reset system prompt
                 gr.update(visible=False),  # Hide chatbot
                 gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]),  # Reset input style
-                gr.update(value=initial_upload_html, elem_classes=["custom-upload", "initial-state"]),  # Reset upload button
-                gr.update(value=initial_send_html, elem_classes=["custom-send", "initial-state"]),  # Reset send button
-                gr.update(value=None, visible=False),  # Clear and hide image input
-                chat_sessions_list,  # Return updated sessions
+                gr.update(value=upload_html, elem_classes=["custom-upload"]),  # Reset upload button with SVG content
+                gr.update(value=send_html, elem_classes=["custom-send"]),  # Reset send button with SVG content
+                gr.update(value=None, visible=False),  # Clear image input
+                chat_sessions_list,
                 None,  # Clear current chat ID
-                saved_chats_html  # Update saved chats display
+                saved_chats_html
             )
 
-        # Add function to load a saved chat
+        # Load saved chat
         def load_chat(chat_id, chat_sessions_list):
             for session in chat_sessions_list:
                 if session["id"] == chat_id:
@@ -448,23 +446,22 @@ def create_chat_interface():
                         session["messages"],  # Load chat history
                         session["messages"][0]["content"] if session["messages"] else "You are a helpful AI assistant.",  # Load system prompt
                         gr.update(visible=True),  # Show chatbot
-                        gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active"]),  # Set input style
+                        gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active"]),  
                         chat_id  # Set current chat ID
                     )
             return [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]), None
 
-        # Modify the handle_chat_click function
+        # !placeholder for demo purposes!
         def handle_chat_click(raw_value, chat_sessions_list):
             # Extract chat_id from the raw value if it exists
             chat_id = None
             try:
                 # The raw_value will be the HTML of the clicked item
                 import re
-                # First try to get the chat ID from the data attribute
                 match = re.search(r'data-chat-id="([^"]+)"', raw_value)
                 if match:
                     chat_id = match.group(1)
-                    print(f"Found chat ID: {chat_id}")  # Debug print
+                    print(f"Found chat ID: {chat_id}") 
                 
                 if not chat_id:
                     return [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]), gr.update(), gr.update(), gr.update(value=None, visible=False), None
@@ -539,7 +536,7 @@ def create_chat_interface():
             queue=False
         )
 
-        # First, define the base JavaScript content
+        # Stateful SVGs in chat interface and chat history
         js = """
         <script>
             function updateSVGState() {
@@ -682,10 +679,9 @@ def create_chat_interface():
         </script>
         """
 
-        # Then, add this JavaScript to the page after all the other components are defined
         gr.HTML(js)
 
-        # Return all components including new ones
+        # Components dictionary
         return {
             'chatbot': chatbot,
             'msg': msg,
@@ -711,5 +707,5 @@ def create_chat_interface():
 # If running this file directly (for testing)
 # if __name__ == "__main__":
 #     chat_ui_dict = create_chat_interface()
-#     chat_interface = chat_ui_dict['chatbot'].parent.parent # Get the top-level Blocks object
+#     chat_interface = chat_ui_dict['chatbot'].parent.parent 
 #     chat_interface.launch()

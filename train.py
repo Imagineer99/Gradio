@@ -24,7 +24,6 @@ def create_train_interface():
                 label="Select Model",
                 interactive=True,
                 scale=3,
-                elem_classes=["model-selection-controls"]
             )
             with gr.Column(elem_classes=["model-selection-card"]):
                 model_search = gr.Textbox(
