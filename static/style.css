@@ -1537,7 +1537,7 @@ div.token.svelte-1scun43 {
 .chat-input {
     border-radius: 500px !important;
     max-width: 599px;
-    margin-left: 25rem;
+    margin-left: 22rem;
     margin-right: -1rem;
     position: relative !important;
 }
@@ -1656,7 +1656,7 @@ div.token.svelte-1scun43 {
 
 .custom-send {
     position: absolute !important;
-    right: 180px !important;
+    right: 228px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     z-index: 9999 !important;
@@ -1729,6 +1729,18 @@ div.token.svelte-1scun43 {
     margin-top: 150px !important;
 }
 
+.gradio-container.gradio-container-5-14-0 .contain .chat-input {
+    max-width: 768px !important;  /* Wider initial state */
+    height: 60px !important;      /* Taller input box */
+    padding: 20px 25px !important;
+    font-size: 1.1rem !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid var(--border-color) !important;
+}
+.gradio-container.gradio-container-5-14-0 .contain .chat-input textarea.scroll-hide {
+    padding-top: 0px !important;
+}
+
 .chat-input-initial .scroll-hide.svelte-173056l {
     padding-top: 0px !important;
 }
@@ -1760,8 +1772,8 @@ div.token.svelte-1scun43 {
 
 /* Active state styling */
 .upload-svg-wrapper:not(.initial-state) {
-    width: 24px !important;
-    height: 24px !important;
+    width: 32px !important;  
+    height: 32px !important; 
 }
 
 .upload-svg-wrapper:not(.initial-state) svg {
@@ -1769,13 +1781,18 @@ div.token.svelte-1scun43 {
 }
 
 .send-svg-wrapper:not(.initial-state) {
-    width: 36px !important;
-    height: 36px !important;
-    padding: 8px !important;
+    width: 42px !important;  
+    height: 42px !important; 
+    padding: 10px !important; 
 }
 
 .send-svg-wrapper:not(.initial-state) svg {
-    transform: scale(1) !important;
+    transform: scale(1.2) !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .upload-svg-wrapper:not(.initial-state) svg {
+    transform: scale(1.2) !important;
+
 }
 
 /* Smooth transitions */
@@ -1861,14 +1878,15 @@ div.token.svelte-1scun43 {
     margin-top: 19px !important;
 }
 .gradio-container.gradio-container-5-14-0 .contain .upload-svg-wrapper:not(.initial-state) {
+    margin-left: 175px;
+    margin-top: 10px;
     width: 24px !important;
     height: 24px !important;
-    margin-left: 23px;
 }
 
 .gradio-container.gradio-container-5-14-0 .contain .block.custom-send.svelte-11xb1hd.hide-container.auto-margin.active-chat {
-    margin-top: 23px !important;
-    right: 240px !important;
+    margin-top: 30px !important;
+    right: 73px !important;
 }
 
 .gradio-container.gradio-container-5-14-0 .contain .block.custom-upload.svelte-11xb1hd.hide-container.auto-margin.active-chat {
@@ -1897,10 +1915,6 @@ div.token.svelte-1scun43 {
     margin-right: 150px !important;
 }
 
-/* Remove any interfering parent constraints */
-.gradio-container, .contain, .wrap {
-    overflow: visible !important;
-}
 
 /* Ensure no max-width constraints from parent elements */
 #settings-panel-column.column * {
@@ -1960,29 +1974,75 @@ div.token.svelte-1scun43 {
     margin-top: 16px;
 }
 
+/* Update saved chat item styling to match new chat button */
 .saved-chat-item {
-    padding: 12px;
-    border-radius: 8px;
-    background: var(--background-fill-secondary);
-    cursor: pointer;
-    transition: all 0.2s ease;
+    padding: 12px 24px !important;  /* Match new chat button padding */
+    border-radius: 500px !important;  /* Match new chat button border-radius */
+    background: var(--background-primary) !important;  /* Match theme background */
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;  /* Match new chat button transition */
+    width: 230px !important;  /* Match new chat button width */
+    border: 1px solid var(--border-color) !important;  /* Add subtle border */
 }
 
 .saved-chat-item:hover {
-    background: var(--background-fill-primary);
+    background-color: var(--hover-color) !important;  /* Use theme hover color */
+    transform: translateY(-0.9px) !important;  /* Subtle lift effect */
+    border-color: var(--primary-700) !important;  /* Highlight border on hover */
 }
 
+/* Ensure text colors remain visible */
 .chat-title {
-    font-weight: 500;
-    margin-bottom: 4px;
+    font-weight: 500 !important;
+    margin-bottom: 4px !important;
+    color: var(--text-primary) !important;
+    margin-left: 15px !important;
 }
 
 .chat-timestamp {
-    font-size: 0.8em;
-    color: var(--body-text-color-subdued);
+    font-size: 0.8em !important;
+    color: var(--text-secondary) !important;
+    margin-left: 15px !important;
 }
-
 
 .gradio-container.gradio-container-5-14-0 .contain .upload-svg-wrapper.initial-state svg {
     transform: scale(1) !important;
+}
+
+.row.chat-header.svelte-1xp0cw7.stretch {
+    margin-left: 621px;
+    margin-top: 248px;
+    margin-bottom: -150px;
+} 
+
+.block.chat-history.modern-chat.svelte-11xb1hd.auto-margin {
+    margin-top: -150px !important;
+    min-height: 934px !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .custom-upload {
+    margin-left: -16px !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .chat-title {
+    margin-left: 15px;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .chat-timestamp {
+    margin-left: 15px; 
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .saved-chat-item {
+    padding: 5px 24px !important;
+    border-radius: 500px !important;
+    background: var(--background-primary) !important;
+    cursor: pointer !important;
+    transition: 0.2s !important;
+    width: 230px !important;
+    border: 1px solid var(--border-color) !important;
+    margin-left: -12px;
+}
+
+.new-chat-btn:hover {
+    transform: translateY(-0.9px) !important; 
 }
