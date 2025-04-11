@@ -126,7 +126,7 @@ with gr.Blocks(
         outputs=[train_tab, chat_tab, export_tab, evaluate_tab, nav_train, nav_evaluate, nav_chat, nav_export]
     )
 
-    # Simplify the JavaScript click handler
+    # JavaScript click handler
     theme_toggle.click(
         fn=None,  
         inputs=[],  
@@ -140,11 +140,11 @@ with gr.Blocks(
         }"
     )
 
-    # Launch the interface
+    # Launch interface
 if __name__ == "__main__":
     demo.launch(
         share=True,
         server_port=8000,
         server_name="0.0.0.0",
-        favicon_path="favicon-32x32.png",
+        favicon_path="assets/favicon-32x32.png",
     )
