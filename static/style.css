@@ -2046,3 +2046,14 @@ div.token.svelte-1scun43 {
 .new-chat-btn:hover {
     transform: translateY(-0.9px) !important; 
 }
+
+.gradio-container.gradio-container-5-14-0 .contain .chat-input {
+    max-width: 768px !important;
+    height: 60px !important;
+    padding: 20px !important;
+    padding-bottom: 39px !important;
+    padding-top: 18px !important;
+    font-size: 1.1rem !important;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px !important;
+    border: 1px solid var(--border-color) !important;
+}
