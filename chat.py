@@ -26,7 +26,7 @@ def mock_chat_response(message, temperature, top_p, max_length, image=None):
     # Stream the response character by character !placeholder for demo purposes!
     for i in range(len(response)):
         yield response[:i+1]
-        time.sleep(0.05)  # Add a small delay between characters !placeholder for demo purposes!
+        time.sleep(0.05)  # Small delay between characters !placeholder for demo purposes!
 
 def create_chat_interface():
     examples = [
@@ -113,7 +113,7 @@ def create_chat_interface():
             new_chat_btn = gr.Button("New Chat", elem_classes=["new-chat-btn"])
 
 
-        # Settings panel - Now visible at the bottom
+        # Settings panel
         with gr.Column(visible=True, elem_id="settings-panel-column") as settings_panel:
             gr.Markdown("## Settings")
             # Model Selection
@@ -200,7 +200,7 @@ def create_chat_interface():
         # --- Image Upload Icon Change Logic ---
         def on_image_upload(image, msg, chatbot):
             
-            # More explicit state check - we're in initial state if:
+            # Explicit state check - we're in initial state if:
             # 1. Either chatbot is None or empty list
             # 2. AND message is either None or empty string after stripping
             is_initial_state = True  # Start with initial state
@@ -377,8 +377,16 @@ def create_chat_interface():
             # Save current chat if it exists
             if chatbot_history and len(chatbot_history) > 0:
                 chat_id = current_chat if current_chat else str(uuid.uuid4())
-                title = next((msg["content"][:30] + "..." for msg in chatbot_history if msg["role"] == "user"), 
-                            f"Chat {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+                
+                # Find first user message and extract title
+                user_content = next((msg["content"] for msg in chatbot_history if msg["role"] == "user"), "")
+                if "<img" in user_content:
+                    title = "Image Chat"
+                else:
+                    title = user_content[:30] + "..." if len(user_content) > 30 else user_content
+                
+                if not title.strip():
+                    title = f"Chat {datetime.now().strftime('%Y-%m-%d %H:%M')}"
                 
                 new_session = {
                     "id": chat_id,
