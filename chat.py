@@ -116,9 +116,14 @@ def create_chat_interface():
         # Settings panel
         with gr.Column(visible=True, elem_id="settings-panel-column") as settings_panel:
             gr.Markdown("## Settings")
+            
+            # Create a state to track which accordion is open
+            accordion_state = gr.State("none")  # Can be "none", "model", "sampling", or "prompting"
+            
             # Model Selection
-            with gr.Accordion("Model Selection", open=False):
-                 with gr.Row(elem_classes=["model-selection-controls"]):
+            model_accordion = gr.Accordion("Model Selection", open=False)
+            with model_accordion:
+                with gr.Row(elem_classes=["model-selection-controls"]):
                     model_dropdown = gr.Dropdown(
                         choices=[
                             "unsloth/Meta-Llama-3.1-8B-bnb-4bit",
@@ -148,7 +153,8 @@ def create_chat_interface():
                     )
 
             # Sampling Parameters
-            with gr.Accordion("Sampling Parameters", open=False):
+            sampling_accordion = gr.Accordion("Sampling Parameters", open=False)
+            with sampling_accordion:
                 with gr.Row():
                     with gr.Column():
                         temperature = gr.Slider(
@@ -159,11 +165,6 @@ def create_chat_interface():
                             minimum=0.1, maximum=1.0, value=0.9, step=0.1,
                             label="Top P", info="Limits token selection probability P"
                         )
-                        min_p = gr.Slider(
-                            minimum=0.0, maximum=1.0, value=0.1, step=0.05,
-                            label="Min P", info="Filters tokens below probability P"
-                        )
-                    with gr.Column():
                         top_k = gr.Slider(
                             minimum=1, maximum=100, value=40, step=1,
                             label="Top K", info="Limits token selection to K value"
@@ -178,8 +179,9 @@ def create_chat_interface():
                         )
 
             # Prompting
-            with gr.Accordion("Prompting", open=False):
-                 with gr.Row():
+            prompting_accordion = gr.Accordion("Prompting", open=False)
+            with prompting_accordion:
+                with gr.Row():
                     with gr.Column(scale=2):
                         system_prompt = gr.Textbox(
                             value="You are a helpful AI assistant.",
@@ -194,8 +196,121 @@ def create_chat_interface():
                             info="Format of the conversation", interactive=True
                         )
 
-            # Clear Chat Button (moved inside settings)
-            #clear = gr.Button("Clear Chat")
+            def update_accordion_state(current_state, expanded_accordion):
+                """
+                Updates accordion states when one is expanded
+                Returns: new_state and update objects for each accordion
+                """
+                # If clicking the already open accordion, close it
+                if expanded_accordion == current_state:
+                    return (
+                        "none",
+                        gr.update(open=False),  # model_accordion
+                        gr.update(open=False),  # sampling_accordion
+                        gr.update(open=False)   # prompting_accordion
+                    )
+                
+                # Otherwise, open the clicked one and close others
+                states = {
+                    "model": (
+                        gr.update(open=True),   # model_accordion
+                        gr.update(open=False),  # sampling_accordion
+                        gr.update(open=False)   # prompting_accordion
+                    ),
+                    "sampling": (
+                        gr.update(open=False),  # model_accordion
+                        gr.update(open=True),   # sampling_accordion
+                        gr.update(open=False)   # prompting_accordion
+                    ),
+                    "prompting": (
+                        gr.update(open=False),  # model_accordion
+                        gr.update(open=False),  # sampling_accordion
+                        gr.update(open=True)    # prompting_accordion
+                    )
+                }
+                return expanded_accordion, *states[expanded_accordion]
+
+            def handle_collapse(state):
+                """Handler for collapse events"""
+                return (
+                    "none",
+                    gr.update(open=False),  # model_accordion
+                    gr.update(open=False),  # sampling_accordion
+                    gr.update(open=False)   # prompting_accordion
+                )
+
+            # Add expand/collapse handlers for each accordion
+            model_accordion.expand(
+                fn=update_accordion_state,
+                inputs=[accordion_state, gr.State("model")],
+                outputs=[
+                    accordion_state,
+                    model_accordion,
+                    sampling_accordion,
+                    prompting_accordion
+                ],
+                show_progress=False
+            )
+
+            model_accordion.collapse(
+                fn=handle_collapse,
+                inputs=[accordion_state],
+                outputs=[
+                    accordion_state,
+                    model_accordion,
+                    sampling_accordion,
+                    prompting_accordion
+                ],
+                show_progress=False
+            )
+
+            sampling_accordion.expand(
+                fn=update_accordion_state,
+                inputs=[accordion_state, gr.State("sampling")],
+                outputs=[
+                    accordion_state,
+                    model_accordion,
+                    sampling_accordion,
+                    prompting_accordion
+                ],
+                show_progress=False
+            )
+
+            sampling_accordion.collapse(
+                fn=handle_collapse,
+                inputs=[accordion_state],
+                outputs=[
+                    accordion_state,
+                    model_accordion,
+                    sampling_accordion,
+                    prompting_accordion
+                ],
+                show_progress=False
+            )
+
+            prompting_accordion.expand(
+                fn=update_accordion_state,
+                inputs=[accordion_state, gr.State("prompting")],
+                outputs=[
+                    accordion_state,
+                    model_accordion,
+                    sampling_accordion,
+                    prompting_accordion
+                ],
+                show_progress=False
+            )
+
+            prompting_accordion.collapse(
+                fn=handle_collapse,
+                inputs=[accordion_state],
+                outputs=[
+                    accordion_state,
+                    model_accordion,
+                    sampling_accordion,
+                    prompting_accordion
+                ],
+                show_progress=False
+            )
 
         # --- Image Upload Icon Change Logic ---
         def on_image_upload(image, msg, chatbot):
@@ -253,7 +368,7 @@ def create_chat_interface():
                 return img.resize(new_size, Image.Resampling.LANCZOS)
             return img
 
-        def user_message(message, chat_history, temp, top_p, min_p, top_k, max_len, rep_penalty, img, system_prompt):
+        def user_message(message, chat_history, temp, top_p, top_k, max_len, rep_penalty, img, system_prompt):
             time.sleep(0.001)  
 
             # Define SVG HTML generators with different sizes based on state
@@ -354,7 +469,7 @@ def create_chat_interface():
         # Event handlers for message submission
         msg.submit(
             user_message,
-            inputs=[msg, chatbot, temperature, top_p, min_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
+            inputs=[msg, chatbot, temperature, top_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
             outputs=[msg, image_input, chatbot, chatbot, msg, upload_icon, send_button],
             show_progress=False,
             queue=True
@@ -362,7 +477,7 @@ def create_chat_interface():
 
         send_button.click(
             user_message,
-            inputs=[msg, chatbot, temperature, top_p, min_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
+            inputs=[msg, chatbot, temperature, top_p, top_k, max_length, repetition_penalty, image_input, system_prompt],
             outputs=[msg, image_input, chatbot, chatbot, msg, upload_icon, send_button],
             show_progress=False,
             queue=True
@@ -697,7 +812,6 @@ def create_chat_interface():
             'temperature': temperature,
             'top_p': top_p,
             'top_k': top_k,
-            'min_p': min_p,
             'max_length': max_length,
             'repetition_penalty': repetition_penalty,
             'system_prompt': system_prompt,
