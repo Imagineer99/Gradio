@@ -38,8 +38,8 @@ def create_chat_interface():
     with gr.Blocks(theme=gr.themes.Soft(primary_hue="emerald")) as chat_interface:
         
         # Main Chat Area
-        with gr.Column(scale=10): # Make this column take most space
-            # Header row - removed settings button
+        with gr.Column(scale=10):
+            # Header row 
             with gr.Row(elem_classes=["chat-header"], equal_height=True):
                  gr.Markdown("## Welcome to Unsloth Chat")
 
@@ -197,38 +197,25 @@ def create_chat_interface():
                         )
 
             def update_accordion_state(current_state, expanded_accordion):
-                """
-                Updates accordion states when one is expanded
-                Returns: new_state and update objects for each accordion
-                """
-                # If clicking the already open accordion, close it
-                if expanded_accordion == current_state:
-                    return (
-                        "none",
-                        gr.update(open=False),  # model_accordion
-                        gr.update(open=False),  # sampling_accordion
-                        gr.update(open=False)   # prompting_accordion
-                    )
-                
-                # Otherwise, open the clicked one and close others
-                states = {
-                    "model": (
-                        gr.update(open=True),   # model_accordion
-                        gr.update(open=False),  # sampling_accordion
-                        gr.update(open=False)   # prompting_accordion
-                    ),
-                    "sampling": (
-                        gr.update(open=False),  # model_accordion
-                        gr.update(open=True),   # sampling_accordion
-                        gr.update(open=False)   # prompting_accordion
-                    ),
-                    "prompting": (
-                        gr.update(open=False),  # model_accordion
-                        gr.update(open=False),  # sampling_accordion
-                        gr.update(open=True)    # prompting_accordion
-                    )
+                """Updates accordion states when one is expanded"""
+                # Create a base state where all accordions are closed
+                base_state = {
+                    "none": False,
+                    "model": False,
+                    "sampling": False,
+                    "prompting": False
                 }
-                return expanded_accordion, *states[expanded_accordion]
+                
+                # If clicking already open accordion, return all closed
+                if expanded_accordion == current_state:
+                    new_state = "none"
+                else:
+                    # Otherwise, set the expanded accordion to true
+                    base_state[expanded_accordion] = True
+                    new_state = expanded_accordion
+                
+                # Convert the boolean states to gradio update objects
+                return (new_state,) + tuple(gr.update(open=base_state[k]) for k in ["model", "sampling", "prompting"])
 
             def handle_collapse(state):
                 """Handler for collapse events"""
@@ -799,6 +786,41 @@ def create_chat_interface():
             // Initialize on page load
             document.addEventListener('DOMContentLoaded', initializeChatClickHandlers);
             document.addEventListener('gradio-loaded', initializeChatClickHandlers);
+
+            const accordionTransition = () => {
+                const accordions = document.querySelectorAll('.gradio-accordion');
+                accordions.forEach(accordion => {
+                    const header = accordion.querySelector('.accordion-header');
+                    if (header) {
+                        header.addEventListener('click', () => {
+                            // First close all accordions
+                            accordions.forEach(acc => {
+                                if (acc !== accordion && acc.classList.contains('accordion-open')) {
+                                    acc.classList.remove('accordion-open');
+                                    const content = acc.querySelector('.accordion-content');
+                                    if (content) {
+                                        content.style.maxHeight = '0px';
+                                    }
+                                }
+                            });
+                            
+                            // After a small delay, open the clicked accordion if it wasn't already open
+                            setTimeout(() => {
+                                if (!accordion.classList.contains('accordion-open')) {
+                                    accordion.classList.add('accordion-open');
+                                    const content = accordion.querySelector('.accordion-content');
+                                    if (content) {
+                                        content.style.maxHeight = content.scrollHeight + 'px';
+                                    }
+                                }
+                            }, 150); // 150ms delay for smooth transition
+                        });
+                    }
+                });
+            };
+
+            document.addEventListener('gradio-loaded', accordionTransition);
+            observer.observe(document.body, { childList: true, subtree: true });
         </script>
         """
 
