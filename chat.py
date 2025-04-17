@@ -64,7 +64,6 @@ def create_chat_interface():
                 elem_classes=["chat-history", "modern-chat"],
                 container=True,
                 type="messages",
-                avatar_images=["user.png", "assistant.png"],
                 layout="bubble",
                 visible=False
             )
@@ -123,7 +122,7 @@ def create_chat_interface():
             # Model Selection
             model_accordion = gr.Accordion("Model Selection", open=False)
             with model_accordion:
-                with gr.Row(elem_classes=["model-selection-controls"]):
+                with gr.Column(elem_classes=["model-selection-controls"]):
                     model_dropdown = gr.Dropdown(
                         choices=[
                             "unsloth/Meta-Llama-3.1-8B-bnb-4bit",
@@ -142,18 +141,18 @@ def create_chat_interface():
                         value="unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit",
                         label="Select Model",
                         interactive=True,
-                        scale=3
                     )
-                    model_search = gr.Textbox(
-                        placeholder="Search for a model",
-                        label="Search",
-                        interactive=True,
-                        elem_classes=["model-search"],
-                        scale=1
-                    )
+                    with gr.Column(scale=2):
+                        model_search = gr.Textbox(
+                            info="Search for a model",
+                            label="Search",
+                            placeholder="Search for a model...",
+                            interactive=True,
+                        )
+
 
             # Sampling Parameters
-            sampling_accordion = gr.Accordion("Sampling Parameters", open=False)
+            sampling_accordion = gr.Accordion("Sampling Parameters", open=False, elem_classes=["sampling-parameters", "sampling-accordion"])
             with sampling_accordion:
                 with gr.Row():
                     with gr.Column():
@@ -187,7 +186,8 @@ def create_chat_interface():
                             value="You are a helpful AI assistant.",
                             info="Defines the LLM's style of response",
                             label="System Prompt", lines=3,
-                            placeholder="Define the LLM's behavior and role..."
+                            placeholder="Define the LLM's behavior and role...",
+                            elem_id="system-prompt-textbox",
                         )
                     with gr.Column(scale=1):
                         chat_template = gr.Dropdown(
@@ -198,7 +198,7 @@ def create_chat_interface():
 
             def update_accordion_state(current_state, expanded_accordion):
                 """Updates accordion states when one is expanded"""
-                # Create a base state where all accordions are closed
+                # Base state where all accordions are closed
                 base_state = {
                     "none": False,
                     "model": False,
@@ -206,15 +206,14 @@ def create_chat_interface():
                     "prompting": False
                 }
                 
-                # If clicking already open accordion, return all closed
+                # Return all closed
                 if expanded_accordion == current_state:
                     new_state = "none"
                 else:
-                    # Otherwise, set the expanded accordion to true
                     base_state[expanded_accordion] = True
                     new_state = expanded_accordion
                 
-                # Convert the boolean states to gradio update objects
+                # Boolean states convert to gradio update objects
                 return (new_state,) + tuple(gr.update(open=base_state[k]) for k in ["model", "sampling", "prompting"])
 
             def handle_collapse(state):
@@ -226,7 +225,7 @@ def create_chat_interface():
                     gr.update(open=False)   # prompting_accordion
                 )
 
-            # Add expand/collapse handlers for each accordion
+            # Handlers for each accordion
             model_accordion.expand(
                 fn=update_accordion_state,
                 inputs=[accordion_state, gr.State("model")],
@@ -356,7 +355,6 @@ def create_chat_interface():
             return img
 
         def user_message(message, chat_history, temp, top_p, top_k, max_len, rep_penalty, img, system_prompt):
-            time.sleep(0.001)  
 
             # Define SVG HTML generators with different sizes based on state
             def get_initial_svg_html():
@@ -482,13 +480,19 @@ def create_chat_interface():
                 
                 # Find first user message and extract title
                 user_content = next((msg["content"] for msg in chatbot_history if msg["role"] == "user"), "")
+                
+                # Remove any HTML tags for title generation
                 if "<img" in user_content:
                     title = "Image Chat"
                 else:
-                    title = user_content[:30] + "..." if len(user_content) > 30 else user_content
+                    # Remove HTML tags if any
+                    import re
+                    clean_content = re.sub(r'<[^>]+>', '', user_content)
+                    # Limit to 20 characters and add ellipsis if needed
+                    title = (clean_content[:20] + '...') if len(clean_content) > 20 else clean_content
                 
                 if not title.strip():
-                    title = f"Chat {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+                    title = f"Chat {datetime.now().strftime('%H:%M')}"
                 
                 new_session = {
                     "id": chat_id,
