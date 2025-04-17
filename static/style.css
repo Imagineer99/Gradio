@@ -1964,7 +1964,7 @@ div.token.svelte-1scun43 {
 }
 
 
-/* new chat history sidebar styles */
+/* chat history sidebar styles */
 
 
 .saved-chats-list {
@@ -1983,6 +1983,9 @@ div.token.svelte-1scun43 {
     transition: all 0.2s ease !important;  /* Match new chat button transition */
     width: 230px !important;  /* Match new chat button width */
     border: 1px solid var(--border-color) !important;  /* Add subtle border */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
 }
 
 .saved-chat-item:hover {
@@ -1997,6 +2000,10 @@ div.token.svelte-1scun43 {
     margin-bottom: 4px !important;
     color: var(--text-primary) !important;
     margin-left: 15px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 170px !important;  /* Leave room for padding */
 }
 
 .chat-timestamp {
@@ -2018,6 +2025,7 @@ div.token.svelte-1scun43 {
 .block.chat-history.modern-chat.svelte-11xb1hd.auto-margin {
     margin-top: -150px !important;
     min-height: 934px !important;
+    margin-bottom: -24px;   
 }
 
 .gradio-container.gradio-container-5-14-0 .contain .custom-upload {
@@ -2041,6 +2049,8 @@ div.token.svelte-1scun43 {
     width: 230px !important;
     border: 1px solid var(--border-color) !important;
     margin-left: -12px;
+    margin-bottom: 26px !important;
+    margin-top: -25px;
 }
 
 .new-chat-btn:hover {
@@ -2056,4 +2066,116 @@ div.token.svelte-1scun43 {
     font-size: 1.1rem !important;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px !important;
     border: 1px solid var(--border-color) !important;
+}
+
+#settings-panel-column .block.svelte-11xb1hd.padded.auto-margin {
+    border-radius: calc(min(20px, 100%)) !important;  /* Will be capped at 32px even as element grows */
+    min-height: 1px !important;
+    
+}
+
+#system-prompt-textbox .scroll-hide.svelte-173056l,
+.gradio-container .contain #system-prompt-textbox .scroll-hide.svelte-173056l {
+    height: auto !important;
+    min-height: 149px !important;
+    border-radius: 18px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px !important;
+    display: block !important;  
+    overflow: auto !important;  
+    line-height: 1.5 !important;  
+    word-wrap: break-word !important; 
+    white-space: pre-wrap !important;  
+    position: relative !important;  
+}
+
+
+#system-prompt-textbox {
+    position: relative !important;
+    width: 100% !important;
+    overflow: visible !important;
+}
+
+
+#settings-panel-column .scroll-hide.svelte-173056l,
+#settings-panel-column .gradio-container .contain .scroll-hide.svelte-173056l {
+    overflow: hidden !important;  
+    resize: none !important;  
+}
+
+
+#settings-panel-column .block.svelte-11xb1hd.padded.auto-margin {
+    height: auto !important;
+    overflow: hidden !important;
+}
+
+
+#system-prompt-textbox .scroll-hide.svelte-173056l,
+.gradio-container .contain #system-prompt-textbox .scroll-hide.svelte-173056l {
+    height: auto !important;
+    min-height: 149px !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    resize: none !important;
+}
+
+
+#settings-panel-column textarea,
+#settings-panel-column input,
+#settings-panel-column .scroll-hide {
+    overflow: hidden !important;
+    resize: none !important;
+}
+
+.message-content.svelte-1u5aj92 {
+    display: none; /* Hides the element */
+}
+
+.flex-wrap.svelte-pcjl1g.svelte-pcjl1g {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    color: var(--body-text-color);
+    font-size: var(--chatbot-text-size);
+    overflow-wrap: break-word;
+    margin-left: 335px;
+    margin-right: 326px;
+}
+
+/* Change this CSS rule */
+.message-content.svelte-1u5aj92 {
+    display: none; /* This is hiding all messages */
+}
+
+/* To this */
+.message-content.svelte-1u5aj92 {
+    background-color: rgb(227 234 253 / 74%);
+    border-radius: 500px 500px 500px 0px;
+    padding: 12px 20px;
+    margin: 4px 0;
+}
+
+
+.block.chat-history.modern-chat.svelte-11xb1hd.auto-margin {
+   border: none !important; 
+   border-top: 1px solid rgba(0, 0, 0, 0.034) !important; 
+   border-radius: 1px !important; 
+}
+
+.icon-button-wrapper.top-panel.hide-top-corner.svelte-1jx2rq3 {
+    display: none !important;
+}
+
+.lg.secondary.new-chat-btn.svelte-5st68j {
+    margin-top: -36px !important;
+}
+
+#sampling-parameters .block.svelte-11xb1hd.padded.auto-margin {
+    margin-bottom: -27px !important;
+}
+
+.message.svelte-pcjl1g.svelte-pcjl1g {
+    border-bottom-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
 }
