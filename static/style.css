@@ -1986,6 +1986,26 @@ div.token.svelte-1scun43 {
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
+    height: 65px !important; /* Fixed height */
+    box-sizing: border-box !important;
+}
+
+.chat-title {
+    font-weight: 500 !important;
+    color: var(--text-primary) !important;
+    margin-left: 15px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 170px !important;
+    line-height: 1.2 !important; /* Consistent line height */
+}
+
+.chat-timestamp {
+    font-size: 0.8em !important;
+    color: var(--text-secondary) !important;
+    margin-left: 15px !important;
+    line-height: 1.2 !important; /* Consistent line height */
 }
 
 .saved-chat-item:hover {
@@ -2048,9 +2068,9 @@ div.token.svelte-1scun43 {
     transition: 0.2s !important;
     width: 230px !important;
     border: 1px solid var(--border-color) !important;
-    margin-left: -12px;
+    margin-left: -12px !important;
     margin-bottom: 26px !important;
-    margin-top: -25px;
+    margin-top: -24px !important;
 }
 
 .new-chat-btn:hover {
@@ -2179,3 +2199,290 @@ div.token.svelte-1scun43 {
     border-bottom-right-radius: 10px !important;
     border-bottom-left-radius: 10px !important;
 }
+
+
+.message-wrap.svelte-gjtrl6 .message-row .md img {
+    border-radius: 7px;
+    margin-bottom: 11px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.saved-chat-item {
+    cursor: pointer;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.saved-chat-item:hover {
+    background-color: rgba(85, 182, 133, 0.1);
+}
+
+.saved-chat-item.active {
+    background-color: rgba(85, 182, 133, 0.2);
+}
+
+.chat-title, .chat-timestamp {
+    pointer-events: none;
+}
+
+.row.chat-input-row.svelte-1xp0cw7.unequal-height {
+    bottom: -30px !important;
+}
+
+.row.chat-header.svelte-1xp0cw7.stretch {
+    bottom: -23px !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .lg.secondary.new-chat-btn.svelte-5st68j {
+    margin-top: -37px !important;
+}
+
+
+.saved-chats-list {
+    display: flex !important;
+    flex-direction: column !important; 
+    gap: 8px !important;
+    margin-top: 16px !important;
+}
+
+.new-chat-btn {
+    background-color: var(--primary-700) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 500px !important;
+    padding: 12px 24px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    width: 230px !important; 
+    margin-top: auto !important; 
+    margin-bottom: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    order: 2 !important; 
+}
+
+.chat-history-sidebar {
+    display: flex !important;
+    flex-direction: column !important;
+    height: calc(100vh - 200px) !important; 
+    position: fixed !important;
+    top: 0 !important;
+    right: auto !important;
+    left: 110px !important;
+    width: 400px !important;
+    margin: 0 !important;
+    padding: 2rem !important;
+    z-index: 1000 !important;
+    transform: none !important;
+    overflow-y: auto !important;
+    margin-top: 150px !important;
+    margin-left: 150px !important;
+    background-color: rgba(228, 19, 19, 0) !important;
+}
+
+
+.gradio-container.gradio-container-5-14-0 .contain .saved-chat-item {
+    padding: 5px 24px !important;
+    border-radius: 500px !important;
+    background: var(--background-primary) !important;
+    cursor: pointer !important;
+    transition: 0.2s !important;
+    width: 230px !important;
+    border: 1px solid var(--border-color) !important;
+    margin-left: -12px !important;
+    margin-bottom: 8px !important; 
+    margin-top: 0 !important; 
+}
+
+.chat-session-btn {
+    padding: 5px 24px !important;
+    border-radius: 500px !important;
+    background: var(--background-primary) !important;
+    cursor: pointer !important;
+    transition: 0.2s !important;
+    width: 230px !important;
+    border: 1px solid var(--border-color) !important;
+    margin-left: 1px !important;
+    margin-bottom: 4px !important;
+    margin-top: -4px !important;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    height: 42px !important; /* Fixed smaller height */
+}
+
+.chat-session-btn:hover {   
+    background-color: rgba(85, 182, 133, 0.1);
+    background-color: var(--hover-color) !important;  /* Use theme hover color */
+    transform: translateY(-0.9px) !important;  /* Subtle lift effect */
+    border-color: var(--primary-700) !important;  /* Highlight border on hover */    
+}
+
+.chat-session-btn.selected {
+    background: #e8f5e9;
+    border-color: #55b685;
+} 
+
+.gradio-container.gradio-container-5-14-0 .contain .lg.secondary.new-chat-btn.svelte-5st68j {
+    margin-top: -4px !important;
+}
+
+/* Add strict height control for chat input */
+.chat-input, 
+.chat-input-initial,
+.chat-input-active {
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+    box-sizing: border-box !important;
+}
+
+.chat-input textarea,
+.chat-input-initial textarea,
+.chat-input-active textarea {
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+    resize: none !important;
+    overflow-y: hidden !important;
+    box-sizing: border-box !important;
+    padding: 12px !important;
+}
+
+/* Ensure the container maintains consistent height */
+.chat-input-row {
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+    box-sizing: border-box !important;
+}
+
+.chat-history-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.chat-title {
+    font-weight: 500;
+}
+
+.chat-timestamp {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.chat-session-btn {
+    padding: 12px 16px !important;
+    border-radius: 500px !important;
+    background: var(--background-primary) !important;
+    cursor: pointer !important;
+    transition: 0.2s !important;
+    width: 230px !important;
+    border: 1px solid var(--border-color) !important;
+    margin-left: 1px !important;
+    margin-bottom: 8px !important;
+    height: auto !important;
+    min-height: 65px !important;
+}
+
+.chat-session-content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    text-align: left !important;
+}
+
+.chat-title {
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    color: var(--text-primary) !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.chat-timestamp {
+    font-size: 0.8rem !important;
+    color: var(--text-secondary) !important;
+    opacity: 0.8 !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+}
+
+.chat-session-btn:hover {
+    background-color: var(--hover-color) !important;
+    transform: translateY(-0.9px) !important;
+    border-color: var(--primary-700) !important;
+}
+
+.chat-session-btn.selected {
+    background: var(--hover-color) !important;
+    border-color: var(--primary-700) !important;
+}
+
+.chat-session-btn {
+    white-space: pre-line !important;
+    text-align: left !important;
+    padding: 12px 16px !important;
+    border-radius: 500px !important;
+    background: var(--background-primary) !important;
+    cursor: pointer !important;
+    transition: 0.2s !important;
+    width: 230px !important;
+    border: 1px solid var(--border-color) !important;
+    margin-left: 1px !important;
+    height: auto !important;
+    min-height: 65px !important;
+    line-height: 1.4 !important;
+    font-size: 0.9rem;
+}
+/* Container for the chat history button */
+.chat-session-btn {
+    white-space: pre-line;
+    text-align: left;
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 18px;
+    background: #fff;
+    border: 1.5px solid #e3e8f0;
+    margin-bottom: 4px !important;
+    font-size: 15px;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 50px !important;
+    max-height: 6px;
+}
+
+/* Title (first line) */
+.chat-session-btn {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+}
+
+/* Timestamp (second line) */
+.chat-session-btn {
+    color: #7a7a7a;
+    font-size: 13px;
+}
+
+/* Hover effect */
+.chat-session-btn:hover, .chat-session-btn:focus {
+    background: #f5faff;
+    border-color: #b6e0fe;
+    box-shadow: 0 4px 16px 0 rgba(60, 72, 88, 0.089);
+}
+
+
+.gradio-container.gradio-container-5-14-0 .contain .lg.secondary.new-chat-btn.svelte-5st68j {
+    margin-top: 1px !important;
+}
+
