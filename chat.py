@@ -26,7 +26,7 @@ def mock_chat_response(message, temperature, top_p, max_length, image=None):
     # Stream the response character by character !placeholder for demo purposes!
     for i in range(len(response)):
         yield response[:i+1]
-        time.sleep(0.05)  # Small delay between characters !placeholder for demo purposes!
+        time.sleep(0.05)  
 
 def create_chat_interface():
     examples = [
@@ -42,20 +42,6 @@ def create_chat_interface():
             # Header row 
             with gr.Row(elem_classes=["chat-header"], equal_height=True):
                  gr.Markdown("## Welcome to Unsloth Chat")
-
-            # Initial popup/example section inside chat container
-            #with gr.Column(elem_id="chat-examples", visible=True) as example_block:
-            #    with gr.Row():
-            #        with gr.Column(scale=2):
-            #            gr.Markdown("## Welcome to Unsloth Chat", elem_id="welcome-title")
-            #            gr.Markdown("Making the community's best AI chat models available to everyone.")
-            #        with gr.Column(scale=1):
-            #            gr.Markdown("Chat UI is now open sourced on Hugging Face Hub")
-            #            gr.Markdown("check out the [↗ repository](https://huggingface.co/spaces/unsloth/chat)")
-            #    
-            #    gr.Markdown("### Try these examples:")
-            #    with gr.Row():
-            #        example_buttons = [gr.Button(example, elem_classes=["example-btn"]) for example in examples]
 
             # Chat History
             chatbot = gr.Chatbot(
@@ -105,12 +91,167 @@ def create_chat_interface():
         with gr.Column(scale=2, elem_classes=["chat-history-sidebar"]):
             gr.Markdown("## Chat History")
             
-            # Container for saved chats
-            saved_chats = gr.HTML(elem_id="saved-chats-container")
             
-            # New Chat Button
+            MAX_SESSIONS = 10
+            sessions_state = gr.State([None]*MAX_SESSIONS)  # Store session data
+            
+            # System prompt defined before we use it in handlers
+            system_prompt = gr.Textbox(
+                value="You are a helpful AI assistant.",
+                info="Defines the LLM's style of response",
+                label="System Prompt", 
+                lines=3,
+                placeholder="Define the LLM's behavior and role...",
+                elem_id="system-prompt-textbox",
+                visible=False  
+            )
+            
+            
             new_chat_btn = gr.Button("New Chat", elem_classes=["new-chat-btn"])
+            
+            # Create session buttons
+            session_buttons = []
+            for i in range(MAX_SESSIONS):
+                btn = gr.Button(
+                    visible=False,
+                    elem_classes=["chat-session-btn"],
+                )
+                session_buttons.append(btn)
+            
+            current_chat_id = gr.State(None)  
+            
+            def create_new_chat(sessions, chat_history):
+                # Find first available slot
+                for i in range(MAX_SESSIONS):
+                    if not sessions[i]:
+                        title = "New Chat"
+                        if chat_history and len(chat_history) > 1:  # Skip system message
+                            user_msg = chat_history[1].get("content", "").strip()
+                            if user_msg:
+                                import re
+                                clean_content = re.sub(r'<[^>]+>', '', user_msg)
+                                clean_content = ' '.join(clean_content.split())
+                                title = clean_content[:20] + ('...' if len(clean_content) > 20 else '')
+                        
+                        sessions[i] = {
+                            "id": str(uuid.uuid4()),
+                            "title": title,
+                            "timestamp": datetime.now().isoformat(),
+                            "messages": chat_history if chat_history else []
+                        }
+                        break
+                
+                button_updates = []
+                sorted_sessions = []
+                for j in range(MAX_SESSIONS):
+                    if sessions[j]:
+                        sorted_sessions.append((j, sessions[j]))
+                
+                # Sort by timestamp, newest first
+                sorted_sessions.sort(key=lambda x: x[1]['timestamp'], reverse=True)
+                
+                # Create button updates in sorted order
+                visible_count = 0
+                button_positions = [None] * MAX_SESSIONS
+                
+                # First, place the visible buttons in order
+                for idx, session in sorted_sessions:
+                    button_positions[visible_count] = {
+                        'title': session['title'],
+                        'timestamp': session['timestamp'],
+                        'visible': True
+                    }
+                    visible_count += 1
+                
+                # Fill remaining positions with invisible buttons
+                for i in range(visible_count, MAX_SESSIONS):
+                    button_positions[i] = {'visible': False}
+                
+                # Create the actual button updates
+                for pos in button_positions:
+                    if pos['visible']:
+                        title = pos['title']
+                        timestamp = datetime.fromisoformat(pos['timestamp']).strftime('%Y-%m-%d %H:%M')
+                        label = f"{title}\n{timestamp}"
+                        button_updates.append(gr.update(
+                            value=label,
+                            visible=True,
+                            elem_classes=["chat-session-btn"]
+                        ))
+                    else:
+                        button_updates.append(gr.update(visible=False))
+                
+                # Clear current chat
+                return (
+                    sessions,  # sessions state
+                    [],  # clear chatbot
+                    "You are a helpful AI assistant.",  # reset system prompt
+                    gr.update(visible=False),  # hide chatbot
+                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]),  # reset input style
+                    gr.update(value=None, visible=False),  # clear image
+                    *button_updates  # update all buttons
+                )
 
+            def load_chat_session(idx, sessions):
+                if not sessions[idx]:
+                    return [], "You are a helpful AI assistant.", gr.update(visible=False)
+                
+                session = sessions[idx]
+                
+                active_upload_html = """
+                <div class="upload-svg-wrapper active-chat force-active" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                """
+                
+                active_send_html = """
+                <div class="send-svg-wrapper active-chat force-active" title="Send Message">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                """
+                
+                return (
+                    session["messages"],                # chatbot messages
+                    session["messages"][0]["content"] if session["messages"] else "You are a helpful AI assistant.",  # system prompt
+                    gr.update(visible=True),            # chatbot visibility
+                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active", "force-active"]),  # msg styling
+                    gr.update(value=active_upload_html, elem_classes=["custom-upload", "active-chat", "force-active"]),  # upload icon
+                    gr.update(value=active_send_html, elem_classes=["custom-send", "active-chat", "force-active"]),  # send button
+                    gr.update(value=None, visible=False),  # image input
+                    idx                                 # current chat id
+                )
+
+            # Event handlers
+            new_chat_btn.click(
+                create_new_chat,
+                inputs=[sessions_state, chatbot],
+                outputs=[sessions_state, chatbot, system_prompt, chatbot, msg, image_input] + session_buttons,
+                show_progress=False,
+                queue=False
+            )
+
+            # Add click handlers for each session button
+            for i, btn in enumerate(session_buttons):
+                btn.click(
+                    load_chat_session,
+                    inputs=[gr.State(i), sessions_state],
+                    outputs=[
+                        chatbot,                    # chat messages
+                        system_prompt,              # system prompt
+                        chatbot,                    # chatbot visibility
+                        msg,                        # input box styling
+                        upload_icon,                # upload icon
+                        send_button,                # send button
+                        image_input,                # image input
+                        current_chat_id             # current chat ID
+                    ],
+                    show_progress=False,
+                    queue=False
+                )
 
         # Settings panel
         with gr.Column(visible=True, elem_id="settings-panel-column") as settings_panel:
@@ -182,14 +323,6 @@ def create_chat_interface():
             with prompting_accordion:
                 with gr.Row():
                     with gr.Column(scale=2):
-                        system_prompt = gr.Textbox(
-                            value="You are a helpful AI assistant.",
-                            info="Defines the LLM's style of response",
-                            label="System Prompt", lines=3,
-                            placeholder="Define the LLM's behavior and role...",
-                            elem_id="system-prompt-textbox",
-                        )
-                    with gr.Column(scale=1):
                         chat_template = gr.Dropdown(
                             choices=["Auto-Select", "Alpaca", "ShareGPT", "OpenAssistant", "Anthropic Claude", "GPTeacher", "CodeAlpaca", "Dolly", "Baize", "OpenOrca", "WizardLM", "Platypus", "Vicuna", "LIMA", "Custom"],
                             value="Auto-Select", label="Chat Template",
@@ -471,7 +604,6 @@ def create_chat_interface():
         # !State for storing chat sessions for demo purposes!
         # !This is a placeholder, we will probably use a database to store the chat sessions!
         chat_sessions = gr.State([])  # List of {id, title, timestamp, messages}
-        current_chat_id = gr.State(None)
 
         def clear_chat(chat_sessions_list, current_chat, chatbot_history):
             # Save current chat if it exists
@@ -488,8 +620,10 @@ def create_chat_interface():
                     # Remove HTML tags if any
                     import re
                     clean_content = re.sub(r'<[^>]+>', '', user_content)
-                    # Limit to 20 characters and add ellipsis if needed
-                    title = (clean_content[:20] + '...') if len(clean_content) > 20 else clean_content
+                    # Remove newlines and extra spaces
+                    clean_content = ' '.join(clean_content.split())
+                    # Limit to exactly 20 characters and add ellipsis if needed
+                    title = clean_content[:20] + ('...' if len(clean_content) > 20 else '')
                 
                 if not title.strip():
                     title = f"Chat {datetime.now().strftime('%H:%M')}"
@@ -502,28 +636,19 @@ def create_chat_interface():
                 }
                 
                 if not current_chat:
-                    chat_sessions_list.append(new_session)
+                    chat_sessions_list.insert(0, new_session)  # Insert at beginning instead of append
                 else:
                     for i, session in enumerate(chat_sessions_list):
                         if session["id"] == current_chat:
                             chat_sessions_list[i] = new_session
                             break
             
-            # Generate saved chats HTML
-            saved_chats_html = """
-            <div class="saved-chats-list" id="saved-chats-list">
-            """
-            for session in sorted(chat_sessions_list, key=lambda x: x["timestamp"], reverse=True):
-                saved_chats_html += f"""
-                <div class="saved-chat-item" data-chat-id="{session['id']}" onclick="handleChatClick('{session['id']}')">
-                    <div class="chat-title">{session['title']}</div>
-                    <div class="chat-timestamp">{datetime.fromisoformat(session['timestamp']).strftime('%Y-%m-%d %H:%M')}</div>
-                </div>
-                """
-            saved_chats_html += "</div>"
-
+            # Update dropdown choices
+            choices = [(session["title"], session["id"]) 
+                      for session in sorted(chat_sessions_list, key=lambda x: x["timestamp"], reverse=True)]
+            
             # Keep the original SVG HTML content
-            upload_html = f"""
+            upload_html = """
             <div class="upload-svg-wrapper initial-state" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -531,7 +656,7 @@ def create_chat_interface():
             </div>
             """
 
-            send_html = f"""
+            send_html = """
             <div class="send-svg-wrapper initial-state" title="Send Message">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -547,47 +672,18 @@ def create_chat_interface():
                 gr.update(value=upload_html, elem_classes=["custom-upload"]),  # Reset upload button with SVG content
                 gr.update(value=send_html, elem_classes=["custom-send"]),  # Reset send button with SVG content
                 gr.update(value=None, visible=False),  # Clear image input
-                chat_sessions_list,
-                None,  # Clear current chat ID
-                saved_chats_html
+                chat_sessions_list,  # Updated chat sessions
+                None  # Clear current chat ID
             )
 
-        # Load saved chat
-        def load_chat(chat_id, chat_sessions_list):
-            for session in chat_sessions_list:
-                if session["id"] == chat_id:
-                    return (
-                        session["messages"],  # Load chat history
-                        session["messages"][0]["content"] if session["messages"] else "You are a helpful AI assistant.",  # Load system prompt
-                        gr.update(visible=True),  # Show chatbot
-                        gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active"]),  
-                        chat_id  # Set current chat ID
-                    )
-            return [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]), None
-
-        # !placeholder for demo purposes!
-        def handle_chat_click(raw_value, chat_sessions_list):
-            # Extract chat_id from the raw value if it exists
-            chat_id = None
-            try:
-                # The raw_value will be the HTML of the clicked item
-                import re
-                match = re.search(r'data-chat-id="([^"]+)"', raw_value)
-                if match:
-                    chat_id = match.group(1)
-                    print(f"Found chat ID: {chat_id}") 
-                
-                if not chat_id:
-                    return [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]), gr.update(), gr.update(), gr.update(value=None, visible=False), None
-            
-            except Exception as e:
-                print(f"Error extracting chat ID: {e}")
+        def on_chat_selected(selected_chat_id, chat_sessions_list):
+            if not selected_chat_id:
                 return [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]), gr.update(), gr.update(), gr.update(value=None, visible=False), None
 
             # Find the matching session
             matching_session = None
             for session in chat_sessions_list:
-                if session["id"] == chat_id:
+                if session["id"] == selected_chat_id:
                     matching_session = session
                     break
             
@@ -595,16 +691,17 @@ def create_chat_interface():
                 messages = matching_session["messages"]
                 system_prompt_val = messages[0]["content"] if messages else "You are a helpful AI assistant."
                 
-                initial_upload_html = """
-                <div class="upload-svg-wrapper active-chat" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                # Always set to active state when chat is selected
+                active_upload_html = """
+                <div class="upload-svg-wrapper active-chat force-active" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
                 """
                 
-                initial_send_html = """
-                <div class="send-svg-wrapper active-chat" title="Send Message">
+                active_send_html = """
+                <div class="send-svg-wrapper active-chat force-active" title="Send Message">
                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.5004 12H5.00043M4.91577 12.2915L2.58085 19.2662C2.39742 19.8142 2.3057 20.0881 2.37152 20.2569C2.42868 20.4034 2.55144 20.5145 2.70292 20.5567C2.87736 20.6054 3.14083 20.4869 3.66776 20.2497L20.3792 12.7296C20.8936 12.4981 21.1507 12.3824 21.2302 12.2216C21.2993 12.082 21.2993 11.9181 21.2302 11.7784C21.1507 11.6177 20.8936 11.5019 20.3792 11.2705L3.66193 3.74776C3.13659 3.51135 2.87392 3.39315 2.69966 3.44164C2.54832 3.48375 2.42556 3.59454 2.36821 3.74078C2.30216 3.90917 2.3929 4.18255 2.57437 4.72931L4.91642 11.7856C4.94759 11.8795 4.96317 11.9264 4.96933 11.9744C4.97479 12.0171 4.97473 12.0602 4.96916 12.1028C4.96289 12.1508 4.94718 12.1977 4.91577 12.2915Z" stroke="#55b685" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -615,38 +712,21 @@ def create_chat_interface():
                     messages,  # chatbot
                     system_prompt_val,  # system_prompt
                     gr.update(visible=True),  # chatbot visibility
-                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active"]),  # msg style
-                    gr.update(value=initial_upload_html, elem_classes=["custom-upload", "active-chat"]),  # upload_icon
-                    gr.update(value=initial_send_html, elem_classes=["custom-send", "active-chat"]),  # send_button
+                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active", "force-active"]),  # msg style - always active
+                    gr.update(value=active_upload_html, elem_classes=["custom-upload", "active-chat", "force-active"]),  # upload_icon - always active
+                    gr.update(value=active_send_html, elem_classes=["custom-send", "active-chat", "force-active"]),  # send_button - always active
                     gr.update(value=None, visible=False),  # image_input
-                    chat_id  # current_chat_id
+                    selected_chat_id  # current_chat_id
                 )
             
-            # Return default values if chat not found
-            return (
-                [],  # Empty chat history
-                "You are a helpful AI assistant.",  # Default system prompt
-                gr.update(visible=False),  # Hide chatbot
-                gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]),  # Initial input style
-                gr.update(value=initial_upload_html, elem_classes=["custom-upload", "initial-state"]),  # Initial upload button
-                gr.update(value=initial_send_html, elem_classes=["custom-send", "initial-state"]),  # Initial send button
-                gr.update(value=None, visible=False),  # Clear image input
-                None  # Clear current chat ID
-            )
-
-        # Update the click handler registration to use click instead of select
-        saved_chats.click(
-            fn=handle_chat_click,
-            inputs=[saved_chats, chat_sessions],
-            outputs=[chatbot, system_prompt, chatbot, msg, upload_icon, send_button, image_input, current_chat_id],
-            show_progress=False
-        )
+            return [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]), gr.update(), gr.update(), gr.update(value=None, visible=False), None
 
         # Update the new chat button click handler
         new_chat_btn.click(
             clear_chat,
             inputs=[chat_sessions, current_chat_id, chatbot],
-            outputs=[chatbot, system_prompt, chatbot, msg, upload_icon, send_button, image_input, chat_sessions, current_chat_id, saved_chats],
+            outputs=[chatbot, system_prompt, chatbot, msg, upload_icon, send_button, image_input, chat_sessions, current_chat_id],
+            show_progress=False,
             queue=False
         )
 
@@ -661,7 +741,10 @@ def create_chat_interface():
                 const sendContainer = document.querySelector('.block.custom-send.svelte-11xb1hd');
                 
                 if (input && uploadWrapper && sendWrapper && uploadContainer && sendContainer) {
-                    if (input.value.trim()) {
+                    // Check if we have force-active class
+                    const isForceActive = input.closest('.chat-input').classList.contains('force-active');
+                    
+                    if (isForceActive || input.value.trim()) {
                         uploadWrapper.classList.remove('initial-state');
                         sendWrapper.classList.remove('initial-state');
                         uploadContainer.classList.remove('initial-state');
@@ -672,7 +755,7 @@ def create_chat_interface():
                         
                         input.closest('.chat-input').classList.remove('chat-input-initial');
                         input.closest('.chat-input').classList.add('chat-input-active');
-                    } else {
+                    } else if (!isForceActive) {
                         uploadWrapper.classList.add('initial-state');
                         sendWrapper.classList.add('initial-state');
                         uploadContainer.classList.add('initial-state');
@@ -732,65 +815,6 @@ def create_chat_interface():
                 subtree: true
             });
 
-            // Update the click handler for saved chats
-            function handleChatClick(chatId) {
-                const savedChatsContainer = document.getElementById('saved-chats-container');
-                if (savedChatsContainer) {
-                    // Find the specific chat item
-                    const clickedItem = document.querySelector(`[data-chat-id="${chatId}"]`);
-                    if (clickedItem) {
-                        // Create a temporary container with just the clicked item
-                        const tempContainer = document.createElement('div');
-                        tempContainer.innerHTML = clickedItem.outerHTML;
-                        
-                        // Trigger the click event with the specific item's HTML
-                        const event = new Event('click', { bubbles: true });
-                        savedChatsContainer.innerHTML = tempContainer.innerHTML;
-                        savedChatsContainer.dispatchEvent(event);
-                        
-                        // Restore the original content after a short delay
-                        setTimeout(() => {
-                            savedChatsContainer.innerHTML = document.querySelector('.saved-chats-list').outerHTML;
-                            initializeChatClickHandlers();
-                        }, 100);
-                    }
-                }
-            }
-
-            // Initialize click handlers for saved chat items
-            function initializeChatClickHandlers() {
-                const chatItems = document.querySelectorAll('.saved-chat-item');
-                chatItems.forEach(item => {
-                    item.onclick = function(e) {
-                        e.stopPropagation(); // Prevent event bubbling
-                        const chatId = this.getAttribute('data-chat-id');
-                        handleChatClick(chatId);
-                    };
-                });
-            }
-
-            // Add to existing observers
-            const chatObserver = new MutationObserver((mutations) => {
-                for (const mutation of mutations) {
-                    if (mutation.addedNodes.length) {
-                        initializeChatClickHandlers();
-                    }
-                }
-            });
-
-            // Observe the saved chats container
-            const savedChatsContainer = document.getElementById('saved-chats-container');
-            if (savedChatsContainer) {
-                chatObserver.observe(savedChatsContainer, {
-                    childList: true,
-                    subtree: true
-                });
-            }
-
-            // Initialize on page load
-            document.addEventListener('DOMContentLoaded', initializeChatClickHandlers);
-            document.addEventListener('gradio-loaded', initializeChatClickHandlers);
-
             const accordionTransition = () => {
                 const accordions = document.querySelectorAll('.gradio-accordion');
                 accordions.forEach(accordion => {
@@ -848,12 +872,19 @@ def create_chat_interface():
             'send_button': send_button,
             'upload_icon': upload_icon,
             'chat_sessions': chat_sessions,
-            'current_chat_id': current_chat_id,
-            'saved_chats': saved_chats
+            'current_chat_id': current_chat_id
         }
 
-# If running this file directly (for testing)
-# if __name__ == "__main__":
-#     chat_ui_dict = create_chat_interface()
-#     chat_interface = chat_ui_dict['chatbot'].parent.parent 
-#     chat_interface.launch()
+def render_chat_buttons(chat_sessions_list, current_chat_id):
+    html = '<div class="custom-chat-buttons">'
+    for session in sorted(chat_sessions_list, key=lambda x: x["timestamp"], reverse=True):
+        active = "active" if session["id"] == current_chat_id else ""
+        html += f"""
+        <button class="chat-history-btn {active}" 
+                onclick="window.setChatDropdown('{session['id']}')">
+            <div class="chat-title">{session['title']}</div>
+            <div class="chat-timestamp">{datetime.fromisoformat(session['timestamp']).strftime('%Y-%m-%d %H:%M')}</div>
+        </button>
+        """
+    html += "</div>"
+    return html
