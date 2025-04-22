@@ -176,12 +176,10 @@ def create_train_interface():
     # Advanced Parameters Section (Initially Hidden)
     with gr.Column(visible=False) as advanced_params:
         with gr.Column(elem_classes=["advanced-params"]):
-            # First Row - LoRA Adapter Settings
             with gr.Row():
                 with gr.Column(elem_classes=["card", "compact-card"]):
                     gr.Markdown("## LoRA Adapter Settings")
                     
-                    # Group 1: Core LoRA Parameters
                     with gr.Row():
                         with gr.Column(scale=1):
                             lora_r = gr.Slider(
@@ -205,7 +203,6 @@ def create_train_interface():
                                 interactive=True
                             )
 
-                    # Group 2: Target Modules and Gradient Checkpointing side by side
                     with gr.Row():
                         with gr.Column(scale=2):
                             target_modules = gr.Dropdown(
@@ -228,7 +225,6 @@ def create_train_interface():
                                 interactive=True
                             )
 
-                    # Group 3: Advanced Options - More compact checkbox layout
                     with gr.Row():
                         with gr.Column(elem_classes=["checkbox-group"]):
                             with gr.Row():
@@ -262,7 +258,6 @@ def create_train_interface():
                 with gr.Column(elem_classes=["card", "compact-card", "training-optimization-card"]):
                     gr.Markdown("## Training Optimization")
                     
-                    # Group 1: Learning Rate and GPU Settings
                     with gr.Row():
                         with gr.Column(scale=2):
                             learning_rate = gr.Dropdown(
@@ -289,7 +284,6 @@ def create_train_interface():
                                 precision=0,
                                 interactive=True
                             )
-                    # Group 2: Batch Processing Settings
                     with gr.Row():
                         with gr.Column(scale=1):
                             batch_size = gr.Slider(
@@ -317,7 +311,6 @@ def create_train_interface():
                                 interactive=True
                             )
 
-                    # Group 3: Training Steps and Sequence Settings
                     with gr.Row():
                         with gr.Column(scale=1):
                             warmup_steps = gr.Slider(
@@ -344,7 +337,6 @@ def create_train_interface():
                                 interactive=True
                             )
                                 
-                    # Group 5: Sequence Packing Option
                     with gr.Row():
                         packing = gr.Checkbox(
                             value=False,
