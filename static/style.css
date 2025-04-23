@@ -1199,7 +1199,7 @@ div.token.svelte-1scun43 {
     min-width: 213px !important;
 }
 .block.load-4bit-checkbox.svelte-11xb1hd.padded {
-    overflow: hidden !important;
+    overflow: hidden auto !important;
 }
 
 /* model selection card button heights*/
@@ -1261,7 +1261,7 @@ div.token.svelte-1scun43 {
     margin-bottom: -13px !important;
 }
 .basic-params-card .block.svelte-11xb1hd.padded.hide-container.auto-margin {
-    overflow: hidden !important;
+    overflow: hidden auto !important;
 }
 .gradio-container.gradio-container-5-14-0 .contain .basic-params-card .svelte-173056l.container.show_textbox_border {
     margin-bottom: -4px !important;
@@ -1325,7 +1325,7 @@ div.token.svelte-1scun43 {
     transform: translateY(-1px) !important;
 }
 .block.checkbox.svelte-11xb1hd.padded.auto-margin {
-    overflow: hidden !important;
+    overflow: hidden auto !important;
 }
 
 /* Training optimization input bar styling */
@@ -1413,7 +1413,7 @@ div.token.svelte-1scun43 {
     width: 32px !important;
     height: 32px !important;
     border-radius: 4px !important;
-    overflow: hidden !important;
+    overflow: hidden auto !important;
 }
 
 .chat-image-input img {
@@ -1441,7 +1441,7 @@ div.token.svelte-1scun43 {
     width: 32px !important;
     height: 32px !important;
     border-radius: 4px !important;
-    overflow: hidden !important;
+    overflow: hidden auto !important;
 }
 
 .chat-image-input img {
@@ -1661,7 +1661,7 @@ div.token.svelte-1scun43 {
     transform: translateY(-50%) !important;
     z-index: 9999 !important;
     pointer-events: none !important;  /* Allow click-through on the container */
-    overflow: hidden !important;
+    overflow: hidden auto !important;
 }
 
 .gradio-container.gradio-container-5-14-0 .contain .custom-upload {
@@ -1669,7 +1669,7 @@ div.token.svelte-1scun43 {
 }
 
 .chat-history.modern-chat.svelte-11xb1hd.flex.auto-margin {
-    overflow: hidden !important;
+    overflow: hidden auto !important;
 }
 
 .custom-send.svelte-11xb1hd.hide-container.auto-margin {
@@ -1995,7 +1995,7 @@ div.token.svelte-1scun43 {
     color: var(--text-primary) !important;
     margin-left: 15px !important;
     white-space: nowrap !important;
-    overflow: hidden !important;
+    overflow: hidden auto !important;
     text-overflow: ellipsis !important;
     max-width: 170px !important;
     line-height: 1.2 !important; /* Consistent line height */
@@ -2021,7 +2021,7 @@ div.token.svelte-1scun43 {
     color: var(--text-primary) !important;
     margin-left: 15px !important;
     white-space: nowrap !important;
-    overflow: hidden !important;
+    overflow: hidden auto !important;
     text-overflow: ellipsis !important;
     max-width: 170px !important;  /* Leave room for padding */
 }
@@ -2120,14 +2120,14 @@ div.token.svelte-1scun43 {
 
 #settings-panel-column .scroll-hide.svelte-173056l,
 #settings-panel-column .gradio-container .contain .scroll-hide.svelte-173056l {
-    overflow: hidden !important;  
+    overflow: hidden auto !important;  
     resize: none !important;  
 }
 
 
 #settings-panel-column .block.svelte-11xb1hd.padded.auto-margin {
     height: auto !important;
-    overflow: hidden !important;
+    overflow: hidden auto !important;
 }
 
 
@@ -2136,7 +2136,7 @@ div.token.svelte-1scun43 {
     height: auto !important;
     min-height: 149px !important;
     border-radius: 18px !important;
-    overflow: hidden !important;
+    overflow: hidden auto !important;
     resize: none !important;
 }
 
@@ -2144,7 +2144,7 @@ div.token.svelte-1scun43 {
 #settings-panel-column textarea,
 #settings-panel-column input,
 #settings-panel-column .scroll-hide {
-    overflow: hidden !important;
+    overflow: hidden auto !important;
     resize: none !important;
 }
 
@@ -2332,7 +2332,6 @@ div.token.svelte-1scun43 {
     margin-top: -4px !important;
 }
 
-/* Add strict height control for chat input */
 .chat-input, 
 .chat-input-initial,
 .chat-input-active {
@@ -2354,7 +2353,6 @@ div.token.svelte-1scun43 {
     padding: 12px !important;
 }
 
-/* Ensure the container maintains consistent height */
 .chat-input-row {
     height: 48px !important;
     min-height: 48px !important;
@@ -2405,7 +2403,7 @@ div.token.svelte-1scun43 {
     margin: 0 !important;
     line-height: 1.2 !important;
     white-space: nowrap !important;
-    overflow: hidden !important;
+    overflow: hidden auto !important;
     text-overflow: ellipsis !important;
 }
 
@@ -2444,6 +2442,7 @@ div.token.svelte-1scun43 {
     line-height: 1.4 !important;
     font-size: 0.9rem;
 }
+
 /* Container for the chat history button */
 .chat-session-btn {
     white-space: pre-line;
@@ -2461,28 +2460,47 @@ div.token.svelte-1scun43 {
     max-height: 6px;
 }
 
-/* Title (first line) */
 .chat-session-btn {
     font-size: 16px;
     font-weight: 600;
     color: #222;
 }
 
-/* Timestamp (second line) */
 .chat-session-btn {
     color: #7a7a7a;
     font-size: 13px;
 }
 
-/* Hover effect */
 .chat-session-btn:hover, .chat-session-btn:focus {
     background: #f5faff;
     border-color: #b6e0fe;
     box-shadow: 0 4px 16px 0 rgba(60, 72, 88, 0.089);
 }
 
-
 .gradio-container.gradio-container-5-14-0 .contain .lg.secondary.new-chat-btn.svelte-5st68j {
     margin-top: 1px !important;
 }
 
+.prompting-accordion .scroll-hide.svelte-173056l {
+    min-height: 140px !important;
+}
+
+.prompting-accordion textarea.svelte-173056l {
+    border-radius: calc(min(20px, 100%)) !important;  
+    overflow: hidden auto !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .prompting-accordion label.container.show_textbox_border.svelte-173056l textarea.svelte-173056l {
+    white-space: pre-wrap !important;
+    overflow-x: hidden !important;
+    resize: none !important;
+}
+
+.model-selection-controls .wrap-inner.svelte-1hfxrpf input,
+.model-selection-controls .wrap-inner.svelte-1hfxrpf select {
+    margin-right: 25px !important; /* Adjust value as needed */
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .model-selection-controls-hf-token {
+    margin-left: 0px !important;
+}
