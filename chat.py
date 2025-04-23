@@ -141,37 +141,26 @@ def create_chat_interface():
                         }
                         break
                 
-                button_updates = []
-                sorted_sessions = []
-                for j in range(MAX_SESSIONS):
-                    if sessions[j]:
-                        sorted_sessions.append((j, sessions[j]))
-                
+                # Sort sessions by timestamp (newest first) and reorder the actual sessions array
+                # First, collect all non-None sessions with their original indices
+                active_sessions = [(i, session) for i, session in enumerate(sessions) if session]
                 # Sort by timestamp, newest first
-                sorted_sessions.sort(key=lambda x: x[1]['timestamp'], reverse=True)
+                active_sessions.sort(key=lambda x: x[1]['timestamp'], reverse=True)
                 
-                # Create button updates in sorted order
-                visible_count = 0
-                button_positions = [None] * MAX_SESSIONS
+                # Create a new sessions array with the correct order
+                new_sessions = [None] * MAX_SESSIONS
+                for new_idx, (old_idx, session) in enumerate(active_sessions):
+                    new_sessions[new_idx] = session
                 
-                # First, place the visible buttons in order
-                for idx, session in sorted_sessions:
-                    button_positions[visible_count] = {
-                        'title': session['title'],
-                        'timestamp': session['timestamp'],
-                        'visible': True
-                    }
-                    visible_count += 1
+                # Update the original sessions array with the new order
+                sessions[:] = new_sessions
                 
-                # Fill remaining positions with invisible buttons
-                for i in range(visible_count, MAX_SESSIONS):
-                    button_positions[i] = {'visible': False}
-                
-                # Create the actual button updates
-                for pos in button_positions:
-                    if pos['visible']:
-                        title = pos['title']
-                        timestamp = datetime.fromisoformat(pos['timestamp']).strftime('%Y-%m-%d %H:%M')
+                # Create button updates based on the new order
+                button_updates = []
+                for i in range(MAX_SESSIONS):
+                    if sessions[i]:
+                        title = sessions[i]['title']
+                        timestamp = datetime.fromisoformat(sessions[i]['timestamp']).strftime('%Y-%m-%d %H:%M')
                         label = f"{title}\n{timestamp}"
                         button_updates.append(gr.update(
                             value=label,
@@ -183,7 +172,7 @@ def create_chat_interface():
                 
                 # Clear current chat
                 return (
-                    sessions,  # sessions state
+                    sessions,  # sessions state with updated order
                     [],  # clear chatbot
                     "You are a helpful AI assistant.",  # reset system prompt
                     gr.update(visible=False),  # hide chatbot
@@ -215,14 +204,14 @@ def create_chat_interface():
                 """
                 
                 return (
-                    session["messages"],                # chatbot messages
-                    session["messages"][0]["content"] if session["messages"] else "You are a helpful AI assistant.",  # system prompt
-                    gr.update(visible=True),            # chatbot visibility
-                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active", "force-active"]),  # msg styling
+                    session["messages"],               
+                    session["messages"][0]["content"] if session["messages"] else "You are a helpful AI assistant.", 
+                    gr.update(visible=True),            
+                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active", "force-active"]), 
                     gr.update(value=active_upload_html, elem_classes=["custom-upload", "active-chat", "force-active"]),  # upload icon
-                    gr.update(value=active_send_html, elem_classes=["custom-send", "active-chat", "force-active"]),  # send button
+                    gr.update(value=active_send_html, elem_classes=["custom-send", "active-chat", "force-active"]),      # send button
                     gr.update(value=None, visible=False),  # image input
-                    idx                                 # current chat id
+                    idx                                    # current chat id
                 )
 
             # Event handlers
@@ -290,7 +279,14 @@ def create_chat_interface():
                             placeholder="Search for a model...",
                             interactive=True,
                         )
-
+                    with gr.Column(scale=2):    
+                        hf_token = gr.Textbox(
+                            placeholder="Enter your token",
+                            label="Hugging Face",
+                            interactive=True,
+                            scale=1,
+                            elem_classes="token-input-model-selection",
+                )
 
             # Sampling Parameters
             sampling_accordion = gr.Accordion("Sampling Parameters", open=False, elem_classes=["sampling-parameters", "sampling-accordion"])
@@ -319,8 +315,16 @@ def create_chat_interface():
                         )
 
             # Prompting
-            prompting_accordion = gr.Accordion("Prompting", open=False)
+            prompting_accordion = gr.Accordion("Prompting", open=False, elem_classes=["prompting-accordion"])
             with prompting_accordion:
+                with gr.Row():
+                    with gr.Column(scale=2):
+                        system_prompt = gr.Textbox(
+                            value="You are a helpful AI assistant.",
+                            info="Defines the LLM's style of response",
+                            label="System Prompt", lines=3,
+                            placeholder="Define the LLM's behavior and role..."
+                        )                
                 with gr.Row():
                     with gr.Column(scale=2):
                         chat_template = gr.Dropdown(
@@ -862,6 +866,7 @@ def create_chat_interface():
             'temperature': temperature,
             'top_p': top_p,
             'top_k': top_k,
+            'hf_token': hf_token,
             'max_length': max_length,
             'repetition_penalty': repetition_penalty,
             'system_prompt': system_prompt,
