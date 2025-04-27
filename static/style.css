@@ -1584,15 +1584,32 @@ div.token.svelte-1scun43 {
 }
 
 .user.svelte-pcjl1g.message {
-    background-color: #f0f0f000 !important;
-    border-color: #b5e2d5 !important;
+    background: #fff !important;
+    border: 1.5px solid #c7e7df !important;
+    border-radius: 999px !important;
+    color: #222 !important;
+    padding: 2px 16px 6px 16px !important;   
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    text-align: center !important;
+    font-size: 1rem !important;
+    margin: 4px 0 !important;
+    box-shadow: none !important;
+    line-height: 1.2 !important;
+    border-radius: min(31px, 100%) !important;
+    max-width: 600px !important;    
+    word-wrap: break-word !important; 
+    white-space: normal !important;   
 }
 
 .bot.svelte-pcjl1g.message {
-    border-color: #1818c80a !important;
-    background-color: rgb(227 234 253 / 74%) !important
+    border-color: #1818c800 !important;
+    background-color: rgba(227, 234, 253, 0) !important;
+    box-shadow: none !important;
+    border-radius: 500px !important; 
 }
-
 
 .gradio-container.gradio-container-5-14-0 .contain label.container.show_textbox_border.svelte-173056l textarea.svelte-173056l {
     white-space: nowrap !important;
@@ -2044,8 +2061,8 @@ div.token.svelte-1scun43 {
 
 .block.chat-history.modern-chat.svelte-11xb1hd.auto-margin {
     margin-top: -150px !important;
-    min-height: 934px !important;
-    margin-bottom: -24px;   
+    min-height: 970px !important;
+    margin-bottom: -49px;   
 }
 
 .gradio-container.gradio-container-5-14-0 .contain .custom-upload {
@@ -2089,7 +2106,7 @@ div.token.svelte-1scun43 {
 }
 
 #settings-panel-column .block.svelte-11xb1hd.padded.auto-margin {
-    border-radius: calc(min(20px, 100%)) !important;  /* Will be capped at 32px even as element grows */
+    border-radius: min(26px, 100%) !important;  /* Will be capped even as element grows */
     min-height: 1px !important;
     
 }
@@ -2163,12 +2180,10 @@ div.token.svelte-1scun43 {
     margin-right: 326px;
 }
 
-/* Change this CSS rule */
 .message-content.svelte-1u5aj92 {
     display: none; /* This is hiding all messages */
 }
 
-/* To this */
 .message-content.svelte-1u5aj92 {
     background-color: rgb(227 234 253 / 74%);
     border-radius: 500px 500px 500px 0px;
@@ -2193,11 +2208,6 @@ div.token.svelte-1scun43 {
 
 #sampling-parameters .block.svelte-11xb1hd.padded.auto-margin {
     margin-bottom: -27px !important;
-}
-
-.message.svelte-pcjl1g.svelte-pcjl1g {
-    border-bottom-right-radius: 10px !important;
-    border-bottom-left-radius: 10px !important;
 }
 
 
@@ -2504,3 +2514,48 @@ div.token.svelte-1scun43 {
 .gradio-container.gradio-container-5-14-0 .contain .model-selection-controls-hf-token {
     margin-left: 0px !important;
 }
+
+/* Hide text in textboxes of HF token input */
+.token-input-model-selection .scroll-hide.svelte-173056l {
+    -webkit-text-security: disc !important;
+    -moz-text-security: disc !important;
+    text-security: disc !important;
+    padding-left: 21px;
+    margin-left: 0px !important;
+}
+.token-input-model-selection .scroll-hide.svelte-173056l::placeholder {
+    -webkit-text-security: none !important;
+    -moz-text-security: none !important;
+    text-security: none !important;
+    margin-left: 0px !important;
+}
+
+.block.sampling-parameters.sampling-accordion.svelte-11xb1hd.padded.auto-margin {
+    scrollbar-width: none !important;        /* Firefox */
+    -ms-overflow-style: none !important;     /* IE and Edge */
+}
+
+.block.svelte-11xb1hd.padded.auto-margin {
+    scrollbar-width: none !important;        /* Firefox */
+    -ms-overflow-style: none !important;     /* IE and Edge */
+}
+
+.label-wrap.svelte-1w6vloh {
+    padding-left: 13px;
+    padding-top: 4px; 
+    padding-bottom: 4px;
+}
+
+.model-selection-controls.svelte-vt1mxs {
+    gap: 0px;
+}
+
+
+.sampling-parameters .wrap.svelte-10lj3xl.svelte-10lj3xl {
+    margin-bottom: 13px;
+}
+
+.svelte-10lj3xl {
+    min-height: 19px;
+}
+
