@@ -105,8 +105,7 @@ def create_chat_interface():
                 elem_id="system-prompt-textbox",
                 visible=False  
             )
-            
-            
+             
             new_chat_btn = gr.Button("New Chat", elem_classes=["new-chat-btn"])
             
             # Create session buttons
@@ -129,10 +128,12 @@ def create_chat_interface():
                             user_msg = chat_history[1].get("content", "").strip()
                             if user_msg:
                                 import re
-                                clean_content = re.sub(r'<[^>]+>', '', user_msg)
-                                clean_content = ' '.join(clean_content.split())
-                                title = clean_content[:20] + ('...' if len(clean_content) > 20 else '')
-                        
+                                clean_content = re.sub(r'<[^>]+>', '', user_msg).strip()
+                                if re.search(r'<img', user_msg, re.IGNORECASE) or clean_content == "":
+                                    title = "Image Chat"
+                                else:
+                                    clean_content = ' '.join(clean_content.split())
+                                    title = clean_content[:20] + ('...' if len(clean_content) > 20 else '')
                         sessions[i] = {
                             "id": str(uuid.uuid4()),
                             "title": title,
@@ -274,7 +275,6 @@ def create_chat_interface():
                     )
                     with gr.Column(scale=2):
                         model_search = gr.Textbox(
-                            info="Search for a model",
                             label="Search",
                             placeholder="Search for a model...",
                             interactive=True,
@@ -299,7 +299,7 @@ def create_chat_interface():
                         )
                         top_p = gr.Slider(
                             minimum=0.1, maximum=1.0, value=0.9, step=0.1,
-                            label="Top P", info="Limits token selection probability P"
+                            label="Top P", info="Limits token selection probability"
                         )
                         top_k = gr.Slider(
                             minimum=1, maximum=100, value=40, step=1,
@@ -325,13 +325,7 @@ def create_chat_interface():
                             label="System Prompt", lines=3,
                             placeholder="Define the LLM's behavior and role..."
                         )                
-                with gr.Row():
-                    with gr.Column(scale=2):
-                        chat_template = gr.Dropdown(
-                            choices=["Auto-Select", "Alpaca", "ShareGPT", "OpenAssistant", "Anthropic Claude", "GPTeacher", "CodeAlpaca", "Dolly", "Baize", "OpenOrca", "WizardLM", "Platypus", "Vicuna", "LIMA", "Custom"],
-                            value="Auto-Select", label="Chat Template",
-                            info="Format of the conversation", interactive=True
-                        )
+
 
             def update_accordion_state(current_state, expanded_accordion):
                 """Updates accordion states when one is expanded"""
@@ -493,6 +487,10 @@ def create_chat_interface():
 
         def user_message(message, chat_history, temp, top_p, top_k, max_len, rep_penalty, img, system_prompt):
 
+            # Validate input: Check if both message and image are empty
+            if not message.strip() and img is None:
+                raise gr.Error("Remember to send a message!")
+
             # Define SVG HTML generators with different sizes based on state
             def get_initial_svg_html():
                 return """
@@ -512,15 +510,6 @@ def create_chat_interface():
                 </div>
                 """
 
-            def get_initial_upload_html():
-                return """
-                <div class="upload-svg-wrapper" title="Upload Image" style="width: 32px; height: 32px; transform: scale(1.2);" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
-                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                """
 
             def get_active_upload_html():
                 return """
@@ -532,17 +521,6 @@ def create_chat_interface():
                 </div>
                 """
 
-            # If no message and no image, keep initial state
-            if not message.strip() and img is None:
-                return (
-                    message,
-                    img,
-                    chat_history,
-                    gr.update(visible=False),
-                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-initial"]),
-                    gr.update(value=get_initial_upload_html(), elem_classes=["custom-upload", "initial-state"]),
-                    gr.update(value=get_initial_svg_html(), elem_classes=["custom-send", "initial-state"])
-                )
 
             chat_history = chat_history or []
 
@@ -872,7 +850,6 @@ def create_chat_interface():
             'system_prompt': system_prompt,
             'model_dropdown': model_dropdown,
             'model_search': model_search,
-            'chat_template': chat_template,
             'settings_panel': settings_panel,
             'send_button': send_button,
             'upload_icon': upload_icon,
