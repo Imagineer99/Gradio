@@ -5,6 +5,7 @@ import os
 from train import create_train_interface
 from chat import create_chat_interface
 from export import create_export_interface
+from eval import create_evaluate_interface
 
 # CSS 
 def load_css():
@@ -74,7 +75,7 @@ with gr.Blocks(
             export_components = create_export_interface()
             
         with gr.Column(visible=False) as evaluate_tab:
-            export_components = create_export_interface()
+            evaluate_components = create_evaluate_interface()
 
     # Tab switching
     def switch_to_chat():
