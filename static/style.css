@@ -2559,3 +2559,38 @@ div.token.svelte-1scun43 {
     min-height: 19px;
 }
 
+.block.chat-history.modern-chat.left-chat.svelte-11xb1hd.auto-margin {
+    margin-left: 0px !important;
+}
+
+.block.chat-history.modern-chat.right-chat.svelte-11xb1hd.auto-margin {
+    margin-left: 0px !important;
+    top: 29px !important;
+
+}
+
+/* Remove or modify the general flex-wrap styling */
+.flex-wrap.svelte-pcjl1g.svelte-pcjl1g {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    color: var(--body-text-color);
+    font-size: var(--chatbot-text-size);
+    overflow-wrap: break-word;
+}
+
+/* Specific styling for left chat */
+.left-chat .flex-wrap.svelte-pcjl1g.svelte-pcjl1g {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+/* Specific styling for right chat */
+.right-chat .flex-wrap.svelte-pcjl1g.svelte-pcjl1g {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.block.chat-history.modern-chat.left-chat.svelte-11xb1hd.auto-margin {
+    min-width: 745px !important;
+}
