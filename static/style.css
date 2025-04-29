@@ -2594,3 +2594,52 @@ div.token.svelte-1scun43 {
 .block.chat-history.modern-chat.left-chat.svelte-11xb1hd.auto-margin {
     min-width: 745px !important;
 }
+
+.right-model-info {
+    position: relative;
+    top: 0px;
+    bottom: 950px;
+    right: 0px;
+    z-index: 100;
+}
+
+.left-model-info {
+    position: relative;
+    top: 0px;
+    bottom: 950px;
+    right: 0px;
+    z-index: 100;
+}
+
+.row.chat-container.svelte-1xp0cw7.unequal-height {
+    top: -37px;
+}
+
+.block.left-model-info.svelte-11xb1hd.padded.hide-container.auto-margin {
+    top: -135px;
+    right: -367px;
+}
+
+.block.right-model-info.svelte-11xb1hd.padded.hide-container.auto-margin {
+    top: -106px;
+    right: -367px;
+}
+
+.block.left-model-info.svelte-11xb1hd.padded.hide-container.auto-margin h3 {
+    color: rgba(120, 120, 120, 0.349) !important;
+}
+
+.block.right-model-info.svelte-11xb1hd.padded.hide-container.auto-margin h3 {
+    color: rgba(120, 120, 120, 0.37) !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .row.eval-input-row.svelte-1xp0cw7.unequal-height {
+    bottom: 6px !important;
+}
+
+.row.eval-chat-header.svelte-1xp0cw7.stretch {
+    margin-left: 621px;
+    margin-top: 296px;
+    margin-bottom: -198px;
+    top: 12px; 
+} 
