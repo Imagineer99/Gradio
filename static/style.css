@@ -2637,9 +2637,22 @@ div.token.svelte-1scun43 {
     bottom: 6px !important;
 }
 
-.row.eval-chat-header.svelte-1xp0cw7.stretch {
-    margin-left: 621px;
-    margin-top: 296px;
-    margin-bottom: -198px;
-    top: 12px; 
-} 
+.block.left-chat-header.svelte-11xb1hd.padded.hide-container.auto-margin {
+    top: 37px;
+}
+
+.block.eval-input.modern-input.chat-input-initial.svelte-11xb1hd.auto-margin {
+    top: 36px;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .block.eval-send.svelte-11xb1hd.hide-container.auto-margin {
+    margin-top: 216px;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .upload-svg-wrapper.eval.initial-state {
+    margin-top: 429px !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .upload-svg-wrapper.initial-state {
+    margin-top: 357px !important;
+}
