@@ -34,11 +34,15 @@ def create_evaluate_interface():
 
     with gr.Blocks(theme=gr.themes.Soft(primary_hue="emerald")) as chat_interface:
         
-        # Main Chat Area - Now split into two columns
+        # Main Chat Area
         with gr.Row(elem_classes=["chat-container"]) as chat_container:
             with gr.Column(scale=5, elem_classes=["left-chat-column"]):
-                with gr.Row(elem_classes=["chat-header"], equal_height=True):
+                with gr.Row(elem_classes=["chat-header", "eval-chat-header"], equal_height=True):
                     gr.Markdown("## Welcome to Unsloth Eval", elem_classes=["left-chat-header"])
+                # Add base model markdown for left chat
+                gr.Markdown("""
+                ### Base
+                """, elem_classes=["left-model-info"])
                 chatbot = gr.Chatbot(
                     height=600,
                     show_label=False,
@@ -52,6 +56,10 @@ def create_evaluate_interface():
             with gr.Column(scale=5, elem_classes=["right-chat-column"]):
                 with gr.Row(elem_classes=["chat-header"], equal_height=True):
                     gr.Markdown("##", elem_classes=["right-chat-header"])
+                # Add LoRA markdown for right chat
+                gr.Markdown("""
+                ### LoRA 
+                """, elem_classes=["right-model-info"])
                 chatbot2 = gr.Chatbot(
                     height=600,
                     show_label=False,
@@ -62,8 +70,8 @@ def create_evaluate_interface():
                     visible=False
                 )
 
-        # Shared Input Area at the bottom
-        with gr.Row(elem_classes=["chat-input-row"]):
+        # Input Area 
+        with gr.Row(elem_classes=["chat-input-row", "eval-input-row"]):
             with gr.Column(scale=8):
                 msg = gr.Textbox(
                     placeholder="Type your message here...",
@@ -78,7 +86,7 @@ def create_evaluate_interface():
                         show_label=False, container=False, visible=False
                     )
                     upload_html = """
-                    <div class="upload-svg-wrapper initial-state" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                    <div class="upload-svg-wrapper initial-state" title="Upload Image" onclick="this.closest('.chat-controls').querySelector('input[type=\\'file\\']').click()">
                         <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -102,7 +110,7 @@ def create_evaluate_interface():
             MAX_SESSIONS = 10
             sessions_state = gr.State([None]*MAX_SESSIONS)  # Store session data
             
-            # System prompt defined before we use it in handlers
+            # System prompt 
             system_prompt = gr.Textbox(
                 value="You are a helpful AI assistant.",
                 info="Defines the LLM's style of response",
@@ -127,7 +135,6 @@ def create_evaluate_interface():
             current_chat_id = gr.State(None)  
             
             def create_new_chat(sessions, chat_history_left, chat_history_right):
-                # Find first available slot
                 for i in range(MAX_SESSIONS):
                     if not sessions[i]:
                         title = "New Chat"
@@ -176,7 +183,7 @@ def create_evaluate_interface():
 
                 # Initial state SVG HTML
                 initial_upload_html = """
-                <div class="upload-svg-wrapper initial-state" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                <div class="upload-svg-wrapper initial-state" title="Upload Image" onclick="this.closest('.chat-controls').querySelector('input[type=\\'file\\']').click()">
                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -213,7 +220,7 @@ def create_evaluate_interface():
                 session = sessions[idx]
                 
                 active_upload_html = """
-                <div class="upload-svg-wrapper active-chat force-active" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                <div class="upload-svg-wrapper active-chat force-active" title="Upload Image" onclick="this.closest('.chat-controls').querySelector('input[type=\\'file\\']').click()">
                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -261,7 +268,7 @@ def create_evaluate_interface():
                 queue=False
             )
 
-            # Add click handlers for each session button
+            # Click handlers for each session button
             for i, btn in enumerate(session_buttons):
                 btn.click(
                     load_chat_session,
@@ -485,7 +492,7 @@ def create_evaluate_interface():
             
             if image is not None and is_initial_state:
                 return """
-                <div class="upload-svg-wrapper has-image initial-state" title="Image Attached" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                <div class="upload-svg-wrapper has-image initial-state" title="Image Attached" onclick="this.closest('.chat-controls').querySelector('input[type=\\'file\\']').click()">
                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M16 5L18 7L22 3M12.5 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H17C17.93 21 18.395 21 18.7765 20.8978C19.8117 20.6204 20.6204 19.8117 20.8978 18.7765C21 18.395 21 17.93 21 17M10.5 8.5C10.5 9.60457 9.60457 10.5 8.5 10.5C7.39543 10.5 6.5 9.60457 6.5 8.5C6.5 7.39543 7.39543 6.5 8.5 6.5C9.60457 6.5 10.5 7.39543 10.5 8.5ZM14.99 11.9181L6.53115 19.608C6.05536 20.0406 5.81747 20.2568 5.79643 20.4442C5.77819 20.6066 5.84045 20.7676 5.96319 20.8755C6.10478 21 6.42628 21 7.06929 21H16.456C17.8951 21 18.6147 21 19.1799 20.7582C19.8894 20.4547 20.4547 19.8894 20.7582 19.1799C21 18.6147 21 17.8951 21 16.456C21 15.9717 21 15.7296 20.9471 15.5042C20.8805 15.2208 20.753 14.9554 20.5733 14.7264C20.4303 14.5442 20.2412 14.3929 19.8631 14.0905L17.0658 11.8527C16.6874 11.5499 16.4982 11.3985 16.2898 11.3451C16.1061 11.298 15.9129 11.3041 15.7325 11.3627C15.5279 11.4291 15.3486 11.5921 14.99 11.9181Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -493,7 +500,7 @@ def create_evaluate_interface():
                 """
             elif image is not None and not is_initial_state:
                 return """
-                <div class="upload-svg-wrapper has-image active-chat" title="Image Attached" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                <div class="upload-svg-wrapper has-image active-chat" title="Image Attached" onclick="this.closest('.chat-controls').querySelector('input[type=\\'file\\']').click()">
                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M16 5L18 7L22 3M12.5 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H17C17.93 21 18.395 21 18.7765 20.8978C19.8117 20.6204 20.6204 19.8117 20.8978 18.7765C21 18.395 21 17.93 21 17M10.5 8.5C10.5 9.60457 9.60457 10.5 8.5 10.5C7.39543 10.5 6.5 9.60457 6.5 8.5C6.5 7.39543 7.39543 6.5 8.5 6.5C9.60457 6.5 10.5 7.39543 10.5 8.5ZM14.99 11.9181L6.53115 19.608C6.05536 20.0406 5.81747 20.2568 5.79643 20.4442C5.77819 20.6066 5.84045 20.7676 5.96319 20.8755C6.10478 21 6.42628 21 7.06929 21H16.456C17.8951 21 18.6147 21 19.1799 20.7582C19.8894 20.4547 20.4547 19.8894 20.7582 19.1799C21 18.6147 21 17.8951 21 16.456C21 15.9717 21 15.7296 20.9471 15.5042C20.8805 15.2208 20.753 14.9554 20.5733 14.7264C20.4303 14.5442 20.2412 14.3929 19.8631 14.0905L17.0658 11.8527C16.6874 11.5499 16.4982 11.3985 16.2898 11.3451C16.1061 11.298 15.9129 11.3041 15.7325 11.3627C15.5279 11.4291 15.3486 11.5921 14.99 11.9181Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -501,7 +508,7 @@ def create_evaluate_interface():
                 """
             else:
                 return """
-                <div class="upload-svg-wrapper" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+                <div class="upload-svg-wrapper" title="Upload Image" onclick="this.closest('.chat-controls').querySelector('input[type=\\'file\\']').click()">
                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -544,7 +551,7 @@ def create_evaluate_interface():
 
         def get_active_upload_html():
             return """
-            <div class="upload-svg-wrapper" title="Upload Image" style="width: 24px; height: 24px; transform: scale(1);" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
+            <div class="upload-svg-wrapper" title="Upload Image" style="width: 24px; height: 24px; transform: scale(1);" onclick="this.closest('.chat-controls').querySelector('input[type=\\'file\\']').click()">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M21 15V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
