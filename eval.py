@@ -40,9 +40,9 @@ def create_evaluate_interface():
                 with gr.Row(elem_classes=["chat-header", "eval-chat-header"], equal_height=True):
                     gr.Markdown("## Welcome to Unsloth Eval", elem_classes=["left-chat-header"])
                 # Add base model markdown for left chat
-                gr.Markdown("""
+                base_markdown = gr.Markdown("""
                 ### Base
-                """, elem_classes=["left-model-info"])
+                """, elem_classes=["left-model-info"], visible=False)
                 chatbot = gr.Chatbot(
                     height=600,
                     show_label=False,
@@ -57,9 +57,9 @@ def create_evaluate_interface():
                 with gr.Row(elem_classes=["chat-header"], equal_height=True):
                     gr.Markdown("##", elem_classes=["right-chat-header"])
                 # Add LoRA markdown for right chat
-                gr.Markdown("""
+                lora_markdown = gr.Markdown("""
                 ### LoRA 
-                """, elem_classes=["right-model-info"])
+                """, elem_classes=["right-model-info"], visible=False)
                 chatbot2 = gr.Chatbot(
                     height=600,
                     show_label=False,
@@ -210,7 +210,9 @@ def create_evaluate_interface():
                     gr.update(value=initial_upload_html, elem_classes=["custom-upload"]),  # reset upload icon
                     gr.update(value=initial_send_html, elem_classes=["custom-send"]),  # reset send button
                     gr.update(value=None, visible=False),  # clear image
-                    *button_updates  # update all buttons
+                    *button_updates,  # update all buttons
+                    gr.update(visible=False),  # hide Base markdown
+                    gr.update(visible=False),  # hide LoRA markdown
                 )
 
             def load_chat_session(idx, sessions):
@@ -245,7 +247,9 @@ def create_evaluate_interface():
                     gr.update(value=active_upload_html, elem_classes=["custom-upload", "active-chat", "force-active"]),  # upload icon
                     gr.update(value=active_send_html, elem_classes=["custom-send", "active-chat", "force-active"]),      # send button
                     gr.update(value=None, visible=False),  # image input
-                    idx  # current chat id
+                    idx,  # current chat id
+                    gr.update(visible=True),  # show Base markdown
+                    gr.update(visible=True),  # show LoRA markdown
                 )
 
             # Event handlers
@@ -263,7 +267,7 @@ def create_evaluate_interface():
                     upload_icon,
                     send_button,
                     image_input
-                ] + session_buttons,
+                ] + session_buttons + [base_markdown, lora_markdown],
                 show_progress=False,
                 queue=False
             )
@@ -283,7 +287,9 @@ def create_evaluate_interface():
                         upload_icon,                # upload icon
                         send_button,                # send button
                         image_input,                # image input
-                        current_chat_id             # current chat ID
+                        current_chat_id,            # current chat ID
+                        base_markdown,              # show Base markdown
+                        lora_markdown               # show LoRA markdown
                     ],
                     show_progress=False,
                     queue=False
@@ -607,14 +613,16 @@ def create_evaluate_interface():
                     gr.update(visible=True),
                     gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active"]),
                     gr.update(value=get_active_upload_html(), elem_classes=["custom-upload", "active-chat"]),
-                    gr.update(value=get_active_svg_html(), elem_classes=["custom-send", "active-chat"])
+                    gr.update(value=get_active_svg_html(), elem_classes=["custom-send", "active-chat"]),
+                    gr.update(visible=True),  # show Base markdown
+                    gr.update(visible=True),  # show LoRA markdown
                 )
 
         # Update event handlers for the split view
         msg.submit(
             user_message,
             inputs=[msg, chatbot, chatbot2, temperature, top_p, max_length, image_input, system_prompt],
-            outputs=[msg, image_input, chatbot, chatbot2, chatbot, chatbot2, msg, upload_icon, send_button],
+            outputs=[msg, image_input, chatbot, chatbot2, chatbot, chatbot2, msg, upload_icon, send_button, base_markdown, lora_markdown],
             show_progress=False,
             queue=True
         )
@@ -622,7 +630,7 @@ def create_evaluate_interface():
         send_button.click(
             user_message,
             inputs=[msg, chatbot, chatbot2, temperature, top_p, max_length, image_input, system_prompt],
-            outputs=[msg, image_input, chatbot, chatbot2, chatbot, chatbot2, msg, upload_icon, send_button],
+            outputs=[msg, image_input, chatbot, chatbot2, chatbot, chatbot2, msg, upload_icon, send_button, base_markdown, lora_markdown],
             show_progress=False,
             queue=True
         )
