@@ -26,6 +26,11 @@ def mock_chat_response(message, temperature, top_p, max_length, image=None):
         time.sleep(0.05)  
 
 def create_evaluate_interface():
+    # Add the new state variables near the start of the function, 
+    # after other gr.State declarations
+    base_markdown_visible = gr.State(False)
+    lora_markdown_visible = gr.State(False)
+    
     examples = [
         "hello world",
         "what's up?", 
@@ -40,9 +45,7 @@ def create_evaluate_interface():
                 with gr.Row(elem_classes=["chat-header", "eval-chat-header"], equal_height=True):
                     gr.Markdown("## Welcome to Unsloth Eval", elem_classes=["left-chat-header"])
                 # Add base model markdown for left chat
-                base_markdown = gr.Markdown("""
-                ### Base
-                """, elem_classes=["left-model-info"], visible=False)
+                base_markdown = gr.Markdown("### Base", elem_classes=["left-model-info"], visible=False)
                 chatbot = gr.Chatbot(
                     height=600,
                     show_label=False,
@@ -57,9 +60,7 @@ def create_evaluate_interface():
                 with gr.Row(elem_classes=["chat-header"], equal_height=True):
                     gr.Markdown("##", elem_classes=["right-chat-header"])
                 # Add LoRA markdown for right chat
-                lora_markdown = gr.Markdown("""
-                ### LoRA 
-                """, elem_classes=["right-model-info"], visible=False)
+                lora_markdown = gr.Markdown("### LoRA", elem_classes=["right-model-info"], visible=False)
                 chatbot2 = gr.Chatbot(
                     height=600,
                     show_label=False,
@@ -106,9 +107,9 @@ def create_evaluate_interface():
         with gr.Column(scale=2, elem_classes=["chat-history-sidebar"]):
             gr.Markdown("## Chat History")
             
-            
             MAX_SESSIONS = 10
             sessions_state = gr.State([None]*MAX_SESSIONS)  # Store session data
+            chat_active_state = gr.State(False)  # Add this line to track chat active state
             
             # System prompt 
             system_prompt = gr.Textbox(
@@ -217,8 +218,12 @@ def create_evaluate_interface():
 
             def load_chat_session(idx, sessions):
                 if not sessions[idx]:
-                    return [], [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(visible=False)
-                
+                    return [], [], "You are a helpful AI assistant.", gr.update(visible=False), gr.update(visible=False), \
+                           gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active", "force-active"]), \
+                           gr.update(value="", elem_classes=["custom-upload"]), \
+                           gr.update(value="", elem_classes=["custom-send"]), \
+                           gr.update(value=None, visible=False), idx, \
+                           gr.update(visible=False), gr.update(visible=False)
                 session = sessions[idx]
                 
                 active_upload_html = """
@@ -238,14 +243,14 @@ def create_evaluate_interface():
                 """
                 
                 return (
-                    session["messages"],  # left chatbot               
+                    session["messages"],  # left chatbot
                     session["messages"],  # right chatbot
-                    session["messages"][0]["content"] if session["messages"] else "You are a helpful AI assistant.", 
-                    gr.update(visible=True),  # show left chatbot            
+                    session["messages"][0]["content"] if session["messages"] else "You are a helpful AI assistant.",
+                    gr.update(visible=True),  # show left chatbot
                     gr.update(visible=True),  # show right chatbot
-                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active", "force-active"]), 
-                    gr.update(value=active_upload_html, elem_classes=["custom-upload", "active-chat", "force-active"]),  # upload icon
-                    gr.update(value=active_send_html, elem_classes=["custom-send", "active-chat", "force-active"]),      # send button
+                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active", "force-active"]),
+                    gr.update(value=active_upload_html, elem_classes=["custom-upload", "active-chat", "force-active"]),
+                    gr.update(value=active_send_html, elem_classes=["custom-send", "active-chat", "force-active"]),
                     gr.update(value=None, visible=False),  # image input
                     idx,  # current chat id
                     gr.update(visible=True),  # show Base markdown
@@ -324,6 +329,26 @@ def create_evaluate_interface():
                         value="unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit",
                         label="Select Model",
                         interactive=True,
+                    )
+                    # Add LoRA selection dropdown
+                    lora_dropdown = gr.Dropdown(
+                        choices=[
+                            "unsloth/mistral-7b-instruct-v0.2-lora",
+                            "unsloth/llama-2-7b-chat-lora",
+                            "unsloth/gemma-7b-lora",
+                            "unsloth/phi-2-lora",
+                            "Custom LoRA"  # Option for custom LoRA path
+                        ],
+                        value="unsloth/mistral-7b-instruct-v0.2-lora",
+                        label="Select LoRA",
+                        interactive=True,
+                    )
+                    # Add custom LoRA path input (initially hidden)
+                    custom_lora_path = gr.Textbox(
+                        label="Custom LoRA Path",
+                        placeholder="Enter path to custom LoRA...",
+                        interactive=True,
+                        visible=False
                     )
                     with gr.Column(scale=2):
                         model_search = gr.Textbox(
@@ -555,10 +580,30 @@ def create_evaluate_interface():
             </div>
             """
 
-        def user_message(message, chat_history_left, chat_history_right, temp, top_p, max_len, img, system_prompt):
+        def activate_chat(base_visible, lora_visible):
+            """Function to activate chat UI elements, checking visibility states"""
+            # Only update visibility if not already visible
+            base_update = gr.update(visible=True) if not base_visible else gr.update()
+            lora_update = gr.update(visible=True) if not lora_visible else gr.update()
+            
+            return (
+                base_update,  # base_markdown
+                lora_update,  # lora_markdown
+                gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active", "force-active"]),  # msg
+                gr.update(value=get_active_upload_html(), elem_classes=["custom-upload", "active-chat", "force-active"]),  # upload_icon
+                gr.update(value=get_active_svg_html(), elem_classes=["custom-send", "active-chat", "force-active"])  # send_button
+            )
+
+        def user_message(message, chat_history_left, chat_history_right, temp, top_p, max_len, img, system_prompt, chat_active, base_visible, lora_visible):
             # Input validation
             if not message.strip() and img is None:
                 raise gr.Error("Remember to send a message!")
+
+            # First, activate the chat UI if not already active
+            if not chat_active:
+                activation_updates = activate_chat(base_visible, lora_visible)
+            else:
+                activation_updates = tuple(gr.update() for _ in range(5))  # maintain current states
 
             # Process message for both chatbots
             for chat_history in [chat_history_left, chat_history_right]:
@@ -587,43 +632,69 @@ def create_evaluate_interface():
             chat_history_left.append({"role": "assistant", "content": ""})
             chat_history_right.append({"role": "assistant", "content": ""})
 
-            # Generate responses for both models
+            # Generate responses
             response_stream_left = mock_chat_response(message, temp, top_p, max_len, img)
             response_stream_right = mock_chat_response(message, temp, top_p, max_len, img)
 
-            # Stream responses
+            # Stream responses without touching visibility
             for left_response, right_response in zip(response_stream_left, response_stream_right):
                 chat_history_left[-1]["content"] = left_response
                 chat_history_right[-1]["content"] = right_response
+                
                 yield (
                     "",  # clear message input
                     processed_img,  # clear image
                     chat_history_left,  # update left chat
                     chat_history_right,  # update right chat
-                    gr.update(visible=True),  # show both chats
-                    gr.update(visible=True),
-                    gr.update(elem_classes=["chat-input", "modern-input", "chat-input-active"]),
-                    gr.update(value=get_active_upload_html(), elem_classes=["custom-upload", "active-chat"]),
-                    gr.update(value=get_active_svg_html(), elem_classes=["custom-send", "active-chat"]),
-                    gr.update(visible=True),  # show Base markdown
-                    gr.update(visible=True),  # show LoRA markdown
+                    gr.update(visible=True),  # maintain left chat visibility
+                    gr.update(visible=True),  # maintain right chat visibility
+                    True,  # chat is now active
+                    base_visible,  # maintain base markdown visibility state
+                    lora_visible,  # maintain lora markdown visibility state
+                    *activation_updates  # UI updates (only active on first message)
                 )
 
-        # Update event handlers for the split view
+        # Update event handlers to include the new states
         msg.submit(
             user_message,
-            inputs=[msg, chatbot, chatbot2, temperature, top_p, max_length, image_input, system_prompt],
-            outputs=[msg, image_input, chatbot, chatbot2, chatbot, chatbot2, msg, upload_icon, send_button, base_markdown, lora_markdown],
+            inputs=[
+                msg, chatbot, chatbot2, temperature, top_p, max_length, 
+                image_input, system_prompt, chat_active_state,
+                base_markdown_visible, lora_markdown_visible  # Add new states
+            ],
+            outputs=[
+                msg, image_input, chatbot, chatbot2, chatbot, chatbot2,
+                chat_active_state, base_markdown_visible, lora_markdown_visible,  # Add state outputs
+                base_markdown, lora_markdown, msg, upload_icon, send_button
+            ],
             show_progress=False,
             queue=True
         )
 
         send_button.click(
             user_message,
-            inputs=[msg, chatbot, chatbot2, temperature, top_p, max_length, image_input, system_prompt],
-            outputs=[msg, image_input, chatbot, chatbot2, chatbot, chatbot2, msg, upload_icon, send_button, base_markdown, lora_markdown],
+            inputs=[
+                msg, chatbot, chatbot2, temperature, top_p, max_length, 
+                image_input, system_prompt, chat_active_state,
+                base_markdown_visible, lora_markdown_visible  # Add new states
+            ],
+            outputs=[
+                msg, image_input, chatbot, chatbot2, chatbot, chatbot2,
+                chat_active_state, base_markdown_visible, lora_markdown_visible,  # Add state outputs
+                base_markdown, lora_markdown, msg, upload_icon, send_button
+            ],
             show_progress=False,
             queue=True
+        )
+
+        def update_custom_lora_visibility(choice):
+            return gr.update(visible=choice == "Custom LoRA")
+
+        lora_dropdown.change(
+            fn=update_custom_lora_visibility,
+            inputs=[lora_dropdown],
+            outputs=[custom_lora_path],
+            show_progress=False
         )
 
         # Return components dictionary
@@ -637,10 +708,14 @@ def create_evaluate_interface():
             'max_length': max_length,
             'system_prompt': system_prompt,
             'model_dropdown': model_dropdown,
+            'lora_dropdown': lora_dropdown,
+            'custom_lora_path': custom_lora_path,
             'model_search': model_search,
             'settings_panel': settings_panel,
             'send_button': send_button,
             'upload_icon': upload_icon,
+            'base_markdown_visible': base_markdown_visible,
+            'lora_markdown_visible': lora_markdown_visible,
         }
 
 def render_chat_buttons(chat_sessions_list, current_chat_id):
