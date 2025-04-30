@@ -2587,8 +2587,8 @@ div.token.svelte-1scun43 {
 
 /* Specific styling for right chat */
 .right-chat .flex-wrap.svelte-pcjl1g.svelte-pcjl1g {
-    margin-left: 0px !important;
-    margin-right: 0px !important;
+    margin-left: 25px !important;
+    margin-right: 25px !important;
 }
 
 .block.chat-history.modern-chat.left-chat.svelte-11xb1hd.auto-margin {
@@ -2655,4 +2655,8 @@ div.token.svelte-1scun43 {
 
 .gradio-container.gradio-container-5-14-0 .contain .upload-svg-wrapper.initial-state {
     margin-top: 357px !important;
+}
+
+.column.left-chat-column.svelte-vt1mxs.gap {
+    top: 1px;
 }
