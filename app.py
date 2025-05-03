@@ -26,7 +26,7 @@ with gr.Blocks(
     css=css_content,
     title="unsloth - Fast and Easy LLM Finetuning",
     analytics_enabled=False,
-    theme="system"
+    theme=None,
 ) as demo: 
     # Meta tags 
     gr.HTML("""
@@ -141,7 +141,6 @@ with gr.Blocks(
         }"
     )
 
-    # Launch interface
 if __name__ == "__main__":
     demo.launch(
         share=True,

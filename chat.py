@@ -224,7 +224,6 @@ def create_chat_interface():
                 queue=False
             )
 
-            # Add click handlers for each session button
             for i, btn in enumerate(session_buttons):
                 btn.click(
                     load_chat_session,
@@ -604,7 +603,7 @@ def create_chat_interface():
                     clean_content = re.sub(r'<[^>]+>', '', user_content)
                     # Remove newlines and extra spaces
                     clean_content = ' '.join(clean_content.split())
-                    # Limit to exactly 20 characters and add ellipsis if needed
+                    # Limit to exactly 20 characters 
                     title = clean_content[:20] + ('...' if len(clean_content) > 20 else '')
                 
                 if not title.strip():
@@ -618,7 +617,7 @@ def create_chat_interface():
                 }
                 
                 if not current_chat:
-                    chat_sessions_list.insert(0, new_session)  # Insert at beginning instead of append
+                    chat_sessions_list.insert(0, new_session)  
                 else:
                     for i, session in enumerate(chat_sessions_list):
                         if session["id"] == current_chat:
@@ -673,7 +672,7 @@ def create_chat_interface():
                 messages = matching_session["messages"]
                 system_prompt_val = messages[0]["content"] if messages else "You are a helpful AI assistant."
                 
-                # Always set to active state when chat is selected
+                # Set to active state when chat is selected
                 active_upload_html = """
                 <div class="upload-svg-wrapper active-chat force-active" title="Upload Image" onclick="document.querySelector('.chat-image-input input[type=\\'file\\']').click()">
                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
