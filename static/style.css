@@ -1,10 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-/* make sure everything is !important */
-
 /* Default theme (light) */
-:root {
+:root, [data-theme="light"], [data-theme="dark"] {
     /* Typography scale */
     --scale-xxl: 2rem !important;    /* 32px */
     --scale-xl: 1.5rem !important;   /* 24px */
@@ -53,6 +51,23 @@
     --body-background: #ffffff !important;
     --block-background-fill: #ffffff !important;
     --nav-border-color: var(--neutral-900) !important;
+}
+
+/* Force light theme colors even in dark mode */
+[data-theme="dark"], html[data-theme="dark"], body[data-theme="dark"], :root.dark, html.dark, body.dark {
+    --background-primary: #ce1717 !important;
+    --background-secondary: #cc5403 !important;
+    --text-primary: #1F2937 !important;   /* var(--neutral-800) */
+    --text-secondary: #4B5563 !important; /* var(--neutral-600) */
+    --border-color: #e5e7eb !important;
+    --accent-color: #10B981 !important;   /* var(--primary-700) */
+    --shadow-color: rgba(0, 0, 0, 0.1) !important;
+    --hover-color: rgba(16, 185, 129, 0.1) !important;
+    --body-background-fill: transparent !important;
+    --body-background: #e70c0c !important;
+    --block-background-fill: #ffffff !important;
+    --nav-border-color: #111827 !important; /* var(--neutral-900) */
+    /* Add any other variables you want to force */
 }
 
 .chat-history-sidebar {
@@ -226,13 +241,11 @@ body::before {
     overflow: visible !important;  /* Prevent scrollbars on boxes themselves */
 }
 
-/* Add these to ensure text remains visible */
 .gr-form, .gr-form-field {
     background-color: var(--background-primary) !important;
     color: var(--text-primary) !important;
 }
 
-/* Add smooth transitions for theme changes */
 * {
     transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -244,12 +257,12 @@ body::before {
 .nav-button {
     background-color: transparent !important;
     color: var(--text-primary) !important;
-    border: 1px solid transparent !important;  /* Add transparent border by default */
+    border: 1px solid transparent !important;  
     transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     padding: 0px !important;
     border-radius: 10px !important;
-    font-weight: 600 !important;  /* Changed from 500 to 600 for bold by default */
+    font-weight: 600 !important;  
     min-width: 100px !important;
     min-height: 40px !important;
     height: 45px !important;
@@ -267,10 +280,10 @@ body::before {
 .nav-button.primary {
     border: 1px solid var(--nav-border-color) !important;
     font-weight: 700 !important;  /* Increased from 600 to 700 to make selected even bolder */
-    animation: fadeInBorder 0.3s ease-in !important;  /* Add fade-in animation */
+    animation: fadeInBorder 0.3s ease-in !important;  
 }
 
-/* Add the fade-in animation */
+
 @keyframes fadeInBorder {
     from {
         border-color: transparent;
@@ -305,7 +318,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-primary) !important;
 }
 
-/* Card headers/titles - Add specific styling for h2 in cards */
+/* Card headers/titles */
 .card .prose h2 {
     font-size: 1.4rem !important;
     font-weight: 600 !important;
@@ -433,7 +446,7 @@ label.svelte-i3tvor {
     margin-right: 2rem !important;
 }
 
-/* Add scrollbar styles and prevent layout shift */
+
 html {
     overflow-y: scroll !important;  /* Always show scrollbar */
 }
@@ -575,7 +588,6 @@ select {
     border-radius: 200px !important;
 }
 
-/* Remove focus outline and add custom focus styles for model selection card elements */
 .model-selection-card input:focus,
 .model-selection-card button:focus,
 .model-selection-card select:focus,
@@ -890,7 +902,6 @@ div.token.svelte-1scun43 {
     padding-right: 0px !important;
 }
 
-/* Add spacing between advanced parameter cards */
 .advanced-params .card {
     margin: 0 8px !important;
 }
@@ -1035,7 +1046,6 @@ div.token.svelte-1scun43 {
     flex-grow: 0 !important;
 }
 
-/* Add this class manually in HTML if needed */
 .fixed-width-row {
     width: 42% !important;
     flex-grow: 0 !important;
@@ -1367,10 +1377,10 @@ div.token.svelte-1scun43 {
 .upload-svg-wrapper svg {
     color: #666;
     transition: color 0.2s;
-    cursor: pointer;  /* Add cursor pointer to the SVG itself */
+    cursor: pointer;  
 }
 
-/* Also add it to the path to ensure it works everywhere */
+
 .upload-svg-wrapper svg path {
     cursor: pointer;
 }
@@ -1735,7 +1745,6 @@ div.token.svelte-1scun43 {
     background: linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0.1)) !important;
 }
 
-/* Add these new styles at the end of the file */
 .chat-input-initial {
     max-width: 768px !important;  /* Wider initial state */
     height: 60px !important;      /* Taller input box */
@@ -1844,10 +1853,6 @@ div.token.svelte-1scun43 {
     margin-top: 361px !important;
 }
 
-/* Initial state only - add the margin-top */
-.gradio-container.gradio-container-5-14-0 .contain .block.custom-send.svelte-11xb1hd.hide-container.auto-margin.initial-state {
-    margin-top: 180px;
-}
 
 /* Active state - override the margin-top */
 .gradio-container.gradio-container-5-14-0 .contain .block.custom-send.svelte-11xb1hd.hide-container.auto-margin.active-chat {
@@ -1866,15 +1871,6 @@ div.token.svelte-1scun43 {
     margin-top: 0 !important;
 }
 
-/* Container styling for send button in initial state */
-.block.custom-send.svelte-11xb1hd.hide-container.auto-margin.initial-state {
-    margin-top: 180px;
-}
-
-/* Container styling for send button in active state */
-.block.custom-send.svelte-11xb1hd.hide-container.auto-margin.active-chat {
-    margin-top: -13px !important;
-}
 .gradio-container.gradio-container-5-14-0 .contain .block.custom-upload.svelte-11xb1hd.hide-container.auto-margin.active-chat {
     margin-top: 42px !important;
     margin-left: -131px !important;
@@ -1982,8 +1978,6 @@ div.token.svelte-1scun43 {
 
 
 /* chat history sidebar styles */
-
-
 .saved-chats-list {
     display: flex;
     flex-direction: column;
@@ -1991,19 +1985,18 @@ div.token.svelte-1scun43 {
     margin-top: 16px;
 }
 
-/* Update saved chat item styling to match new chat button */
 .saved-chat-item {
-    padding: 12px 24px !important;  /* Match new chat button padding */
-    border-radius: 500px !important;  /* Match new chat button border-radius */
-    background: var(--background-primary) !important;  /* Match theme background */
+    padding: 12px 24px !important;  
+    border-radius: 500px !important;  
+    background: var(--background-primary) !important;  
     cursor: pointer !important;
-    transition: all 0.2s ease !important;  /* Match new chat button transition */
-    width: 230px !important;  /* Match new chat button width */
-    border: 1px solid var(--border-color) !important;  /* Add subtle border */
+    transition: all 0.2s ease !important;  
+    width: 230px !important;  
+    border: 1px solid var(--border-color) !important;  
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
-    height: 65px !important; /* Fixed height */
+    height: 65px !important; 
     box-sizing: border-box !important;
 }
 
@@ -2015,18 +2008,18 @@ div.token.svelte-1scun43 {
     overflow: hidden auto !important;
     text-overflow: ellipsis !important;
     max-width: 170px !important;
-    line-height: 1.2 !important; /* Consistent line height */
+    line-height: 1.2 !important; 
 }
 
 .chat-timestamp {
     font-size: 0.8em !important;
     color: var(--text-secondary) !important;
     margin-left: 15px !important;
-    line-height: 1.2 !important; /* Consistent line height */
+    line-height: 1.2 !important; 
 }
 
 .saved-chat-item:hover {
-    background-color: var(--hover-color) !important;  /* Use theme hover color */
+    background-color: var(--hover-color) !important;  
     transform: translateY(-0.9px) !important;  /* Subtle lift effect */
     border-color: var(--primary-700) !important;  /* Highlight border on hover */
 }
@@ -2040,7 +2033,7 @@ div.token.svelte-1scun43 {
     white-space: nowrap !important;
     overflow: hidden auto !important;
     text-overflow: ellipsis !important;
-    max-width: 170px !important;  /* Leave room for padding */
+    max-width: 170px !important;  
 }
 
 .chat-timestamp {
@@ -2660,3 +2653,135 @@ div.token.svelte-1scun43 {
 .column.left-chat-column.svelte-vt1mxs.gap {
     top: 1px;
 }
+
+.left-chat-header.svelte-lag733 {
+    top: -1px !important;
+    position: relative;
+}
+
+.export-card {
+    margin-bottom: 2rem !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.07) !important; /* subtle greenish shadow */
+    border: 1.5px solid var(--primary-700) !important;
+    background: var(--background-primary) !important;
+}
+[data-theme="dark"] .export-card {
+    background: #232833 !important;
+    border: 1.5px solid var(--primary-600) !important;
+}
+
+
+.column.model-format.svelte-vt1mxs.gap {
+    left: -370px;
+    min-width: 1002px;
+}
+
+.model-format .gr-group.svelte-1nguped {
+    left: -132px;
+    border: none;
+    position: relative;
+}
+
+.column.card.export-destinations-card.svelte-vt1mxs.gap {
+  max-width: 1114px;
+  margin-left: 186px;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .export-type-card .block.svelte-11xb1hd.padded.hide-container.auto-margin {
+    margin-bottom: -0.75rem !important;
+}
+
+.column.card.logging-monitoring-card.svelte-vt1mxs.gap {
+    margin-bottom: 1.5rem !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .model-format .row.svelte-1xp0cw7.unequal-height {
+    min-width: 799px;
+}
+
+.model-format .block.svelte-11xb1hd.padded.auto-margin {
+    max-width: 556px;
+}
+
+.model-format .gguf-group .form.svelte-633qhp {
+    position: absolute;
+    margin-left: 6px !important;
+}
+
+/* New Chat Button Styling */
+.export-btn {
+    background-color: var(--primary-700) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 500px !important;
+    padding: 12px 24px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    width: 230px !important; 
+    margin-bottom: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin-left: 610px !important;
+    margin-top: 10px;
+}
+
+.export-btn::before {
+    content: "" !important;
+    display: inline-block !important;
+    width: 16px !important;
+    height: 16px !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17 3.33782C19.989 5.06687 22 8.29859 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 8.29859 4.01099 5.06687 7 3.33782M8 12L12 16M12 16L16 12M12 16V2' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    margin-right: 8px !important;
+    vertical-align: middle !important;
+}
+
+.export-btn:hover {
+    transform: translateY(-0.9px) !important; 
+}
+
+.column.card.export-type-card.svelte-vt1mxs.gap {
+    margin-bottom: 3px !important;
+}
+
+/* Subtle click effect for export button */
+.export-btn:active {
+    transform: scale(0.99) translateY(0.5px) !important; /* Made more subtle: 0.98 → 0.99, 1px → 0.5px */
+    background-color: var(--primary-800) !important;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.05s ease !important;
+}
+
+/* Create a subtle ripple effect on click */
+.export-btn {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.export-btn::after {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    pointer-events: none !important;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10.01%) !important;
+    background-repeat: no-repeat !important;
+    background-position: 5% !important;
+    transform: scale(10, 10) !important;
+    opacity: 0 !important;
+    transition: transform 0.4s, opacity 0.5s !important;
+}
+
+.export-btn:active::after {
+    transform: scale(0, 0) !important;
+    opacity: 0.3 !important;
+    transition: 0s !important;
+}
+
