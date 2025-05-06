@@ -26,7 +26,62 @@ with gr.Blocks(
     css=css_content,
     title="unsloth - Fast and Easy LLM Finetuning",
     analytics_enabled=False,
-    theme=None,
+    head= """
+    <script>
+      function setThemeBasedOnSystem() {
+        const darkModePreferred = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const htmlElement = document.documentElement;
+        const theme = darkModePreferred ? 'dark' : 'light';
+        
+        console.log('System prefers dark mode:', darkModePreferred);
+        
+        // Set theme
+        htmlElement.setAttribute('data-theme', theme);
+        document.body.setAttribute('data-theme', theme);
+        
+        // Log the change
+        console.log('Theme set to:', theme);
+      }
+
+      function setupThemeListener() {
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          console.log('System theme changed');
+          setThemeBasedOnSystem();
+        });
+      }
+
+      function onPageLoad() {
+        console.log('Running on:', window.location.href);
+        setThemeBasedOnSystem();
+        setupThemeListener();
+        
+        let h1 = document.querySelector('h1');
+        if (h1 && !h1.hasAttribute('data-js-modified')) {
+          h1.style.transition = 'all 0.5s';
+          h1.style.color = '#10B981';
+          h1.setAttribute('data-js-modified', 'true');
+        }
+      }
+
+      // Initial load attempts
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded');
+        onPageLoad();
+      });
+      
+      window.addEventListener('load', () => {
+        console.log('Window load');
+        onPageLoad();
+      });
+      
+      // Backup immediate try
+      setTimeout(() => {
+        console.log('Delayed execution');
+        onPageLoad();
+      }, 1000);
+    </script>
+    """
 ) as demo: 
     # Meta tags 
     gr.HTML("""
@@ -133,11 +188,14 @@ with gr.Blocks(
         inputs=[],  
         outputs=[], 
         js="() => { \
-            const currentTheme = document.documentElement.getAttribute('data-theme'); \
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light'; \
-            document.documentElement.setAttribute('data-theme', newTheme); \
-            document.body.setAttribute('data-theme', newTheme); \
-            console.log('Theme set to:', newTheme); \
+            const htmlElement = document.documentElement; \
+            if (htmlElement.getAttribute('data-theme') === 'dark') { \
+                htmlElement.setAttribute('data-theme', 'light'); \
+                document.body.setAttribute('data-theme', 'light'); \
+            } else { \
+                htmlElement.setAttribute('data-theme', 'dark'); \
+                document.body.setAttribute('data-theme', 'dark'); \
+            } \
         }"
     )
 
