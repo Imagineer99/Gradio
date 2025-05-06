@@ -53,23 +53,24 @@
     --nav-border-color: var(--neutral-900) !important;
 }
 
-/* Force light theme colors even in dark mode */
-[data-theme="dark"], html[data-theme="dark"], body[data-theme="dark"], :root.dark, html.dark, body.dark {
-    --background-primary: #ce1717 !important;
-    --background-secondary: #cc5403 !important;
-    --text-primary: #1F2937 !important;   /* var(--neutral-800) */
-    --text-secondary: #4B5563 !important; /* var(--neutral-600) */
+/* theme colors even in dark mode */
+:root.dark, html.dark, body.dark {
+    --background-primary: #ffffff;
+    --background-secondary: #f3f4f6;
+    --text-primary: var(--neutral-800);
+    --text-secondary: var(--neutral-600);
     --border-color: #e5e7eb !important;
-    --accent-color: #10B981 !important;   /* var(--primary-700) */
-    --shadow-color: rgba(0, 0, 0, 0.1) !important;
-    --hover-color: rgba(16, 185, 129, 0.1) !important;
-    --body-background-fill: transparent !important;
-    --body-background: #e70c0c !important;
-    --block-background-fill: #ffffff !important;
-    --nav-border-color: #111827 !important; /* var(--neutral-900) */
+    --accent-color: var(--primary-700);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --hover-color: rgba(16, 185, 129, 0.1);
+    --body-background-fill: transparent;
+    --body-background: #ffffff;
+    --block-background-fill: #ffffff;
+    --nav-border-color: var(--neutral-900); /* var(--neutral-900) */
     /* Add any other variables you want to force */
 }
 
+[data-theme="dark"] :root.dark, html.dark, body.dark
 .chat-history-sidebar {
     position: fixed !important;
     top: 0 !important;
@@ -446,7 +447,6 @@ label.svelte-i3tvor {
     margin-right: 2rem !important;
 }
 
-
 html {
     overflow-y: scroll !important;  /* Always show scrollbar */
 }
@@ -547,8 +547,6 @@ select {
     outline: none !important;
 }
 [data-theme="dark"] .gradio-container.gradio-container-5-14-0 .contain .card {
-    min-height: 226px !important;
-    padding-top: 30px !important;
     border: 1px solid rgb(223 223 223 / 30%) !important;
 } 
 
@@ -1276,6 +1274,15 @@ div.token.svelte-1scun43 {
 .gradio-container.gradio-container-5-14-0 .contain .basic-params-card .svelte-173056l.container.show_textbox_border {
     margin-bottom: -4px !important;
 }
+
+.lora-adapter-settings-card .wrap-inner.svelte-1hfxrpf {
+    min-height: 47px !important;
+}
+
+.lora-adapter-settings-card .wrap.svelte-1scun43 {
+    min-width: 896px !important;
+}
+
 
 .column.card.basic-params-card.svelte-vt1mxs.gap {
     padding-bottom: 13px !important;
@@ -2661,8 +2668,7 @@ div.token.svelte-1scun43 {
 
 .export-card {
     margin-bottom: 2rem !important;
-    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.07) !important; /* subtle greenish shadow */
-    border: 1.5px solid var(--primary-700) !important;
+    border: 1.5px solid #1bb98c69 !important;
     background: var(--background-primary) !important;
 }
 [data-theme="dark"] .export-card {
@@ -2785,3 +2791,36 @@ div.token.svelte-1scun43 {
     transition: 0s !important;
 }
 
+.hf-card .scroll-hide.svelte-173056l {
+    padding-left: 20px !important;
+}
+
+.ollama-card .scroll-hide.svelte-173056l {
+    padding-left: 20px !important;
+}
+
+.chat-input-row .scroll-hide.svelte-173056l {
+    padding-right: 23px !important;
+}
+
+.local-save-card .block.svelte-11xb1hd.padded.hide-container.auto-margin,
+.hf-card .block.svelte-11xb1hd.padded.hide-container.auto-margin,
+.ollama-card .block.svelte-11xb1hd.padded.hide-container.auto-margin {
+    margin-bottom: -5.5rem !important;
+}
+
+.card.export-card:hover,
+.card.export-type-card:hover,
+.card.local-save-card:hover,
+.card.hf-card:hover,
+.card.ollama-card:hover {
+    border: 1.5px solid #1bb98c71 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.007) !important;
+    transition: all 0.35s ease !important;
+}
+
+.column.card.local-save-card.svelte-vt1mxs.gap,
+.column.card.hf-card.svelte-vt1mxs.gap,
+.column.card.ollama-card.svelte-vt1mxs.gap {
+    padding-bottom: 22px !important;
+}
