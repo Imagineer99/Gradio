@@ -28,58 +28,74 @@ with gr.Blocks(
     analytics_enabled=False,
     head= """
     <script>
-      function setThemeBasedOnSystem() {
-        const darkModePreferred = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const htmlElement = document.documentElement;
-        const theme = darkModePreferred ? 'dark' : 'light';
-        
-        console.log('System prefers dark mode:', darkModePreferred);
-        
-        // Set theme
-        htmlElement.setAttribute('data-theme', theme);
-        document.body.setAttribute('data-theme', theme);
-        
-        // Log the change
-        console.log('Theme set to:', theme);
+      let userHasManuallyToggled = false;
+
+      function simulateToggleClick(retryCount = 0) {
+          const toggleBtn = document.getElementById('theme-toggle-btn');
+          if (toggleBtn) {
+              toggleBtn.click();
+              console.log('Auto-toggled to dark theme');
+              document.body.style.opacity = '1';
+          } else if (retryCount < 10) {  // Try up to 10 times
+              console.log('Toggle button not found, retrying...', retryCount);
+              setTimeout(() => simulateToggleClick(retryCount + 1), 200);  // Retry every 200ms
+          } else {
+              console.log('Failed to find toggle button, showing content anyway');
+              document.body.style.opacity = '1';
+          }
       }
 
-      function setupThemeListener() {
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-          console.log('System theme changed');
-          setThemeBasedOnSystem();
-        });
+      function setInitialTheme() {
+          if (!userHasManuallyToggled) {
+              const htmlElement = document.documentElement;
+              
+              // First force light theme`
+              htmlElement.classList.remove('dark');
+              document.body.classList.remove('dark');
+              htmlElement.removeAttribute('data-theme');
+              document.body.removeAttribute('data-theme');
+              htmlElement.setAttribute('data-theme', 'light');
+              document.body.setAttribute('data-theme', 'light');
+              
+              // Check if system prefers dark
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              console.log('System prefers dark:', prefersDark);
+              
+              if (prefersDark) {
+                  // Wait a bit longer for Gradio to fully initialize
+                  setTimeout(() => simulateToggleClick(), 500);
+              } else {
+                  document.body.style.opacity = '1';
+              }
+          }
+      }
+
+      function setupThemeToggleListener() {
+          const toggleBtn = document.getElementById('theme-toggle-btn');
+          if (toggleBtn) {
+              toggleBtn.addEventListener('click', () => {
+                  userHasManuallyToggled = true;
+                  console.log('Theme manually toggled');
+              });
+          }
       }
 
       function onPageLoad() {
-        console.log('Running on:', window.location.href);
-        setThemeBasedOnSystem();
-        setupThemeListener();
-        
-        let h1 = document.querySelector('h1');
-        if (h1 && !h1.hasAttribute('data-js-modified')) {
-          h1.style.transition = 'all 0.5s';
-          h1.style.color = '#10B981';
-          h1.setAttribute('data-js-modified', 'true');
-        }
+          setInitialTheme();
+          setupThemeToggleListener();
+          
+          let h1 = document.querySelector('h1');
+          if (h1 && !h1.hasAttribute('data-js-modified')) {
+              h1.style.transition = 'all 0.5s';
+              h1.innerHTML += ' (Theme Control Active!)';
+              h1.setAttribute('data-js-modified', 'true');
+          }
       }
 
-      // Initial load attempts
-      document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded');
-        onPageLoad();
-      });
-      
-      window.addEventListener('load', () => {
-        console.log('Window load');
-        onPageLoad();
-      });
-      
-      // Backup immediate try
-      setTimeout(() => {
-        console.log('Delayed execution');
-        onPageLoad();
-      }, 1000);
+      // Run as early as possible
+      setInitialTheme();
+      document.addEventListener('DOMContentLoaded', onPageLoad);
+      window.addEventListener('load', onPageLoad);
     </script>
     """
 ) as demo: 
