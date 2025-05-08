@@ -143,7 +143,7 @@ def create_chat_interface():
                         break
                 
                 # Sort sessions by timestamp (newest first) and reorder the actual sessions array
-                # First, collect all non-None sessions with their original indices
+                # collect all non-None sessions with their original indices
                 active_sessions = [(i, session) for i, session in enumerate(sessions) if session]
                 # Sort by timestamp, newest first
                 active_sessions.sort(key=lambda x: x[1]['timestamp'], reverse=True)
@@ -153,7 +153,6 @@ def create_chat_interface():
                 for new_idx, (old_idx, session) in enumerate(active_sessions):
                     new_sessions[new_idx] = session
                 
-                # Update the original sessions array with the new order
                 sessions[:] = new_sessions
                 
                 # Create button updates based on the new order

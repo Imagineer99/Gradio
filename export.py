@@ -25,11 +25,11 @@ def create_export_interface():
                     with gr.Row():
                         merge_format = gr.Radio(
                             choices=[
+                                "4-bit (FP4)",
                                 "16-bit (FP16)",
-                                "4-bit (INT4)",
                                 "GGUF",
                             ],
-                            value="GGUF",
+                            value="16-bit (FP16)",
                             label="Model Format",
                             info="Choose precision for the merged model",
                             interactive=True,
@@ -55,15 +55,14 @@ def create_export_interface():
         with gr.Row():
             # Local Save Card
             with gr.Column(elem_classes=["card", "local-save-card"]):
+                gr.Markdown("## Local")
                 local_save = gr.Checkbox(
                     label="💾 Save Locally",
                     value=True,
-                    info="Save model to local storage",
                     interactive=True,
                 )
                 # Always visible
                 with gr.Column() as local_group:
-                    gr.Markdown("#### Local Save")
                     output_dir = gr.Textbox(
                         label="Output Directory",
                         placeholder="Path to save the model",
@@ -79,15 +78,14 @@ def create_export_interface():
 
             # Hugging Face Card
             with gr.Column(elem_classes=["card", "hf-card"]):
+                gr.Markdown("## Hugging Face")
                 push_to_hub = gr.Checkbox(
                     label="🤗 Push to Hugging Face",
                     value=False,
-                    info="Upload to Hugging Face Hub",
                     interactive=True,
                 )
                 # Always visible
                 with gr.Column() as hub_group:
-                    gr.Markdown("#### Hugging Face Hub")
                     hub_model_id = gr.Textbox(
                         label="Hub Model ID",
                         placeholder="username/model-name",
@@ -97,21 +95,20 @@ def create_export_interface():
                         label="Hub Token",
                         placeholder="Enter your Hugging Face token",
                         type="password",
+                        scale=3,
                         elem_classes=["export-input"],
-                        scale=3
                     )
 
             # Ollama Card
             with gr.Column(elem_classes=["card", "ollama-card"]):
+                gr.Markdown("## Ollama")
                 push_to_ollama = gr.Checkbox(
                     label="🦙 Push to Ollama",
                     value=False,
-                    info="Export to Ollama",
                     interactive=True,
                 )
                 # Always visible
                 with gr.Column() as ollama_group:
-                    gr.Markdown("#### Ollama")
                     ollama_model_name = gr.Textbox(
                         label="Ollama Model Name",
                         placeholder="username/model-name",
@@ -134,8 +131,6 @@ def create_export_interface():
         outputs=[merge_format_group]
     )
 
-
-
     # Components dictionary
     return {
         'export_interface': export_interface,
@@ -149,4 +144,6 @@ def create_export_interface():
         'hub_model_id': hub_model_id,
         'ollama_model_name': ollama_model_name,
         'ollama_key': ollama_key,
+        'output_dir': output_dir,
+        'file_name': file_name,
     } 

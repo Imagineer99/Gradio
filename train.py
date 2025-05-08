@@ -177,7 +177,7 @@ def create_train_interface():
     with gr.Column(visible=False) as advanced_params:
         with gr.Column(elem_classes=["advanced-params"]):
             with gr.Row():
-                with gr.Column(elem_classes=["card", "compact-card"]):
+                with gr.Column(elem_classes=["card", "compact-card", "lora-adapter-settings-card"]):
                     gr.Markdown("## LoRA Adapter Settings")
                     
                     with gr.Row():
