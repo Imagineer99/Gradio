@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-/* Default theme (light) */
 :root, [data-theme="light"], [data-theme="dark"] {
     /* Typography scale */
     --scale-xxl: 2rem !important;    /* 32px */
@@ -66,8 +65,7 @@
     --body-background-fill: transparent;
     --body-background: #ffffff;
     --block-background-fill: #ffffff;
-    --nav-border-color: var(--neutral-900); /* var(--neutral-900) */
-    /* Add any other variables you want to force */
+    --nav-border-color: var(--neutral-900); 
 }
 
 [data-theme="dark"] :root.dark, html.dark, body.dark
@@ -76,23 +74,20 @@
     top: 0 !important;
     right: auto !important;
     left: 110px !important;
-    width: 400px !important;  /* Set a specific width instead of 100% */
-    height: 100vh !important;  /* Full viewport height */
+    width: 400px !important;  
+    height: 100vh !important;  
     margin: 0 !important;
     padding: 2rem !important;
     z-index: 1000 !important;
     transform: none !important;
-    overflow-y: auto !important;  /* Allow scrolling if content is too tall */
+    overflow-y: auto !important;  
     margin-top: 150px !important;
     margin-left: 150px !important;
-    background-color: rgba(228, 19, 19, 0) !important; /* Match the app background */
+    background-color: rgba(228, 19, 19, 0) !important;
     color: #d91717;
 }
-/* Enhanced dark theme */
+
 [data-theme="dark"] {
-    /* Keep the primary and neutral color palette the same in dark mode */
-    
-    /* Theme variables - update these for dark mode */
     --background-primary: #292929 !important;
     --background-secondary: #292929 !important;
     --text-primary: #f3f4f6 !important;
@@ -107,20 +102,18 @@
     --nav-border-color: #ffffff !important;
 }
 
-/* Apply theme variables */
 body {
     background-color: var(--body-background) !important;
     color: var(--text-primary);
     margin: 0 !important;
-    overflow-x: hidden !important;  /* Prevent horizontal scrollbar */
+    overflow-x: hidden !important;  
     box-sizing: border-box !important;
 }
 
-/* Updated theme toggle button styles */
 .theme-toggle-btn {
     position: relative !important;
-    width: 80px !important;      /* Increased from 70px */
-    height: 40px !important;     /* Increased from 34px */
+    width: 80px !important;      
+    height: 40px !important;     
     border-radius: var(--radius-full) !important;
     cursor: pointer !important;
     padding: 0 !important;
@@ -129,23 +122,23 @@ body {
     background: var(--background-primary) !important;
     box-shadow: 1px 1px 2px var(--shadow-color),
                 -1px -1px 2px rgba(255, 255, 255, 0.05) !important;
-    max-width: 80px !important;  /* Increased from 70px to match width */
-    min-width: 80px !important;  /* Increased from 70px to match width */
+    max-width: 80px !important; 
+    min-width: 80px !important;  
 }
 
 .theme-toggle-btn::after {
     content: '' !important;
     position: absolute !important;
-    top: 5px !important;         /* Adjusted from 4px to center the circle */
-    left: 5px !important;        /* Adjusted from 4px to center the circle */
-    width: 30px !important;      /* Increased from 26px */
-    height: 30px !important;     /* Increased from 26px */
+    top: 5px !important;         
+    left: 5px !important;        
+    width: 30px !important;      
+    height: 30px !important;     
     border-radius: 50% !important;
     background-color: var(--background-primary) !important;
     box-shadow: inset 4px 4px 8px var(--shadow-color),
                 inset -1px -1px 2px var(--background-secondary) !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    background-size: 20px !important;  /* Increased from 18px to scale icon with button */
+    background-size: 20px !important; 
     background-position: center !important;
     background-repeat: no-repeat !important;
 }
@@ -167,7 +160,6 @@ body[data-theme="dark"] .theme-toggle-btn::after,
     transform: scale(0.98) !important;
 }
 
-/* Debug style to verify CSS loading */
 body::before {
     content: 'CSS Loaded'!important;
     position: fixed !important;
@@ -178,10 +170,10 @@ body::before {
     padding: 4px 8px !important;
     font-size: 12px !important;
     z-index: 9999 !important;
-    display: none; /* Change to block to debug */
+    display: none; 
 }
 
-/* Apply theme variables to Gradio elements */
+/* Gradio elements */
 .gradio-container {
     background-color: var(--background-primary) !important;
     font-family: 'Inter', sans-serif !important;
@@ -280,10 +272,9 @@ body::before {
 /* Primary button style - this is the active/selected page */
 .nav-button.primary {
     border: 1px solid var(--nav-border-color) !important;
-    font-weight: 700 !important;  /* Increased from 600 to 700 to make selected even bolder */
+    font-weight: 700 !important;
     animation: fadeInBorder 0.3s ease-in !important;  
 }
-
 
 @keyframes fadeInBorder {
     from {
@@ -294,24 +285,21 @@ body::before {
     }
 }
 
-/* Override the global transition for nav-button borders */
 .nav-button {
     transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Dark theme adjustments */
 [data-theme="dark"] .nav-button:hover {
     color: var(--primary-700) !important;
 }
 
-/* Navigation buttons container */
 .navigation-buttons {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 1rem !important;
-    height: 40px !important;  /* Match logo container height */
+    height: 40px !important; 
 }
 
 /* Headers and text */
@@ -333,7 +321,6 @@ p, span, label {
     color: var(--text-secondary) !important;
 }
 
-/* Svelte label styles */
 label.svelte-i3tvor {
     background-color: transparent !important;
 }
@@ -382,7 +369,6 @@ label.svelte-i3tvor {
     fill: var(--accent-color) !important;
 }
 
-/* Add/update these styles */
 .header {
     display: flex !important;
     align-items: center !important;
@@ -402,18 +388,17 @@ label.svelte-i3tvor {
     margin-bottom: 120px !important;
 }
 
-/* Logo styling with Gradio overrides */
 .logo-container {
     display: flex !important;
     align-items: center !important;
     gap: 0.75rem !important;
-    height: 75px !important;  /* Increased from 60px */
+    height: 75px !important; 
     margin: 0 !important;
 }
 
 .logo-container img {
-    height: 70px !important;  /* Increased from 55px */
-    width: 80px !important;   /* Increased from 64px */
+    height: 70px !important;
+    width: 80px !important;
     object-fit: contain !important;
     margin-right: 10px !important;
 }
@@ -426,29 +411,25 @@ label.svelte-i3tvor {
     line-height: 60px !important;
 }
 
-/* Moves the logo image container to the right */
 .image-container.svelte-dpdy90 button.svelte-dpdy90 {
     justify-content: end;
 }
 
-/* Hide icon buttons for logo */
 .logo-container .icon-button-wrapper {
     display: none !important;
 }
 
-/* Remove this if it exists */
 .theme-toggle-spacer {
     display: none !important;
 }
 
-/* Update theme toggle button position */
 .theme-toggle-btn {
-    margin-left: auto !important; /* This will push the button to the right */
+    margin-left: auto !important; 
     margin-right: 2rem !important;
 }
 
 html {
-    overflow-y: scroll !important;  /* Always show scrollbar */
+    overflow-y: scroll !important;  
 }
 
 /* Custom scrollbar styling with theme transitions */
@@ -487,7 +468,6 @@ html {
     background: var(--neutral-700) !important;
 }
 
-/* Firefox scrollbar styling */
 * {
     scrollbar-width: thin !important;
     scrollbar-color: var(--neutral-500) var(--background-secondary) !important;
@@ -497,10 +477,9 @@ html {
     scrollbar-color: var(--neutral-600) var(--background-secondary) !important;
 }
 
-/* For dropdown menus that need scrolling */
 .gr-dropdown .options {
-    max-height: 300px !important;  /* Adjust this value as needed */
-    overflow-y: auto !important;   /* Only show scrollbar when needed */
+    max-height: 300px !important;  
+    overflow-y: auto !important; 
     scrollbar-width: thin !important;
 }
 
@@ -510,21 +489,19 @@ input, select, textarea {
     -ms-overflow-style: none !important;  /* IE and Edge */
 }
 
-/* Hide webkit scrollbar while keeping other UI elements */
+/* Hide webkit scrollbar */
 input::-webkit-scrollbar, 
 select::-webkit-scrollbar, 
 textarea::-webkit-scrollbar {
     display: none !important;
 }
 
-/* Ensure dropdown arrows and selection circles remain visible */
 select {
     appearance: auto !important;
     -webkit-appearance: auto !important;
     -moz-appearance: auto !important;
 }
 
-/* Cards */
 .card {
     background: white;
     border-radius: 30px !important;
@@ -543,22 +520,19 @@ select {
 [data-theme="dark"] .card {
     background: #292929 !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-    border: 1px solid #232833 !important;
+    border: 1px solid #282a2c !important;
     outline: none !important;
 }
 [data-theme="dark"] .gradio-container.gradio-container-5-14-0 .contain .card {
     border: 1px solid rgb(223 223 223 / 30%) !important;
 } 
 
-/* Model Selection Card specific styling */
 .model-selection-card {
     --block-background-fill: #e9f3f0;
     background: var(--block-background-fill) !important;
     margin-bottom: 3px !important;
 }
 
-
-/* Model selection card width */
 .model-selection-card .wrap.svelte-1hfxrpf {
     max-width: 370px !important;
     min-width: 456px;
@@ -566,12 +540,12 @@ select {
 }
 
 .model-selection-card .wrap-inner.svelte-1hfxrpf {
-    background: #232833;
+    background: #282a2c;
     border-radius: 500px;
 }
 
 .model-selection-card .wrap-inner.svelte-1hfxrpf .secondary-wrap.svelte-1hfxrpf {
-    background: #232833;
+    background: #282a2c;
 }
 
 .model-selection-card .wrap.svelte-1hfxrpf.svelte-1hfxrpf {
@@ -581,7 +555,7 @@ select {
 }
 
 .model-selection-card .wrap-inner.svelte-1hfxrpf input {
-    background: #232833 !important;
+    background: #282a2c !important;
     color: aliceblue !important;
     border-radius: 200px !important;
 }
@@ -595,13 +569,11 @@ select {
     box-shadow: 0 0 0 2px rgba(197, 7, 7, 0) !important;
 }
 
-/* Remove default focus ring from dropdown */
 .model-selection-card .wrap.svelte-1hfxrpf.svelte-1hfxrpf:focus-within {
     outline: none !important;
     box-shadow: 0 0 0 2px rgba(204, 4, 4, 0) !important;
 }
 
-/*border to input boxes for model selection card */
 label.container.show_textbox_border.svelte-173056l input.svelte-173056l, label.container.show_textbox_border.svelte-173056l textarea.svelte-173056l {
     border: var(--input-border-width) solid var(--input-border-color);
     border-radius: 500px;
@@ -611,13 +583,11 @@ label.container.show_textbox_border.svelte-173056l input.svelte-173056l, label.c
     fill: aliceblue !important;
 }
 
-/* Dark theme model selection card background */
 [data-theme="dark"] .model-selection-card {
     --block-background-fill: #989ef5 !important;
     background: var(--block-background-fill) !important;
 }
 
-/* Remove the border from the card block */
 div.svelte-633qhp {
     border: var(--block-border-width) solid #e4e4e700 !important;
     background: #e4e4e700 !important;
@@ -633,14 +603,12 @@ div.svelte-633qhp {
     border: none !important;
 }
 
-/* Visibility states */
 .hide, 
 .hidden,
 [style*="display: none"] {
     display: none !important;
 }
 
-/* Card visibility states */
 .card.hide,
 .card.hidden,
 .card[style*="display: none"],
@@ -666,10 +634,9 @@ div.svelte-633qhp {
 
 
 .training-progress-card {
-    max-width: 490px !important;  /* Limit maximum width */
+    max-width: 490px !important; 
 }
 
-/* Training progress card button styling */
 .training-progress-card .gr-button {
     font-size: 0.9rem !important;
     height: 38px !important;
@@ -678,7 +645,6 @@ div.svelte-633qhp {
     padding-bottom: 28px !important;
 }
 
-/* Start button specific styling */
 .start-finetune-btn {
     background-color: var(--primary-700) !important;
     color: white !important;
@@ -690,7 +656,6 @@ div.svelte-633qhp {
     background-color: var(--primary-800) !important;
 }
 
-/* Update button styles for all buttons in cards */
 .upload-button,
 .combine-datasets-btn,
 .start-finetune-btn,
@@ -703,7 +668,6 @@ div.svelte-633qhp {
     border: none !important;
 }
 
-/* Common hover effect for neuromorphic buttons */
 .upload-button:hover,
 .combine-datasets-btn:hover,
 .start-finetune-btn:hover,
@@ -713,7 +677,6 @@ div.svelte-633qhp {
     transform: translateY(1px) !important;
 }
 
-/* Active/pressed state for neuromorphic buttons */
 .upload-button:active,
 .combine-datasets-btn:active,
 .start-finetune-btn:active,
@@ -723,7 +686,6 @@ div.svelte-633qhp {
     transform: translateY(1px) !important;
 }
 
-/* Stop button hover style (keeping the border but making it neuromorphic too) */
 .stop-finetune-btn {
     border: 1px solid transparent !important;
     background: var(--background-primary) !important;
@@ -733,7 +695,6 @@ div.svelte-633qhp {
     border: 1px solid #dd535a5d !important;
 }
 
-/* Start finetune button specific styles (keeping its color) */
 .start-finetune-btn {
     background-color: var(--primary-700) !important;
     color: white !important;
@@ -744,7 +705,6 @@ div.svelte-633qhp {
     background-color: var(--primary-800) !important;
 }
 
-/* Upload button and combine button specific styles */
 .upload-button,
 .combine-datasets-btn {
     color: var(--text-primary) !important;
@@ -753,7 +713,6 @@ div.svelte-633qhp {
     background-position: center !important;
 }
 
-/* Dark theme specific gradient adjustments */
 [data-theme="dark"] .upload-button,
 [data-theme="dark"] .combine-datasets-btn {
     background: radial-gradient(circle at 30% 30%, 
@@ -765,7 +724,6 @@ div.svelte-633qhp {
                 rgba(50, 50, 50, 0.9) 100%) !important;
 }
 
-/* Dark theme specific adjustments */
 
 [data-theme="dark"] .upload-button:hover,
 [data-theme="dark"] .combine-datasets-btn:hover,
@@ -783,22 +741,16 @@ div.svelte-633qhp {
                 inset -2px -2px 4px rgba(255, 255, 255, 0.05) !important;
 }
 
-/* Ensure number input is always on the right */
 .svelte-10lj3xl .tab-like-container {
     margin-left: auto !important;
 }
 
-
-
-/* Target Training Dataset wrap div specifically */
 div.wrap.svelte-1hfxrpf {
     border-radius: 500px !important;
 }
 
-/* Target additional wrap div */
 .local-datasets-dropdown div.wrap.svelte-1scun43 {
     border: 1px solid var(--border-color) !important;
-    border-radius: calc(min(32px, 100%)) !important;  /* Will be capped at 32px even as element grows */
 }
 
 /* Prevent border highlight on focus and selection */
@@ -835,13 +787,13 @@ div.token.svelte-1scun43 {
 .card .gr-form > div > div:last-child {
     padding-left: 0 !important;
     padding-right: 0 !important;
-    margin-left: -2px !important;  /* Fine-tune alignment */
-    margin-right: -2px !important;  /* Fine-tune alignment */
+    margin-left: -2px !important;  
+    margin-right: -2px !important;  
 }
 
 /* Scroll hide styling */
 [data-theme="dark"] .scroll-hide.svelte-173056l {
-    background: #232833 !important;
+    background: #282a2c !important;
     border-radius: 500px !important;
 }
 
@@ -849,7 +801,7 @@ div.token.svelte-1scun43 {
 [data-theme="dark"] .scroll-hide.svelte-173056l,
 [data-theme="dark"] .scroll-hide.svelte-173056l input,
 [data-theme="dark"] .scroll-hide.svelte-173056l .secondary-wrap {
-    background: #23283385 !important;
+    background: #282a2c85 !important;
     color: var(--neutral-900) !important;
     border: none !important ;
 }
@@ -875,7 +827,7 @@ div.token.svelte-1scun43 {
     cursor: pointer !important;
     font-weight: 500 !important;
     transition: all 0.2s ease !important;
-    color: #374151 !important; /* Added for better visibility */
+    color: #374151 !important;
 }
 
 /* Hover state for non-active buttons */
@@ -883,12 +835,11 @@ div.token.svelte-1scun43 {
     background: rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Active/selected button state - modified for visibility */
 .mode-toggle-buttons .primary {
     background: white !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-    color: #111827 !important; /* Darker text for active state */
-    font-weight: 600 !important; /* Make active text slightly bolder */
+    color: #111827 !important; 
+    font-weight: 600 !important; 
 }
 
 #component-14.row.mode-toggle-buttons {
@@ -907,7 +858,7 @@ div.token.svelte-1scun43 {
 .advanced-params .card:first-child:not(.logging-monitoring-card) {
     margin-left: 0 !important;
 }
-/* Monitoring and logging card margin */
+
 .advanced-params .card.logging-monitoring-card:first-child {
     margin-left: 372px !important;
 }
@@ -921,7 +872,7 @@ div.token.svelte-1scun43 {
     display: flex !important;
     flex-direction: column !important;
     gap: 25px !important;
-    margin-top: 30px !important;  /* Added to match basic params spacing */
+    margin-top: 30px !important; 
 }
 
 .advanced-params .card {
@@ -939,7 +890,6 @@ div.token.svelte-1scun43 {
     width: 100% !important;
 }
 
-/* For advanced cards in Gradio container */
 .gradio-container.gradio-container-5-14-0 .contain .advanced-params .card {
     padding-top: 30px !important;
 }
@@ -957,7 +907,6 @@ div.token.svelte-1scun43 {
     gap: 1rem !important;
 }
 
-/* Make compact card headers look like regular card headers */
 .compact-card .prose h3 {
     font-size: 1.25rem !important;  
     font-weight: 600 !important;
@@ -967,19 +916,16 @@ div.token.svelte-1scun43 {
     display: block !important;
 }
 
-/* Slider group styling */
 .compact-card .gr-slider {
     min-width: 150px !important;
     max-width: 250px !important;
 }
 
-/* Checkbox group styling */
 .compact-card .gr-checkbox-row {
     gap: 1rem !important;
     margin-top: 0.5rem !important;
 }
 
-/* Info text styling */
 .compact-card .gr-input-label, 
 .compact-card .gr-text-input-label {
     font-size: 0.9rem !important;
@@ -1008,7 +954,6 @@ div.token.svelte-1scun43 {
     margin-bottom: 1rem !important;
 }
 
-/* Adjust input widths */
 .compact-card .gr-text-input,
 .compact-card .gr-number-input {
     flex: 1 !important;
@@ -1026,20 +971,17 @@ div.token.svelte-1scun43 {
     padding: 0.3rem !important;
 }
 
-/* Make checkboxes more compact */
 .compact-card .gr-checkbox-container {
     gap: 0.5rem !important;
     margin: 0 !important;
 }
 
-/* Target all rows with these classes in the checkbox group section */
 .compact-card.card .checkbox-group .row.svelte-1xp0cw7.unequal-height {
     width: 42% !important;
     flex-grow: 0 !important;
     max-width: 800px !important;
 }
 
-/* Generic selector for all similar rows */
 .row.svelte-1xp0cw7.unequal-height {
     flex-grow: 0 !important;
 }
@@ -1078,7 +1020,6 @@ div.token.svelte-1scun43 {
     min-height: 0px !important;
 }
 
-/* Override the advanced-params card min-height specifically for monitoring card */
 .gradio-container.gradio-container-5-14-0 .contain .advanced-params .card.logging-monitoring-card {
     min-height: 0px !important;
 }
@@ -1092,12 +1033,10 @@ div.token.svelte-1scun43 {
     font-family: 'Poppins' !important;
 }
 
-/* Target the form element directly with a very specific selector */
 .model-selection-card div.form.svelte-633qhp {
-    max-width: 482px !important; /* Extreme value to test if selector works */
+    max-width: 482px !important; 
 }
 
-/* Model Selection Card column styling */
 .search-input-with-icon.svelte-vt1mxs {
     max-width: 275px !important;
 }
@@ -1142,7 +1081,6 @@ div.token.svelte-1scun43 {
     width: auto !important;
 }
 
-/* Remove gap in Model Selection card */
 .model-selection-card .row.svelte-1xp0cw7.unequal-height {
     gap: 0 !important;
 }   
@@ -1174,7 +1112,6 @@ div.token.svelte-1scun43 {
     min-width: 399px !important;
 }
 
-
 .model-selection-card .search-input-with-icon .scroll-hide.svelte-173056l {
     padding-left: 40px !important;
     background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
@@ -1194,7 +1131,6 @@ div.token.svelte-1scun43 {
 .row.navigation-buttons.svelte-1xp0cw7.unequal-height {
     margin-left: 58px !important;
 }
-
 
 /* Model Selection Card column styling */
 .model-selection-card .form.svelte-633qhp {
@@ -1312,7 +1248,6 @@ div.token.svelte-1scun43 {
     min-height: 194px !important;
 }
 
-/* Target scroll-hide elements specifically in Configure Parameters card */
 .basic-params-card .scroll-hide.svelte-173056l {
     height: 41px !important;
     min-height: 41px !important;
@@ -1330,12 +1265,6 @@ div.token.svelte-1scun43 {
     margin-top: -8px !important;
     margin-bottom: 8px !important;
 }
-
-/* Note to self: reduce left and right padding of cards */ 
-/*
-<h2 style="
-    margin-bottom: 0.25rem !important;
-">Model Selection</h2> */
 
 /* Moves upload & combine datasets button up */
 .gradio-container.gradio-container-5-14-0 .contain .upload-button, .gradio-container.gradio-container-5-14-0 .contain .combine-datasets-btn {
@@ -1582,8 +1511,6 @@ div.token.svelte-1scun43 {
     min-height: 50rem !important;
 }
 
-
-
 .message-row.bubble.user-row.svelte-pcjl1g.with_avatar.with_opposite_avatar {
     margin-right: 364px !important;
 }
@@ -1753,8 +1680,8 @@ div.token.svelte-1scun43 {
 }
 
 .chat-input-initial {
-    max-width: 768px !important;  /* Wider initial state */
-    height: 60px !important;      /* Taller input box */
+    max-width: 768px !important;
+    height: 60px !important;
     padding: 20px 25px !important;
     font-size: 1.1rem !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
@@ -1763,8 +1690,8 @@ div.token.svelte-1scun43 {
 }
 
 .gradio-container.gradio-container-5-14-0 .contain .chat-input {
-    max-width: 768px !important;  /* Wider initial state */
-    height: 60px !important;      /* Taller input box */
+    max-width: 768px !important;
+    height: 60px !important;
     padding: 20px 25px !important;
     font-size: 1.1rem !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
@@ -1883,7 +1810,6 @@ div.token.svelte-1scun43 {
     margin-left: -131px !important;
 }
 .block.custom-upload.svelte-11xb1hd.hide-container.auto-margin.initial-state {
-    /* Your styles for initial state only */
     margin-top: 361px !important;
     transform: translateX(180px);
 }
@@ -1923,9 +1849,9 @@ div.token.svelte-1scun43 {
     position: fixed !important;
     top: 0 !important;
     right: 0 !important;
-    left: auto !important;  /* Remove left positioning */
-    width: 400px !important;  /* Set a specific width instead of 100% */
-    height: 100vh !important;  /* Full viewport height */
+    left: auto !important;
+    width: 400px !important;
+    height: 100vh !important;
     margin: 0 !important;
     padding: 2rem !important;
     z-index: 1000 !important;
@@ -1946,7 +1872,6 @@ div.token.svelte-1scun43 {
     opacity: 1 !important;
 }
 
-/* Dark theme support */
 [data-theme="dark"] .chat-history-sidebar {
     background-color: var(--background-primary) !important;
 }
@@ -1955,7 +1880,6 @@ div.token.svelte-1scun43 {
     padding-top: 164px;
 }
 
-/* New Chat Button Styling */
 .new-chat-btn {
     background-color: var(--primary-700) !important;
     color: white !important;
@@ -2027,11 +1951,10 @@ div.token.svelte-1scun43 {
 
 .saved-chat-item:hover {
     background-color: var(--hover-color) !important;  
-    transform: translateY(-0.9px) !important;  /* Subtle lift effect */
-    border-color: var(--primary-700) !important;  /* Highlight border on hover */
+    transform: translateY(-0.9px) !important; 
+    border-color: var(--primary-700) !important; 
 }
 
-/* Ensure text colors remain visible */
 .chat-title {
     font-weight: 500 !important;
     margin-bottom: 4px !important;
@@ -2134,19 +2057,16 @@ div.token.svelte-1scun43 {
     overflow: visible !important;
 }
 
-
 #settings-panel-column .scroll-hide.svelte-173056l,
 #settings-panel-column .gradio-container .contain .scroll-hide.svelte-173056l {
     overflow: hidden auto !important;  
     resize: none !important;  
 }
 
-
 #settings-panel-column .block.svelte-11xb1hd.padded.auto-margin {
     height: auto !important;
     overflow: hidden auto !important;
 }
-
 
 #system-prompt-textbox .scroll-hide.svelte-173056l,
 .gradio-container .contain #system-prompt-textbox .scroll-hide.svelte-173056l {
@@ -2156,7 +2076,6 @@ div.token.svelte-1scun43 {
     overflow: hidden auto !important;
     resize: none !important;
 }
-
 
 #settings-panel-column textarea,
 #settings-panel-column input,
@@ -2191,7 +2110,6 @@ div.token.svelte-1scun43 {
     margin: 4px 0;
 }
 
-
 .block.chat-history.modern-chat.svelte-11xb1hd.auto-margin {
    border: none !important; 
    border-top: 1px solid rgba(0, 0, 0, 0.034) !important; 
@@ -2209,7 +2127,6 @@ div.token.svelte-1scun43 {
 #sampling-parameters .block.svelte-11xb1hd.padded.auto-margin {
     margin-bottom: -27px !important;
 }
-
 
 .message-wrap.svelte-gjtrl6 .message-row .md img {
     border-radius: 7px;
@@ -2248,7 +2165,6 @@ div.token.svelte-1scun43 {
 .gradio-container.gradio-container-5-14-0 .contain .lg.secondary.new-chat-btn.svelte-5st68j {
     margin-top: -37px !important;
 }
-
 
 .saved-chats-list {
     display: flex !important;
@@ -2295,7 +2211,6 @@ div.token.svelte-1scun43 {
     background-color: rgba(228, 19, 19, 0) !important;
 }
 
-
 .gradio-container.gradio-container-5-14-0 .contain .saved-chat-item {
     padding: 5px 24px !important;
     border-radius: 500px !important;
@@ -2323,14 +2238,14 @@ div.token.svelte-1scun43 {
     padding: 10px;
     margin: 5px 0;
     border-radius: 8px;
-    height: 42px !important; /* Fixed smaller height */
+    height: 42px !important; 
 }
 
 .chat-session-btn:hover {   
     background-color: rgba(85, 182, 133, 0.1);
-    background-color: var(--hover-color) !important;  /* Use theme hover color */
-    transform: translateY(-0.9px) !important;  /* Subtle lift effect */
-    border-color: var(--primary-700) !important;  /* Highlight border on hover */    
+    background-color: var(--hover-color) !important; 
+    transform: translateY(-0.9px) !important; 
+    border-color: var(--primary-700) !important;   
 }
 
 .chat-session-btn.selected {
@@ -2508,7 +2423,7 @@ div.token.svelte-1scun43 {
 
 .model-selection-controls .wrap-inner.svelte-1hfxrpf input,
 .model-selection-controls .wrap-inner.svelte-1hfxrpf select {
-    margin-right: 25px !important; /* Adjust value as needed */
+    margin-right: 25px !important;
 }
 
 .gradio-container.gradio-container-5-14-0 .contain .model-selection-controls-hf-token {
@@ -2561,15 +2476,23 @@ div.token.svelte-1scun43 {
 
 .block.chat-history.modern-chat.left-chat.svelte-11xb1hd.auto-margin {
     margin-left: 0px !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.035) !important;
+    border-left: 1px solid rgba(0, 0, 0, 0.035) !important;
+    border-top-left-radius: 22px !important;
+    border-top-right-radius: 22px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+
 }
 
 .block.chat-history.modern-chat.right-chat.svelte-11xb1hd.auto-margin {
-    margin-left: 0px !important;
+    margin-left: 1px !important;
     top: 29px !important;
-
+    border-radius: 22px !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.035) !important;
+    border-bottom-right-radius: 0px !important;
 }
 
-/* Remove or modify the general flex-wrap styling */
 .flex-wrap.svelte-pcjl1g.svelte-pcjl1g {
     display: flex;
     flex-direction: column;
@@ -2581,8 +2504,8 @@ div.token.svelte-1scun43 {
 
 /* Specific styling for left chat */
 .left-chat .flex-wrap.svelte-pcjl1g.svelte-pcjl1g {
-    margin-left: 0px !important;
-    margin-right: 0px !important;
+    margin-left: 25px !important;
+    margin-right: 25px !important;
 }
 
 /* Specific styling for right chat */
@@ -2593,6 +2516,7 @@ div.token.svelte-1scun43 {
 
 .block.chat-history.modern-chat.left-chat.svelte-11xb1hd.auto-margin {
     min-width: 745px !important;
+/*    border-right: solid 2px #8080801f !important; */
 }
 
 .right-model-info {
@@ -2672,10 +2596,9 @@ div.token.svelte-1scun43 {
     background: var(--background-primary) !important;
 }
 [data-theme="dark"] .export-card {
-    background: #232833 !important;
+    background: #282a2c !important;
     border: 1.5px solid var(--primary-600) !important;
 }
-
 
 .column.model-format.svelte-vt1mxs.gap {
     left: -370px;
@@ -2714,7 +2637,6 @@ div.token.svelte-1scun43 {
     margin-left: 6px !important;
 }
 
-/* New Chat Button Styling */
 .export-btn {
     background-color: var(--primary-700) !important;
     color: white !important;
@@ -2754,14 +2676,13 @@ div.token.svelte-1scun43 {
     margin-bottom: 3px !important;
 }
 
-/* Subtle click effect for export button */
+/* Click effect for export button */
 .export-btn:active {
-    transform: scale(0.99) translateY(0.5px) !important; /* Made more subtle: 0.98 → 0.99, 1px → 0.5px */
+    transform: scale(0.99) translateY(0.5px) !important; 
     background-color: var(--primary-800) !important;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
     transition: all 0.05s ease !important;
 }
-
 /* Create a subtle ripple effect on click */
 .export-btn {
     position: relative !important;
@@ -2814,7 +2735,6 @@ div.token.svelte-1scun43 {
 .card.local-save-card:hover,
 .card.hf-card:hover,
 .card.ollama-card:hover {
-    border: 1.5px solid #1bb98c71 !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.007) !important;
     transition: all 0.35s ease !important;
 }
@@ -2823,4 +2743,45 @@ div.token.svelte-1scun43 {
 .column.card.hf-card.svelte-vt1mxs.gap,
 .column.card.ollama-card.svelte-vt1mxs.gap {
     padding-bottom: 22px !important;
+}
+
+[data-theme="dark"] .wrap.svelte-1hfxrpf {
+    border-color: #444 !important;
+    background-color: #282a2c !important;
+    color: #fff !important;
+}
+
+[data-theme="dark"] .border-none.svelte-1hfxrpf {
+    color: #fff !important;
+}
+
+[data-theme="dark"] .wrap.svelte-1scun43,
+[data-theme="dark"] .token.svelte-1scun43 {
+    background-color: #282a2c !important;
+    border-color: #444 !important;
+    color: #fff !important;
+}
+
+[data-theme="dark"] .token-remove.svelte-1scun43 {
+    color: #55b685 !important;           /* Green highlight for X */
+    background-color: #333 !important;    /* Slightly lighter dark for background */
+    border-color: #444 !important;
+}
+
+/* Dropdown styling for dark theme */
+[data-theme="dark"] .options.svelte-y6qw75 {
+    background: #282a2c !important;
+    color: #fff !important;
+    border-radius: 12px !important;
+    border: 1px solid #444 !important;
+}
+
+[data-theme="dark"] .item.svelte-y6qw75 {
+    background: transparent !important;
+    color: #fff !important;
+}
+
+[data-theme="dark"] .item.svelte-y6qw75.selected {
+    background: #333 !important;
+    color: #55b685 !important;
 }
