@@ -131,11 +131,12 @@ def create_train_interface():
                         step=1,
                         interactive=True
                     )                                       
-                    max_sequence_length = gr.Textbox(
-                        value="2048",
+                    max_sequence_length = gr.Number(
+                        value=2048,
                         label="Max Context Length",
                         info="Maximum sequence length for the model",
-                        interactive=True
+                        interactive=True,
+                        precision=0
                     )
 
         # Right Column - Training Progress
