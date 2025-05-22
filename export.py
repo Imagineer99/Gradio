@@ -55,7 +55,7 @@ def create_export_interface():
         with gr.Row():
             # Local Save Card
             with gr.Column(elem_classes=["card", "local-save-card"]):
-                gr.Markdown("## Local")
+                gr.Markdown("## .")
                 local_save = gr.Checkbox(
                     label="💾 Save Locally",
                     value=True,
@@ -78,7 +78,7 @@ def create_export_interface():
 
             # Hugging Face Card
             with gr.Column(elem_classes=["card", "hf-card"]):
-                gr.Markdown("## Hugging Face")
+                gr.Markdown("## .")
                 push_to_hub = gr.Checkbox(
                     label="🤗 Push to Hugging Face",
                     value=False,
@@ -101,7 +101,7 @@ def create_export_interface():
 
             # Ollama Card
             with gr.Column(elem_classes=["card", "ollama-card"]):
-                gr.Markdown("## Ollama")
+                gr.Markdown("## .")
                 push_to_ollama = gr.Checkbox(
                     label="🦙 Push to Ollama",
                     value=False,
