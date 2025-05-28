@@ -361,21 +361,19 @@ def create_train_interface():
                                 info="Enable logging to Weights & Biases platform",
                                 interactive=True
                             )
-                            with gr.Column():
+                            with gr.Column(visible=False) as wandb_settings:
                                 wandb_token = gr.Textbox(
                                     placeholder="Enter your W&B API token",
                                     label="W&B API Token",
                                     info="Enter your W&B API token",
                                     type="password",
-                                    interactive=True,
-                                    visible=False
+                                    interactive=True
                                 )
                                 wandb_project = gr.Textbox(
                                     value="llm-finetuning",
                                     label="W&B Project Name",
                                     info="Name of the project in W&B",
-                                    interactive=True,
-                                    visible=False
+                                    interactive=True
                                 )
 
                         # TensorBoard Section
@@ -405,8 +403,7 @@ def create_train_interface():
                     # Update visibility toggles for both logging systems
                     def toggle_wandb_fields(enable):
                         return {
-                            wandb_token: gr.update(visible=enable),
-                            wandb_project: gr.update(visible=enable)
+                            wandb_settings: gr.update(visible=enable)
                         }
 
                     def toggle_tensorboard_fields(enable):
@@ -417,7 +414,7 @@ def create_train_interface():
                     enable_wandb.change(
                         fn=toggle_wandb_fields,
                         inputs=[enable_wandb],
-                        outputs=[wandb_token, wandb_project]
+                        outputs=[wandb_settings]
                     )
 
                     enable_tensorboard.change(
