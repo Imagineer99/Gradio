@@ -96,6 +96,30 @@ with gr.Blocks(
       setInitialTheme();
       document.addEventListener('DOMContentLoaded', onPageLoad);
       window.addEventListener('load', onPageLoad);
+
+      function applyZoomForSmallScreens() {
+        if (window.screen.width < 1920) {
+          document.body.style.zoom = "0.75";
+        } else {
+          document.body.style.zoom = "";
+        }
+      }
+
+      // Run on load
+      applyZoomForSmallScreens();
+
+      // Also run on resize (in case user resizes window or moves to another monitor)
+      window.addEventListener('resize', applyZoomForSmallScreens);
+
+      function applyZoomFor1080p() {
+        if (window.screen.width === 1920 && window.screen.height === 1080) {
+          document.body.style.zoom = "0.75";
+        } else {
+          document.body.style.zoom = "";
+        }
+      }
+      applyZoomFor1080p();
+      window.addEventListener('resize', applyZoomFor1080p);
     </script>
     """
 ) as demo: 
