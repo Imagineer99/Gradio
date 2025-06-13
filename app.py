@@ -2,10 +2,10 @@ import gradio as gr
 import os
 
 # Pages
-from train import create_train_interface
-from chat import create_chat_interface
-from export import create_export_interface
-from eval import create_evaluate_interface
+from pages.train import create_train_interface
+from pages.chat import create_chat_interface
+from pages.export import create_export_interface
+from pages.eval import create_evaluate_interface
 
 # CSS 
 def load_css():
