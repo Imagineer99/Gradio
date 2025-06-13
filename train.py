@@ -28,8 +28,9 @@ def create_train_interface():
             )
             # Hidden upload button positioned over the search icon
             model_upload_btn = gr.UploadButton(
-                "📁",
+                "",
                 file_types=[".bin", ".safetensors", ".gguf", ".pt", ".pth"],
+                elem_classes=["model-upload-icon"],
                 scale=0,
                 size="sm",
                 visible=True
