@@ -1058,13 +1058,11 @@ div.token.svelte-1scun43 {
 .token-input .scroll-hide.svelte-173056l {
     -webkit-text-security: disc !important;
     -moz-text-security: disc !important;
-    text-security: disc !important;
     padding-left: 21px;
 }
 .token-input .scroll-hide.svelte-173056l::placeholder {
     -webkit-text-security: none !important;
     -moz-text-security: none !important;
-    text-security: none !important;
 }
 
 /* Search bar in model selection styling */
@@ -1083,6 +1081,20 @@ div.token.svelte-1scun43 {
 [data-theme="dark"] .model-selection-card .search-input-with-icon .scroll-hide.svelte-173056l {
     background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z' stroke='%23e5e7eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
+
+/* Model dropdown with search icon */
+.model-dropdown-with-icon .wrap-inner.svelte-1hfxrpf {
+    padding-left: 40px !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13 7L11.8845 4.76892C11.5634 4.1268 11.4029 3.80573 11.1634 3.57116C10.9516 3.36373 10.6963 3.20597 10.4161 3.10931C10.0992 3 9.74021 3 9.02229 3H5.2C4.0799 3 3.51984 3 3.09202 3.21799C2.71569 3.40973 2.40973 3.71569 2.21799 4.09202C2 4.51984 2 5.0799 2 6.2V7M2 7H17.2C18.8802 7 19.7202 7 20.362 7.32698C20.9265 7.6146 21.3854 8.07354 21.673 8.63803C22 9.27976 22 10.1198 22 11.8V16.2C22 17.8802 22 18.7202 21.673 19.362C21.3854 19.9265 20.9265 20.3854 20.362 20.673C19.7202 21 18.8802 21 17.2 21H6.8C5.11984 21 4.27976 21 3.63803 20.673C3.07354 20.3854 2.6146 19.9265 2.32698 19.362C2 18.7202 2 17.8802 2 16.2V7Z' stroke='%23F8F8FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: 12px center !important;
+    background-size: 20px !important;
+}
+
+[data-theme="dark"] .model-dropdown-with-icon .wrap-inner.svelte-1hfxrpf {
+    background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13 7L11.8845 4.76892C11.5634 4.1268 11.4029 3.80573 11.1634 3.57116C10.9516 3.36373 10.6963 3.20597 10.4161 3.10931C10.0992 3 9.74021 3 9.02229 3H5.2C4.0799 3 3.51984 3 3.09202 3.21799C2.71569 3.40973 2.40973 3.71569 2.21799 4.09202C2 4.51984 2 5.0799 2 6.2V7M2 7H17.2C18.8802 7 19.7202 7 20.362 7.32698C20.9265 7.6146 21.3854 8.07354 21.673 8.63803C22 9.27976 22 10.1198 22 11.8V16.2C22 17.8802 22 18.7202 21.673 19.362C21.3854 19.9265 20.9265 20.3854 20.362 20.673C19.7202 21 18.8802 21 17.2 21H6.8C5.11984 21 4.27976 21 3.63803 20.673C3.07354 20.3854 2.6146 19.9265 2.32698 19.362C2 18.7202 2 17.8802 2 16.2V7Z' stroke='%23F8F8FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+
 
 /* Header spacing */
 .row.logo-container.svelte-1xp0cw7.unequal-height {
@@ -2395,14 +2407,12 @@ div.token.svelte-1scun43 {
 .token-input-model-selection .scroll-hide.svelte-173056l {
     -webkit-text-security: disc !important;
     -moz-text-security: disc !important;
-    text-security: disc !important;
     padding-left: 21px;
     margin-left: 0px !important;
 }
 .token-input-model-selection .scroll-hide.svelte-173056l::placeholder {
     -webkit-text-security: none !important;
     -moz-text-security: none !important;
-    text-security: none !important;
     margin-left: 0px !important;
 }
 
@@ -3163,3 +3173,80 @@ input.svelte-k79vs1.svelte-k79vs1.svelte-k79vs1:checked {
 .gradio-container.gradio-container-5-14-0 .contain input.svelte-k79vs1.svelte-k79vs1.svelte-k79vs1:checked {
     background-color: #57b686;
 }
+
+/* Model upload button positioned over search icon */
+.model-upload-icon {
+    position: absolute !important;
+    left: 6px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    height: 32px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 0 !important; 
+    transition: background-color 0.2s ease !important;
+}
+
+.model-upload-icon:hover {
+    background-color: rgba(16, 185, 129, 0.1) !important;
+}
+
+.model-upload-icon:active {
+    background-color: rgba(16, 185, 129, 0.2) !important;
+    transform: translateY(-50%) scale(0.95) !important;
+}
+
+.model-dropdown-with-icon {
+    position: relative !important;
+}
+
+.model-upload-icon span,
+.model-upload-icon .upload-text {
+    display: none !important;
+}
+
+.model-dropdown-with-icon .model-upload-icon {
+    position: absolute !important;
+    left: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 24px !important;
+    height: 24px !important;
+    z-index: 10 !important;
+}
+.gradio-container.gradio-container-5-14-0 .contain .model-upload-icon {
+    max-width: none !important;
+    width: 38px !important;
+    height: 32px !important;
+    min-width: 2px !important;
+    flex: 0 0 2px !important;
+    display: block !important;
+    box-sizing: border-box !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .model-upload-icon {
+    position: absolute !important;
+    left: 18px !important;
+    top: 49% !important;
+    transform: translateY(-37%) !important;
+    height: 32px !important;
+    background: #b1151500 !important;
+    border: none !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    font-size: 0px !important;
+    transition: background-color 0.2s !important;
+}
+
+.gradio-container.gradio-container-5-14-0 .contain .model-upload-icon:hover {
+    background: #b1151500 !important;
+}
+
