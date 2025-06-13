@@ -24,6 +24,15 @@ def create_train_interface():
                 label="Select Model",
                 interactive=True,
                 scale=3,
+                elem_classes="model-dropdown-with-icon",
+            )
+            # Hidden upload button positioned over the search icon
+            model_upload_btn = gr.UploadButton(
+                "📁",
+                file_types=[".bin", ".safetensors", ".gguf", ".pt", ".pth"],
+                scale=0,
+                size="sm",
+                visible=True
             )
             with gr.Column(elem_classes=["model-selection-card"]):
                 model_search = gr.Textbox(
@@ -542,9 +551,48 @@ def create_train_interface():
         outputs=[start_btn, stop_btn]
     )
 
+    # Handle local model file upload
+    def handle_model_upload(file):
+        import os
+        if file is None:
+            return gr.update()
+        
+        # Get the filename without path
+        model_name = f"Local: {os.path.basename(file.name)}"
+        
+        # Get current choices and add the new local model
+        current_choices = [
+            "unsloth/Meta-Llama-3.1-8B-bnb-4bit",
+            "unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit",
+            "unsloth/Meta-Llama-3.1-70B-bnb-4bit",
+            "unsloth/Meta-Llama-3.1-405B-bnb-4bit",
+            "unsloth/Mistral-Nemo-Base-2407-bnb-4bit",
+            "unsloth/Mistral-Nemo-Instruct-2407-bnb-4bit",
+            "unsloth/mistral-7b-v0.3-bnb-4bit",
+            "unsloth/mistral-7b-instruct-v0.3-bnb-4bit",
+            "unsloth/Phi-3.5-mini-instruct",
+            "unsloth/Phi-3-medium-4k-instruct",
+            "unsloth/gemma-2-9b-bnb-4bit",
+            "unsloth/gemma-2-27b-bnb-4bit"
+        ]
+        
+        # Add local model to the top of the list if not already present
+        if model_name not in current_choices:
+            current_choices.insert(0, model_name)
+        
+        return gr.update(choices=current_choices, value=model_name)
+
+    # Connect the upload handler
+    model_upload_btn.upload(
+        fn=handle_model_upload,
+        inputs=[model_upload_btn],
+        outputs=[model_dropdown]
+    )
+
     # Components dictionary
     return {
         'model_dropdown': model_dropdown,
+        'model_upload_btn': model_upload_btn,
         'model_search': model_search,
         'load_4bit': load_4bit,
         'hf_token' : hf_token,
