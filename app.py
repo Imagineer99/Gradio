@@ -1,6 +1,19 @@
 import gradio as gr
 import os
 
+# WORKAROUND FOR GRADIO API SCHEMA BUG:
+# There's a bug in Gradio's API schema generation where complex interfaces
+# cause a "TypeError: argument of type 'bool' is not iterable" error.
+# We disable API generation entirely as a workaround.
+
+# Monkey patch to disable API schema generation
+def _disabled_get_api_info(self):
+    """Disabled API info generation to work around schema bug"""
+    return {"named_endpoints": {}, "unnamed_endpoints": {}}
+
+# Apply the monkey patch
+gr.Blocks.get_api_info = _disabled_get_api_info
+
 # Pages
 from pages.train import create_train_interface
 from pages.chat import create_chat_interface
@@ -174,32 +187,52 @@ with gr.Blocks(
 
     # Tab switching
     def switch_to_chat():
-        return gr.update(visible=False), gr.update(visible=True), gr.update(visible=False), gr.update(visible=False), \
-               gr.update(elem_classes=["nav-button", "secondary"]), \
-               gr.update(elem_classes=["nav-button", "secondary"]), \
-               gr.update(elem_classes=["nav-button", "primary"]), \
-               gr.update(elem_classes=["nav-button", "secondary"])
+        return (
+            gr.update(visible=False),  # train_tab
+            gr.update(visible=True),   # chat_tab
+            gr.update(visible=False),  # export_tab
+            gr.update(visible=False),  # evaluate_tab
+            gr.update(elem_classes=["nav-button", "secondary"]),  # nav_train
+            gr.update(elem_classes=["nav-button", "secondary"]),  # nav_evaluate
+            gr.update(elem_classes=["nav-button", "primary"]),    # nav_chat
+            gr.update(elem_classes=["nav-button", "secondary"])   # nav_export
+        )
 
     def switch_to_train():
-        return gr.update(visible=True), gr.update(visible=False), gr.update(visible=False), gr.update(visible=False), \
-               gr.update(elem_classes=["nav-button", "primary"]), \
-               gr.update(elem_classes=["nav-button", "secondary"]), \
-               gr.update(elem_classes=["nav-button", "secondary"]), \
-               gr.update(elem_classes=["nav-button", "secondary"])
+        return (
+            gr.update(visible=True),   # train_tab
+            gr.update(visible=False),  # chat_tab
+            gr.update(visible=False),  # export_tab
+            gr.update(visible=False),  # evaluate_tab
+            gr.update(elem_classes=["nav-button", "primary"]),    # nav_train
+            gr.update(elem_classes=["nav-button", "secondary"]),  # nav_evaluate
+            gr.update(elem_classes=["nav-button", "secondary"]),  # nav_chat
+            gr.update(elem_classes=["nav-button", "secondary"])   # nav_export
+        )
     
     def switch_to_export():
-        return gr.update(visible=False), gr.update(visible=False), gr.update(visible=True), gr.update(visible=False), \
-               gr.update(elem_classes=["nav-button", "secondary"]), \
-               gr.update(elem_classes=["nav-button", "secondary"]), \
-               gr.update(elem_classes=["nav-button", "secondary"]), \
-               gr.update(elem_classes=["nav-button", "primary"])
+        return (
+            gr.update(visible=False),  # train_tab
+            gr.update(visible=False),  # chat_tab
+            gr.update(visible=True),   # export_tab
+            gr.update(visible=False),  # evaluate_tab
+            gr.update(elem_classes=["nav-button", "secondary"]),  # nav_train
+            gr.update(elem_classes=["nav-button", "secondary"]),  # nav_evaluate
+            gr.update(elem_classes=["nav-button", "secondary"]),  # nav_chat
+            gr.update(elem_classes=["nav-button", "primary"])     # nav_export
+        )
                
     def switch_to_evaluate():
-        return gr.update(visible=False), gr.update(visible=False), gr.update(visible=False), gr.update(visible=True), \
-               gr.update(elem_classes=["nav-button", "secondary"]), \
-               gr.update(elem_classes=["nav-button", "primary"]), \
-               gr.update(elem_classes=["nav-button", "secondary"]), \
-               gr.update(elem_classes=["nav-button", "secondary"])
+        return (
+            gr.update(visible=False),  # train_tab
+            gr.update(visible=False),  # chat_tab
+            gr.update(visible=False),  # export_tab
+            gr.update(visible=True),   # evaluate_tab
+            gr.update(elem_classes=["nav-button", "secondary"]),  # nav_train
+            gr.update(elem_classes=["nav-button", "primary"]),    # nav_evaluate
+            gr.update(elem_classes=["nav-button", "secondary"]),  # nav_chat
+            gr.update(elem_classes=["nav-button", "secondary"])   # nav_export
+        )
 
     # Click handlers
     nav_chat.click(
