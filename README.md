@@ -1,9 +1,4 @@
 
-# Quick Install
-`pip install gradio` 
-
-or
-
 # Create and activate a virtual environment
 `python -m venv venv`
 
