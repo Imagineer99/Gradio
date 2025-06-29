@@ -67,7 +67,7 @@ def create_train_interface():
                 gr.Markdown("## Training Dataset")
                 with gr.Column():
                     with gr.Row():  
-                        input_text = gr.Textbox(
+                        hf_dataset = gr.Textbox(
                             placeholder="Type dataset from 🤗",
                             label="Hugging Face Dataset",
                             interactive=True,
@@ -542,136 +542,9 @@ def create_train_interface():
             stop_btn: gr.update(interactive=is_training)
         }
 
-    def save_to_yaml(model_dropdown,
-        model_upload_btn,
-        model_search,
-        load_4bit,
-        hf_token,
-        local_datasets,
-        learning_rate,
-        num_epochs,
-        loss_plot,
-        start_btn,
-        warmup_steps,
-        max_steps,
-        max_sequence_length,
-        input_text,
-        upload_btn,
-        random_seed,
-        weight_decay,
-        batch_size,
-        grad_accumulation,
-        data_template, 
-        packing,
-        target_modules,
-        lora_r,
-        lora_alpha,
-        lora_dropout,
-        gradient_checkpointing,
-        use_rslora,
-        use_loftq,
-        train_on_completions, 
-        enable_wandb,
-        wandb_token,
-        wandb_project,
-        enable_tensorboard,
-        tensorboard_dir,
-         log_frequency,
-        gpu_count,
-        combine_btn,
-        stop_btn,
-        save_steps,):
-        import yaml
-        data = {
-            'model_dropdown': model_dropdown,
-            'model_upload_btn': model_upload_btn,
-            'model_search': model_search,
-            'load_4bit': load_4bit,
-            'hf_token' : hf_token,
-            'local_datasets' : local_datasets,
-            'learning_rate': learning_rate,
-            'num_epochs': num_epochs,
-            'loss_plot': loss_plot,
-            'start_btn': start_btn,
-            'warmup_steps': warmup_steps,
-            'max_steps': max_steps,
-            'max_seq_length': max_sequence_length,
-            'input_text': input_text,
-            'upload_btn': upload_btn,
-            'random_seed': random_seed,
-            'weight_decay': weight_decay,
-            'batch_size': batch_size,
-            'grad_accumulation': grad_accumulation,
-            'data_template': data_template, 
-            'packing': packing,
-            'target_modules': target_modules,
-            'lora_r': lora_r,
-            'lora_alpha': lora_alpha,
-            'lora_dropout': lora_dropout,
-            'gradient_checkpointing': gradient_checkpointing,
-            'use_rslora': use_rslora,
-            'use_loftq': use_loftq,
-            'train_on_completions': train_on_completions, 
-            'enable_wandb': enable_wandb,
-            'wandb_token': wandb_token,
-            'wandb_project': wandb_project,
-            'enable_tensorboard': enable_tensorboard,
-            'tensorboard_dir': tensorboard_dir,
-            'log_frequency': log_frequency,
-            'gpu_count': gpu_count,
-            'combine_btn': combine_btn,
-            'stop_btn': stop_btn,
-            'save_steps': save_steps
-        }
-        with open('config/finetune.yaml', 'w') as outfile:
-            yaml.dump(data, outfile, default_flow_style=False)
-
     start_btn.click(
         fn=lambda: toggle_training_buttons(True),
         outputs=[start_btn, stop_btn]
-    ).then(
-        fn=save_to_yaml,
-        inputs=[
-        model_dropdown,
-        model_upload_btn,
-        model_search,
-        load_4bit,
-        hf_token,
-        local_datasets,
-        learning_rate,
-        num_epochs,
-        loss_plot,
-        start_btn,
-        warmup_steps,
-        max_steps,
-        max_sequence_length,
-        input_text,
-        upload_btn,
-        random_seed,
-        weight_decay,
-        batch_size,
-        grad_accumulation,
-        data_template, 
-        packing,
-        target_modules,
-        lora_r,
-        lora_alpha,
-        lora_dropout,
-        gradient_checkpointing,
-        use_rslora,
-        use_loftq,
-        train_on_completions, 
-        enable_wandb,
-        wandb_token,
-        wandb_project,
-        enable_tensorboard,
-        tensorboard_dir,
-         log_frequency,
-        gpu_count,
-        combine_btn,
-        stop_btn,
-        save_steps,
-        ]
     )
 
     stop_btn.click(
@@ -718,9 +591,9 @@ def create_train_interface():
     )
 
     return_to_top_button = """
-    <button class="return-to-top-btn" id="return-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" style="position: fixed; bottom: 30px; right: 30px; opacity: 1; visibility: visible;">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 19V5M5 12L12 5L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <button class="return-to-top-btn" id="return-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="return-to-top-icon">
+            <polygon points="12,7 19,17 5,17" stroke="currentColor" stroke-width="2" fill="none"/>
         </svg>
     </button>
     """
@@ -742,7 +615,7 @@ def create_train_interface():
         'warmup_steps': warmup_steps,
         'max_steps': max_steps,
         'max_seq_length': max_sequence_length,
-        'input_text': input_text,
+        'hf_dataset': hf_dataset,
         'upload_btn': upload_btn,
         'random_seed': random_seed,
         'weight_decay': weight_decay,

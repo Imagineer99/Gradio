@@ -133,60 +133,22 @@ with gr.Blocks(
       }
       applyZoomFor1080p();
       window.addEventListener('resize', applyZoomFor1080p);
-        // scroll to top button 
-            function scrollToTop() {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-      
-      function toggleReturnToTopButton() {
-          const button = document.getElementById('return-to-top');
-          if (!button) return;
-          
-          const scrolled = window.pageYOffset || document.documentElement.scrollTop;
-          const show = scrolled > 200;
-          
-          button.style.opacity = show ? '1' : '0';
-          button.style.visibility = show ? 'visible' : 'hidden';
-          button.style.transform = show ? 'translateY(0)' : 'translateY(20px)';
-      }
-      
+            // Scroll top button
+                        // scroll to top button - simple version, always visible
       function initReturnToTopButton() {
           const button = document.getElementById('return-to-top');
-          if (!button) {
-              console.log('Return to top button not found');
-              return false;
-          }
-          
-          console.log('Return to top button found, setting up...');
+          if (!button) return false;
           
           button.addEventListener('click', (e) => {
               e.preventDefault();
-              console.log('Button clicked!');
-              scrollToTop();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
           });
-          
-          window.addEventListener('scroll', toggleReturnToTopButton);
-          toggleReturnToTopButton();
           
           return true;
       }
       
-      function tryInitButton() {
-          if (initReturnToTopButton()) return;
-          
-          setTimeout(() => {
-              if (initReturnToTopButton()) return;
-              
-              const retry = setInterval(() => {
-                  if (initReturnToTopButton()) clearInterval(retry);
-              }, 1000);
-              
-              setTimeout(() => clearInterval(retry), 10000);
-          }, 500);
-      }
-      
-      document.addEventListener('DOMContentLoaded', tryInitButton);
-      window.addEventListener('load', tryInitButton);
+      document.addEventListener('DOMContentLoaded', initReturnToTopButton);
+      window.addEventListener('load', initReturnToTopButton);
     </script>
     """
 ) as demo: 
