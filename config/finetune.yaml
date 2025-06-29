@@ -1,0 +1,47 @@
+batch_size: 2
+combine_btn: Combine
+data_template: Auto-Select
+enable_tensorboard: false
+enable_wandb: false
+gpu_count: auto
+grad_accumulation: 4
+gradient_checkpointing: unsloth
+hf_token: ''
+input_text: ''
+learning_rate: 5e-5
+load_4bit: true
+local_datasets:
+- Sharegpt-dogs.json
+log_frequency: 10
+lora_alpha: 16
+lora_dropout: 0
+lora_r: 16
+loss_plot: null
+max_seq_length: 2048
+max_steps: 0
+model_dropdown: unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit
+model_search: ''
+model_upload_btn: null
+num_epochs: 4
+packing: false
+random_seed: 3407
+save_steps: 0
+start_btn: Start finetuning
+stop_btn: Stop
+target_modules:
+- q_proj
+- k_proj
+- v_proj
+- o_proj
+- gate_proj
+- up_proj
+- down_proj
+tensorboard_dir: runs
+train_on_completions: false
+upload_btn: null
+use_loftq: false
+use_rslora: false
+wandb_project: llm-finetuning
+wandb_token: ''
+warmup_steps: 5
+weight_decay: 0.01
