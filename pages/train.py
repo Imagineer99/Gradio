@@ -590,6 +590,16 @@ def create_train_interface():
         outputs=[model_dropdown]
     )
 
+    return_to_top_button = """
+    <button class="return-to-top-btn" id="return-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" style="position: fixed; bottom: 30px; right: 30px; opacity: 1; visibility: visible;">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 19V5M5 12L12 5L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+    """
+    
+    gr.HTML(return_to_top_button)
+
     # Components dictionary
     return {
         'model_dropdown': model_dropdown,
